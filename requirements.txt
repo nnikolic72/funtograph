@@ -5,6 +5,7 @@ configparser==3.5.0b2
 dj-database-url==0.3.0
 dj-static==0.0.6
 django-bootstrap3==5.1.1
+gunicorn==19.3.0
 linecache2==1.0.0
 numpy==1.9.2
 ordereddict==1.1

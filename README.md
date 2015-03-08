@@ -29,6 +29,10 @@ heroku logs
 heroku config:set S3_KEY=8N029N81
 heroku config:set DJANGO_SETTINGS_MODULE=funtograph.settings.devheroku --app funtograph-dev
 
+//Heroku check for problems
+heroku run "python manage.py check" --app funtograph-dev
+
+
 //Windows Powerhell environment variable setup
 $env:DJANGO_SETTINGS_MODULE="nnpicksdj.settings.local"
 //Windows cmd
