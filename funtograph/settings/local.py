@@ -5,6 +5,9 @@ __author__ = 'tanja'
 
 from ConfigParser import ConfigParser
 
+DEBUG = True
+
+TEMPLATE_DEBUG = True
 
 config = ConfigParser()
 settings_path = PROJECT_DIR.child('funtograph').child("settings")
