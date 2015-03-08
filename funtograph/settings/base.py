@@ -12,16 +12,29 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from unipath import Path
+from ConfigParser import ConfigParser
+
+#BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+PROJECT_DIR = Path(__file__).ancestor(3)
+BASE_DIR = PROJECT_DIR.child('funtograph')
+
+config = ConfigParser()
+settings_path = PROJECT_DIR.child('funtograph').child("settings")
+settings_path = Path(settings_path, 'settings.ini')
+config.read(settings_path)
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+TEMPLATE_DIRS = (
+    PROJECT_DIR.child("funtograph").child("templates").child("funtograph"),
+                 )
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'm@_(kqcf#r1ab!!1a_=f4$c23pgv!$5a)2gf7h3n_2(72#o#rx'
+SECRET_KEY = config.get('funtograph', 'APP_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,7 +53,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'bootstrap3',
 )
+
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -86,7 +102,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR,  'funtograph/templates'),
-)
 
