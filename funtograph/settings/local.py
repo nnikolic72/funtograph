@@ -1,15 +1,17 @@
+from unipath import Path
+from funtograph.settings import base
+
 __author__ = 'tanja'
 
 from ConfigParser import ConfigParser
 
-from .base import *
 
 config = ConfigParser()
-settings_path = PROJECT_DIR.child('funtograph').child("settings")
+settings_path = base.PROJECT_DIR.child('funtograph').child("settings")
 settings_path = Path(settings_path, 'settings.ini')
 config.read(settings_path)
 
-
+SECRET_KEY =  config.get('funtograph', 'APP_SECRET_KEY')
 DATABASE_USER = config.get('database', 'DATABASE_USER')
 DATABASE_PASSWORD = config.get('database', 'DATABASE_PASSWORD')
 DATABASE_HOST = config.get('database', 'DATABASE_HOST')
@@ -28,5 +30,5 @@ DATABASES = {
     }
 }
 
-MEDIA_ROOT = PROJECT_DIR.child("media")
-STATIC_ROOT = PROJECT_DIR.child("static")
+MEDIA_ROOT = base.PROJECT_DIR.child("media")
+STATIC_ROOT = base.PROJECT_DIR.child("static")
