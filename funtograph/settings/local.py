@@ -1,5 +1,5 @@
 from unipath import Path
-from funtograph.settings import base
+from funtograph.settings.base import *
 
 __author__ = 'tanja'
 
@@ -7,7 +7,7 @@ from ConfigParser import ConfigParser
 
 
 config = ConfigParser()
-settings_path = base.PROJECT_DIR.child('funtograph').child("settings")
+settings_path = PROJECT_DIR.child('funtograph').child("settings")
 settings_path = Path(settings_path, 'settings.ini')
 config.read(settings_path)
 
@@ -30,5 +30,5 @@ DATABASES = {
     }
 }
 
-MEDIA_ROOT = base.PROJECT_DIR.child("media")
-STATIC_ROOT = base.PROJECT_DIR.child("static")
+MEDIA_ROOT = PROJECT_DIR.child("media")
+STATIC_ROOT = PROJECT_DIR.child("static")
