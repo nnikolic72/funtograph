@@ -11,6 +11,9 @@ git add -A
 git commit -am "versionx"
 git push heroku master
 
+// Heroku issue a command to specific app
+heroku <command> --app funtograph-dev
+
 // Heroku migrate django models
 heroku run python manage.py migrate
 
@@ -21,6 +24,10 @@ heroku run python manage.py collectstatic
 cd funtograph
 heroku ps
 heroku logs
+
+//Heroku environment settings
+heroku config:set S3_KEY=8N029N81
+heroku config:set DJANGO_SETTINGS_MODULE=funtograph.settings.dev-heroku --app funtograph-dev
 
 //Windows Powerhell environment variable setup
 $env:DJANGO_SETTINGS_MODULE="nnpicksdj.settings.local"

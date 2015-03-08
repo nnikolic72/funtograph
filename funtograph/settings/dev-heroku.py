@@ -13,7 +13,7 @@ settings_path = PROJECT_DIR.child('funtograph').child("settings")
 settings_path = Path(settings_path, 'settings.ini')
 config.read(settings_path)
 
-SECRET_KEY =  config.get('funtograph', 'API_SECRET_KEY')
+SECRET_KEY =  os.environ['API_SECRET_KEY']
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
