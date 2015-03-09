@@ -1,0 +1,10 @@
+[funtograph]
+SECRET_KEY : isdjoewjdowjdoefdijeodijefoejfoeijfoefe
+[database]
+SECRET_KEY :
+DATABASE_USER :
+DATABASE_PASSWORD :
+DATABASE_HOST :
+DATABASE_PORT :
+DATABASE_ENGINE :
+DATABASE_NAME :
