@@ -71,17 +71,15 @@
                 </div>
             </div>
 
-
-
             <hr>
             <footer>
                 <p>&copy; Funtograph 2015</p>
 
                 <div id="navbar" class="navbar-collapse collapse">
-                    Language:
+                    {% get_current_language as LANGUAGE_CODE %} {{ LANGUAGE_CODE }}- Current Language:
                     <form action="/i18n/setlang/" method="post">
                         {% csrf_token %}
-                        <input name="next" type="hidden" value="/" />
+                        <input name="next" type="hidden" value="{{ request.get_full_path }}" />
                         <select name="language">
                             {% for lang in LANGUAGES %}
                                 <option value="{{ lang.0 }}">{{ lang.1 }}</option>

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.utils import translation
 from django.utils.translation import ugettext as _
 
 # Create your views here.
@@ -17,7 +18,8 @@ class LanderHomePageView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         '''Serve GET request'''
+        #user_language = 'es'
+        #translation.activate(user_language)
 
-        return render(request, self.template_name, {
-        }
+        return render(request, self.template_name, { 'request' : request}
         )
