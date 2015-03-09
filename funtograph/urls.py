@@ -6,7 +6,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'funtograph.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-
+    url(r'^i18n/', include('django.conf.urls.i18n')), # go to /i18n/setlang/
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', TemplateView.as_view(template_name="base.html"), name='apphome'),
+    url(r'^$', include('lander.urls', namespace='lander')),
 )
