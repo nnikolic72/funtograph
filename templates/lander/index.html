@@ -8,6 +8,7 @@
         {% bootstrap_messages %}
 
         {% block nav %}
+        <section>
             <nav class="navbar navbar-inverse navbar-fixed-top">
                 <div class="container">
                     <div class="navbar-header">
@@ -34,19 +35,20 @@
                 </div>
 
             </nav>
+        </section>
         {% endblock nav %}
 
 
 
-        <div class="jumbotron">
+        <section class="jumbotron">
             <div class="container">
                 <h1>{% trans 'Hello, photographer!' %}</h1>
-                <p>
+                <h2 class="mission-statement">
                     {% trans 'Welcome to the breakthrough web site for photographers. It is time to show off your photography skills against world-class photographers. Join this revolutionary game and become #1!' %}
-                </p>
+                </h2>
                 <p><a class="btn btn-primary btn-lg" href="#" role="button">{%  trans 'Learn more' %}&raquo;</a></p>
             </div>
-        </div>
+        </section>
 
 
 
@@ -77,27 +79,35 @@
                 <div class="container">
                     <!-- Example row of columns -->
                     <div class="row">
-                        <div class="col-md-10">
-                            <p>&copy; Funtograph 2015</p>
+                        <div class="col-md-9">
+                            <p class="label label-default">&copy; Funtograph 2015</p>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div id="navbar" class="navbar-collapse collapse">
-                                {% get_current_language as LANGUAGE_CODE %}<small>Current Language: {{ LANGUAGE_CODE }}</small>
+                                {% get_current_language as LANGUAGE_CODE %}
+                                <span class="label label-default">Current Language: {{ LANGUAGE_CODE }}</span>
                                 <form action="/i18n/setlang/" method="post">
                                     {% csrf_token %}
-
-                                    <input name="next" type="hidden" value="{{ request.get_full_path }}" />
-                                    <select name="language">
+                                    <div class="form-group">
+                                    <span>
+                                        <input name="next" type="hidden" value="{{ request.get_full_path }}" />
+                                    </span>
+                                    </div>
+                                    <div class="form-group">
+                                    <select name="language" class="btn btn-default btn-sm">
                                         {% for lang in LANGUAGES %}
                                             <option value="{{ lang.0 }}">{{ lang.1 }}</option>
                                         {% endfor %}
                                     </select>
-                                    <small><input type="submit" value="Go" /></small>
+                                        <input type="submit" class="btn btn-sucess btn-sm" value="Go" />
+                                    </div>
                                 </form>
                             </div>
                         </div>
+                    </div>
+                </div>
             </footer>
         </div> <!-- /container -->
-
+    </div>
 
 {% endblock content %}
