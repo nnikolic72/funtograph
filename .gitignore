@@ -8,6 +8,8 @@ __pycache__/
 # C extensions
 *.so
 
+.idea
+
 # Distribution / packaging
 .Python
 env/
@@ -46,7 +48,7 @@ nosetests.xml
 coverage.xml
 
 # Translations
-*.mo
+#*.mo
 *.pot
 
 # Django stuff:

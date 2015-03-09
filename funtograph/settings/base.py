@@ -18,7 +18,7 @@ from ConfigParser import ConfigParser
 #BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PROJECT_DIR = Path(__file__).ancestor(3)
 BASE_DIR = PROJECT_DIR.child('funtograph')
-LOCALE_DIR = PROJECT_DIR.child('locale')
+
 
 config = ConfigParser()
 settings_path = PROJECT_DIR.child('funtograph').child("settings")
@@ -36,6 +36,16 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
     'django.template.loaders.eggs.Loader',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.contrib.messages.context_processors.messages',
 )
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -98,6 +108,13 @@ LANGUAGES = (
     ('en', 'English'),
     ('de', 'German'),
     ('es', 'Spanish'),
+)
+
+#LOCALE_DIR = PROJECT_DIR.child("locale")
+
+LOCALE_PATHS = (
+    PROJECT_DIR.child("locale"),
+
 )
 
 TIME_ZONE = 'UTC'

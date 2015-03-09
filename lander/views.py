@@ -11,10 +11,6 @@ class LanderHomePageView(TemplateView):
     '''
 
     template_name = 'lander/index.html'
-    # Translators: header of landing page
-
-
-    # Translators: Keep &raquo; text intact.
 
     def get(self, request, *args, **kwargs):
         '''Serve GET request'''

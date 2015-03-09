@@ -44,7 +44,7 @@
                 <p>
                     {% trans 'Welcome to the breakthrough web site for photographers. It is time to show off your photography skills against world-class photographers. Join this revolutionary game and become #1!' %}
                 </p>
-                <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a> <span class="caret"></span></p>
+                <p><a class="btn btn-primary btn-lg" href="#" role="button">{%  trans 'Learn more' %}&raquo;</a></p>
             </div>
         </div>
 
@@ -57,38 +57,45 @@
                 <div class="col-md-4">
                     <h2>{% trans 'Build Your Photo Empire' %}</h2>
                     <p>{% trans 'Start from scratch and become the most prominent photographer. Build your empire step by step and rule the photo world!' %}</p>
-                    <p><a class="btn btn-default" href="#" role="button">{% autoescape off %}{% trans 'View details &raquo;' %}{% endautoescape %}</a></p>
+                    <p><a class="btn btn-default" href="#" role="button">{% autoescape off %}{% trans 'View details' %}&raquo;{% endautoescape %}</a></p>
                 </div>
                 <div class="col-md-4">
                     <h2>{% trans 'Build Your Photo Empire' %}</h2>
                     <p>{% trans 'Start from scratch and become the most prominent photographer. Build your empire step by step and rule the photo world!' %}</p>
-                    <p><a class="btn btn-default" href="#" role="button">{% autoescape off %}{% trans 'View details &raquo;' %}{% endautoescape %}</a></p>
+                    <p><a class="btn btn-default" href="#" role="button">{% autoescape off %}{% trans 'View details' %}&raquo;{% endautoescape %}</a></p>
                 </div>
                 <div class="col-md-4">
                     <h2>{% trans 'Build Your Photo Empire' %}</h2>
                     <p>{% trans 'Start from scratch and become the most prominent photographer. Build your empire step by step and rule the photo world!' %}</p>
-                    <p><a class="btn btn-default" href="#" role="button">{% autoescape off %}{% trans 'View details &raquo;' %}{% endautoescape %}</a></p>
+                    <p><a class="btn btn-default" href="#" role="button">{% autoescape off %}{% trans 'View details' %}&raquo;{% endautoescape %}</a></p>
                 </div>
             </div>
 
             <hr>
             <footer>
-                <p>&copy; Funtograph 2015</p>
 
-                <div id="navbar" class="navbar-collapse collapse">
-                    {% get_current_language as LANGUAGE_CODE %} {{ LANGUAGE_CODE }}- Current Language:
-                    <form action="/i18n/setlang/" method="post">
-                        {% csrf_token %}
-                        <input name="next" type="hidden" value="{{ request.get_full_path }}" />
-                        <select name="language">
-                            {% for lang in LANGUAGES %}
-                                <option value="{{ lang.0 }}">{{ lang.1 }}</option>
-                            {% endfor %}
-                        </select>
-                        <input type="submit" value="Go" />
-                    </form>
-                </div>
+                <div class="container">
+                    <!-- Example row of columns -->
+                    <div class="row">
+                        <div class="col-md-10">
+                            <p>&copy; Funtograph 2015</p>
+                        </div>
+                        <div class="col-md-2">
+                            <div id="navbar" class="navbar-collapse collapse">
+                                {% get_current_language as LANGUAGE_CODE %}<small>Current Language: {{ LANGUAGE_CODE }}</small>
+                                <form action="/i18n/setlang/" method="post">
+                                    {% csrf_token %}
 
+                                    <input name="next" type="hidden" value="{{ request.get_full_path }}" />
+                                    <select name="language">
+                                        {% for lang in LANGUAGES %}
+                                            <option value="{{ lang.0 }}">{{ lang.1 }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <small><input type="submit" value="Go" /></small>
+                                </form>
+                            </div>
+                        </div>
             </footer>
         </div> <!-- /container -->
 

@@ -3,24 +3,24 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-09 14:47+0100\n"
-"PO-Revision-Date: 2015-03-09 15:28+0100\n"
+"POT-Creation-Date: 2015-03-09 19:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: es\n"
-"X-Generator: Poedit 1.7.4\n"
 
 #: .\templates\lander\index.html:15
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Cambio de navegación"
 
 #: .\templates\lander\index.html:30
 msgid "Sign in"
@@ -28,17 +28,21 @@ msgstr "Registrarse"
 
 #: .\templates\lander\index.html:43
 msgid "Hello, photographer!"
-msgstr "Hola Fotógrafo"
+msgstr "Hola, fotógrafo!"
 
 #: .\templates\lander\index.html:45
-msgid
+msgid ""
 "Welcome to the breakthrough web site for photographers. It is time to show "
 "off your photography skills against world-class photographers. Join this "
 "revolutionary game and become #1!"
-msgstr
-"Bienvenido a la página web de gran avance para los fotógrafos. Es el "
-"momento de mostrar sus habilidades de fotografía contra fotógrafos de "
-"talla mundial. Únete a este juego revolucionario y convertirse en # 1!"
+msgstr ""
+"Bienvenido a la página web de gran avance para los fotógrafos. Es el momento "
+"de mostrar sus habilidades de fotografía contra fotógrafos de talla mundial. "
+"Únete a este juego revolucionario y convertirse en # 1!"
+
+#: .\templates\lander\index.html:47
+msgid "Learn more"
+msgstr "Aprender más"
 
 #: .\templates\lander\index.html:58 .\templates\lander\index.html.py:63
 #: .\templates\lander\index.html:68
@@ -47,14 +51,14 @@ msgstr "Construya su imperio fotos"
 
 #: .\templates\lander\index.html:59 .\templates\lander\index.html.py:64
 #: .\templates\lander\index.html:69
-msgid
+msgid ""
 "Start from scratch and become the most prominent photographer. Build your "
 "empire step by step and rule the photo world!"
-msgstr
-"Empezar desde cero y convertirse en el más prominente fotógrafo. Construye "
-"tu imperio paso a paso y dominar el mundo foto!"
+msgstr ""
+"Empezar desde cero y convertirse en el fotógrafo más destacado. Construye tu "
+"paso a paso imperio y gobernar el mundo de la fotografía!"
 
 #: .\templates\lander\index.html:60 .\templates\lander\index.html.py:65
 #: .\templates\lander\index.html:70
-msgid "View details &raquo;"
+msgid "View details"
 msgstr "Ver detalles"
