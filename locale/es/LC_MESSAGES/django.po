@@ -1,0 +1,54 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-09 14:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\templates\lander\index.html:15
+msgid "Toggle navigation"
+msgstr ""
+
+#: .\templates\lander\index.html:30
+msgid "Sign in"
+msgstr ""
+
+#: .\templates\lander\index.html:43
+msgid "Hello, photographer!"
+msgstr "Hola Fotógrafo"
+
+#: .\templates\lander\index.html:45
+msgid ""
+"Welcome to the breakthrough web site for photographers. It is time to show "
+"off your photography skills against world-class photographers. Join this "
+"revolutionary game and become #1!"
+msgstr ""
+
+#: .\templates\lander\index.html:58 .\templates\lander\index.html.py:63
+#: .\templates\lander\index.html:68
+msgid "Build Your Photo Empire"
+msgstr ""
+
+#: .\templates\lander\index.html:59 .\templates\lander\index.html.py:64
+#: .\templates\lander\index.html:69
+msgid ""
+"Start from scratch and become the most prominent photographer. Build your "
+"empire step by step and rule the photo world!"
+msgstr ""
+
+#: .\templates\lander\index.html:60 .\templates\lander\index.html.py:65
+#: .\templates\lander\index.html:70
+msgid "View details &raquo;"
+msgstr ""
