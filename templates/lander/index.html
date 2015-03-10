@@ -4,51 +4,52 @@
 
 {% block bootstrap3_content %}
     {{ block.super }}
-    <!--{% bootstrap_messages %}-->
-<div class="container-fluid">
-            <!-- Example row of columns -->
-            <div class="row bg-success">
-                <div class="col-xs-12 text-right">
+    {% bootstrap_messages %}
 
-                        {% get_current_language as LANGUAGE_CODE %}
-                        <span class="label label-default">Current Language: {{ LANGUAGE_CODE }}</span>
-                        <form action="/i18n/setlang/" method="post">
-                            {% csrf_token %}
-                                    <span>
-                                        <input name="next" type="hidden" value="{{ request.get_full_path }}" />
-                                    </span>
-                            <div class="form-group" style="margin-top: 5px;">
-                                <select name="language" class="btn btn-default btn-xs">
-                                    {% for lang in LANGUAGES %}
-                                        <option value="{{ lang.0 }}">{{ lang.1 }}</option>
-                                    {% endfor %}
-                                </select>
-                                <input type="submit" class="btn btn-success btn-xs" value="Go" />
-                            </div>
-                        </form>
-
-                </div>
-            </div>
-        </div>
 
     <div class="jumbotron">
         <div class="container">
+            <div class="col-xs-12 text-right">
+                {% get_current_language as LANGUAGE_CODE %}
+                <span class="label label-default">Current Language: {{ LANGUAGE_CODE }}</span>
+                <form action="/i18n/setlang/" method="post">
+                    {% csrf_token %}
+                                    <span>
+                                        <input name="next" type="hidden" value="{{ request.get_full_path }}" />
+                                    </span>
+                    <div class="form-group" style="margin-top: 5px;">
+                        <!--<select name="language" class="btn btn-default btn-xs">-->
+                        {% for lang in LANGUAGES %}
+                            <!--<option value="{{ lang.0 }}">{{ lang.1 }}</option>-->
+                            <input type="hidden" name="language" value="{{lang.0}}"/>
+                            <input id="lang_{{lang.0}}" type = "image" src="{{ STATIC_URL }}img/{{ lang.0 }}.png" alt="{{ lang.1 }}"/>
+                        {% endfor %}
+                        <!--</select>-->
+                        <!--<input type="submit" class="btn btn-success btn-xs" value="Go" />-->
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+        <div class="container">
             <h1>{% trans 'Hello, photographer!' %}</h1>
+            <img class="img-responsive img-thumbnail" style="box-shadow: 0 0 30px black; margin: 20px;" src="{{ STATIC_URL }}img/funtographlogo.png"></img>
             <p>
-                {% trans 'Welcome to the breakthrough game for photographers. It is time to show off your photography skills against world-class photographers. Discover this revolutionary game now and become #1!' %}
+                {% trans 'Welcome to Funtograph, breakthrough game for photographers. It is time to show off your photography skills against world-class photographers. Discover this revolutionary game now and become #1!' %}
             </p>
-            <h2 class="text-success" style="padding-bottom: 20px;">{% trans 'COMING SOON' %} <small>{% trans 'leave us your email address to be notified when the game starts' %}</small></h2>
+            <h2 class="text-primary" style="padding-bottom: 20px;">{% trans 'COMING SOON' %} <small>{% trans 'leave us your email address. We will notify you when the game starts.' %}</small></h2>
             <form class="form-inline" role="form" action="{% url 'lander:signupemail' %}" id="singnupform">
                 {% csrf_token %}
 
-                    <div class="form-group">
-                    <label class="text-danger" for="email">Your email: </label> {{ form.email }}
-                    </div>
-                    <div class="form-group">
-                    <label class="text-danger" for="name">Your name: </label> {{ form.name }}
-                    </div>
                 <div class="form-group">
-                <button type="submit" class="btn btn-primary">{% trans 'Sign up' %}</button>
+                    <label class="text-primary" for="email">Your email: </label> {{ form.email }}
+                </div>
+                <div class="form-group">
+                    <label class="text-primary" for="name">Your name: </label> {{ form.name }}
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">{% trans 'Sign up' %}</button>
                 </div>
             </form>
 
