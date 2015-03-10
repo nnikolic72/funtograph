@@ -5,6 +5,7 @@ from django.utils.translation import ugettext as _
 # Create your views here.
 from django.views.generic.base import TemplateView
 
+from .forms import SignUpForm
 
 class LanderHomePageView(TemplateView):
     ''' Home page of lander app
@@ -14,8 +15,19 @@ class LanderHomePageView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         '''Serve GET request'''
-        #user_language = 'es'
-        #translation.activate(user_language)
 
-        return render(request, self.template_name, { 'request' : request}
+        return render(request, self.template_name,
+                      dict(request=request, form=SignUpForm(),)
         )
+
+class LanderSignUpView(TemplateView):
+    ''' Thank you page
+    '''
+
+    template_name = 'lander/signup.html'
+
+    def get(self, request, *args, **kwargs):
+        '''Serve GET request'''
+
+        return render(request, self.template_name,
+                      dict(request=request, ))

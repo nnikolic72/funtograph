@@ -31,14 +31,9 @@ msgid "Hello, photographer!"
 msgstr "Hola, fotógrafo!"
 
 #: .\templates\lander\index.html:45
-msgid ""
-"Welcome to the breakthrough web site for photographers. It is time to show "
-"off your photography skills against world-class photographers. Join this "
-"revolutionary game and become #1!"
-msgstr ""
-"Bienvenido a la página web de gran avance para los fotógrafos. Es el momento "
-"de mostrar sus habilidades de fotografía contra fotógrafos de talla mundial. "
-"Únete a este juego revolucionario y convertirse en # 1!"
+msgid "Welcome to the breakthrough game for photographers. It is time to show off your photography skills against world-class photographers. Discover this revolutionary game now and become #1"
+msgstr "Bienvenido al juego de gran avance para los fotógrafos. Es el momento de mostrar sus habilidades de fotografía contra fotógrafos de talla mundial. Descubra este juego revolucionario ahora y hazte #1"
+
 
 #: .\templates\lander\index.html:47
 msgid "Learn more"

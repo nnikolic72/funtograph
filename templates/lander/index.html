@@ -1,113 +1,147 @@
 {% extends 'base.html' %}
 {% load i18n %}
-
 {% load bootstrap3 %}
 
-{% block content %}
-    <div class="container">
-        {% bootstrap_messages %}
-
-        {% block nav %}
-        <section>
-            <nav class="navbar navbar-inverse navbar-fixed-top">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                            <span class="sr-only">{% trans 'Toggle navigation' %}</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#">Funtograph</a>
-                    </div>
-                    <div id="navbar" class="navbar-collapse collapse">
-                        <form class="navbar-form navbar-right">
-                            <div class="form-group">
-                                <input type="text" placeholder="Email" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <input type="password" placeholder="Password" class="form-control">
-                            </div>
-                            <button type="submit" class="btn btn-success">{% trans 'Sign in' %}</button>
-                        </form>
-
-                    </div><!--/.navbar-collapse -->
-                </div>
-
-            </nav>
-        </section>
-        {% endblock nav %}
-
-
-
-        <section class="jumbotron">
-            <div class="container">
-                <h1>{% trans 'Hello, photographer!' %}</h1>
-                <h2 class="mission-statement">
-                    {% trans 'Welcome to the breakthrough web site for photographers. It is time to show off your photography skills against world-class photographers. Join this revolutionary game and become #1!' %}
-                </h2>
-                <p><a class="btn btn-primary btn-lg" href="#" role="button">{%  trans 'Learn more' %}&raquo;</a></p>
-            </div>
-        </section>
-
-
-
-
-        <div class="container">
+{% block bootstrap3_content %}
+    {{ block.super }}
+    <!--{% bootstrap_messages %}-->
+<div class="container-fluid">
             <!-- Example row of columns -->
-            <div class="row">
-                <div class="col-md-4">
-                    <h2>{% trans 'Build Your Photo Empire' %}</h2>
-                    <p>{% trans 'Start from scratch and become the most prominent photographer. Build your empire step by step and rule the photo world!' %}</p>
-                    <p><a class="btn btn-default" href="#" role="button">{% autoescape off %}{% trans 'View details' %}&raquo;{% endautoescape %}</a></p>
-                </div>
-                <div class="col-md-4">
-                    <h2>{% trans 'Build Your Photo Empire' %}</h2>
-                    <p>{% trans 'Start from scratch and become the most prominent photographer. Build your empire step by step and rule the photo world!' %}</p>
-                    <p><a class="btn btn-default" href="#" role="button">{% autoescape off %}{% trans 'View details' %}&raquo;{% endautoescape %}</a></p>
-                </div>
-                <div class="col-md-4">
-                    <h2>{% trans 'Build Your Photo Empire' %}</h2>
-                    <p>{% trans 'Start from scratch and become the most prominent photographer. Build your empire step by step and rule the photo world!' %}</p>
-                    <p><a class="btn btn-default" href="#" role="button">{% autoescape off %}{% trans 'View details' %}&raquo;{% endautoescape %}</a></p>
-                </div>
-            </div>
+            <div class="row bg-success">
+                <div class="col-xs-12 text-right">
 
-            <hr>
-            <footer>
-
-                <div class="container">
-                    <!-- Example row of columns -->
-                    <div class="row">
-                        <div class="col-md-9">
-                            <p class="label label-default">&copy; Funtograph 2015</p>
-                        </div>
-                        <div class="col-md-3">
-                            <div id="navbar" class="navbar-collapse collapse">
-                                {% get_current_language as LANGUAGE_CODE %}
-                                <span class="label label-default">Current Language: {{ LANGUAGE_CODE }}</span>
-                                <form action="/i18n/setlang/" method="post">
-                                    {% csrf_token %}
-                                    <div class="form-group">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        <span class="label label-default">Current Language: {{ LANGUAGE_CODE }}</span>
+                        <form action="/i18n/setlang/" method="post">
+                            {% csrf_token %}
                                     <span>
                                         <input name="next" type="hidden" value="{{ request.get_full_path }}" />
                                     </span>
-                                    </div>
-                                    <div class="form-group">
-                                    <select name="language" class="btn btn-default btn-sm">
-                                        {% for lang in LANGUAGES %}
-                                            <option value="{{ lang.0 }}">{{ lang.1 }}</option>
-                                        {% endfor %}
-                                    </select>
-                                        <input type="submit" class="btn btn-sucess btn-sm" value="Go" />
-                                    </div>
-                                </form>
+                            <div class="form-group" style="margin-top: 5px;">
+                                <select name="language" class="btn btn-default btn-xs">
+                                    {% for lang in LANGUAGES %}
+                                        <option value="{{ lang.0 }}">{{ lang.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                                <input type="submit" class="btn btn-success btn-xs" value="Go" />
                             </div>
-                        </div>
-                    </div>
+                        </form>
+
                 </div>
-            </footer>
-        </div> <!-- /container -->
+            </div>
+        </div>
+
+    <div class="jumbotron">
+        <div class="container">
+            <h1>{% trans 'Hello, photographer!' %}</h1>
+            <p>
+                {% trans 'Welcome to the breakthrough game for photographers. It is time to show off your photography skills against world-class photographers. Discover this revolutionary game now and become #1!' %}
+            </p>
+            <h2 class="text-success" style="padding-bottom: 20px;">{% trans 'COMING SOON' %} <small>{% trans 'leave us your email address to be notified when the game starts' %}</small></h2>
+            <form class="form-inline" role="form" action="{% url 'lander:signupemail' %}">
+                {% csrf_token %}
+
+                    <div class="form-group">
+                    <label class="text-danger" for="email">Your email: </label> {{ form.email }}
+                    </div>
+                    <div class="form-group">
+                    <label class="text-danger" for="name">Your name: </label> {{ form.name }}
+                    </div>
+                <div class="form-group">
+                <button type="submit" class="btn btn-primary">{% trans 'Sign up' %}</button>
+                </div>
+            </form>
+
+        </div>
     </div>
 
-{% endblock content %}
+
+
+
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row" style="padding-bottom:50px;" >
+            <div class="col-sm-4">
+                <h2 class="bg-primary text-center" style="padding:10px;">{% trans 'Build Your Photo Empire' %}</h2>
+                <p class="text-justify">{% trans 'Start from scratch and become the most prominent photographer. Build your empire step by step and rule the photo world!' %}</p>
+                <p><a class="btn btn-default" href="#buildempire" role="button">{% autoescape off %}{% trans 'View details' %}&raquo;{% endautoescape %}</a></p>
+            </div>
+            <div class="col-sm-4">
+                <h2 class="bg-success text-center" style="padding:10px;">{% trans 'Compete With Others' %}</h2>
+                <p class="text-justify">{% trans 'Use your best photos as your weapons. Compete against other players and win. Duels and leagues await you!' %}</p>
+                <p><a class="btn btn-default" href="#compete" role="button">{% autoescape off %}{% trans 'View details' %}&raquo;{% endautoescape %}</a></p>
+            </div>
+            <div class="col-sm-4">
+                <h2 class="bg-danger text-center" style="padding:10px;">{% trans 'Gloves Are Off' %}</h2>
+                <p class="text-justify">{% trans 'No more sweet comments and boring photo feeds. Find out what you are really worth as a photographer and as an photo critic.' %}</p>
+                <p><a class="btn btn-default" href="#gloves" role="button">{% autoescape off %}{% trans 'View details' %}&raquo;{% endautoescape %}</a></p>
+            </div>
+        </div>
+    </div> <!-- /container -->
+
+    <div class="jumbotron" id="buildempire" style="margin-bottom: 50px;">
+        <div class="container">
+            <h2>{% trans 'Build Your Photo Empire' %}</h2>
+            <p>
+                {% trans 'Welcome to the breakthrough game for photographers. It is time to show off your photography skills against world-class photographers. Discover this revolutionary game now and become #1!' %}
+            </p>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button">{%  trans 'Sign up' %}&raquo;</a></p>
+        </div>
+    </div>
+
+    <div class="jumbotron" id="compete" style="margin-bottom: 50px;">
+        <div class="container">
+            <h2>{% trans 'Compete With Others' %}</h2>
+            <p>
+                {% trans 'Welcome to the breakthrough game for photographers. It is time to show off your photography skills against world-class photographers. Discover this revolutionary game now and become #1!' %}
+            </p>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button">{%  trans 'Sign up' %}&raquo;</a></p>
+        </div>
+    </div>
+
+    <div class="jumbotron" id="gloves" style="margin-bottom: 50px;">
+        <div class="container">
+            <h2>{% trans 'Gloves Are Off' %}</h2>
+            <p>
+                {% trans 'Welcome to the breakthrough game for photographers. It is time to show off your photography skills against world-class photographers. Discover this revolutionary game now and become #1!' %}
+            </p>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button">{%  trans 'Sign up' %}&raquo;</a></p>
+        </div>
+    </div>
+
+    <div class="container">
+    <hr>
+    <footer>
+
+        <div class="container-fluid">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="col-xs-9">
+                    <p class="label label-default">&copy; Funtograph 2015</p>
+                </div>
+                <div class="col-xs-3">
+
+                        {% get_current_language as LANGUAGE_CODE %}
+                        <span class="label label-default">Current Language: {{ LANGUAGE_CODE }}</span>
+                        <form action="/i18n/setlang/" method="post">
+                            {% csrf_token %}
+                                    <span>
+                                        <input name="next" type="hidden" value="{{ request.get_full_path }}" />
+                                    </span>
+                            <div class="form-group">
+                                <select name="language" class="btn btn-default btn-xs">
+                                    {% for lang in LANGUAGES %}
+                                        <option value="{{ lang.0 }}">{{ lang.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                                <input type="submit" class="btn btn-sucess btn-xs" value="Go" />
+                            </div>
+                        </form>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+{% endblock bootstrap3_content %}
+
