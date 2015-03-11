@@ -10,6 +10,7 @@
     <div class="jumbotron">
         <div class="container">
             <div class="col-xs-12 text-right">
+            {% if SHOW_TRANSLATIONS == True %}
                 {% get_current_language as LANGUAGE_CODE %}
                 <span class="label label-default">Current Language: {{ LANGUAGE_CODE }}</span>
                 <form action="/i18n/setlang/" method="post">
@@ -28,7 +29,7 @@
                         <!--<input type="submit" class="btn btn-success btn-xs" value="Go" />-->
                     </div>
                 </form>
-
+            {% endif %}
             </div>
         </div>
 

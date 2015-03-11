@@ -32,6 +32,8 @@ heroku config:set DJANGO_SETTINGS_MODULE=funtograph.settings.devheroku --app fun
 //Heroku check for problems
 heroku run "python manage.py check" --app funtograph-dev
 
+//Heroku add domain
+heroku domains:add www.funtograph.com --app funtograph-dev
 
 //Windows Powerhell environment variable setup
 $env:DJANGO_SETTINGS_MODULE="nnpicksdj.settings.local"

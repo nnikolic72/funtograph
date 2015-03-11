@@ -6,6 +6,7 @@ from django.utils.translation import ugettext as _
 from django.views.generic.base import TemplateView
 
 from .forms import SignUpForm
+from funtograph.settings.base import SHOW_TRANSLATIONS
 
 class LanderHomePageView(TemplateView):
     ''' Home page of lander app
@@ -17,7 +18,8 @@ class LanderHomePageView(TemplateView):
         '''Serve GET request'''
 
         return render(request, self.template_name,
-                      dict(request=request, form=SignUpForm(),)
+                      dict(request=request, form=SignUpForm(),
+                           SHOW_TRANSLATIONS=SHOW_TRANSLATIONS,)
         )
 
 class LanderSignUpView(TemplateView):
