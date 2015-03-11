@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load bootstrap3 %}
+
+{% block bootstrap3_content %}
+    {{ block.super }}
+    {% bootstrap_messages %}
+
+
+    <div class="jumbotron">
+        <div class="container">
+            <div class="col-xs-12 text-right">
+            {% if SHOW_TRANSLATIONS == True %}
+                {% get_current_language as LANGUAGE_CODE %}
+                <span class="label label-default">Current Language: {{ LANGUAGE_CODE }}</span>
+                <form action="/i18n/setlang/" method="post">
+                    {% csrf_token %}
+                                    <span>
+                                        <input name="next" type="hidden" value="{{ request.get_full_path }}" />
+                                    </span>
+                    <div class="form-group" style="margin-top: 5px;">
+                        <!--<select name="language" class="btn btn-default btn-xs">-->
+                        {% for lang in LANGUAGES %}
+                            <!--<option value="{{ lang.0 }}">{{ lang.1 }}</option>-->
+                            <input type="hidden" name="language" value="{{lang.0}}"/>
+                            <input id="lang_{{lang.0}}" type = "image" src="{{ STATIC_URL }}img/{{ lang.0 }}.png" alt="{{ lang.1 }}"/>
+                        {% endfor %}
+                        <!--</select>-->
+                        <!--<input type="submit" class="btn btn-success btn-xs" value="Go" />-->
+                    </div>
+                </form>
+            {% endif %}
+            </div>
+        </div>
+
+        <div class="container">
+            <h1>{% trans 'Hello, photographer!' %}</h1>
+            <img class="img-responsive img-thumbnail" style="box-shadow: 0 0 30px black; margin: 20px;" src="{{ STATIC_URL }}img/funtographlogo.png"></img>
+            <p>
+                {% trans 'Welcome to Funtograph, breakthrough game for photographers. It is time to show off your photography skills against world-class photographers. Discover this revolutionary game now and become #1!' %}
+            </p>
+            <h2 class="text-primary" style="padding-bottom: 20px;">{% trans 'COMING SOON' %} <small>{% trans 'leave us your email address. We will notify you when the game starts.' %}</small></h2>
+            <form class="form-inline" role="form" action="{% url 'lander:signupemail' %}" id="singnupform">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label class="text-primary" for="email">Your email: </label> {{ form.email }}
+                </div>
+                <div class="form-group">
+                    <label class="text-primary" for="name">Your name: </label> {{ form.name }}
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">{% trans 'Sign up' %}</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+
+
+
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row" style="padding-bottom:50px;" >
+            <div class="col-sm-4">
+                <h2 class="bg-primary text-center" style="padding:10px;">{% trans 'Build Your Photo Empire' %}</h2>
+                <p class="text-justify">{% trans 'Start from scratch and become the most prominent photographer. Build your empire step by step and rule the photo world!' %}</p>
+                <p><a class="btn btn-default" href="#buildempire" role="button">{% autoescape off %}{% trans 'View details' %}&raquo;{% endautoescape %}</a></p>
+            </div>
+            <div class="col-sm-4">
+                <h2 class="bg-success text-center" style="padding:10px;">{% trans 'Compete With Others' %}</h2>
+                <p class="text-justify">{% trans 'Use your best photos as your weapons. Compete against other players and win. Duels and leagues await you!' %}</p>
+                <p><a class="btn btn-default" href="#compete" role="button">{% autoescape off %}{% trans 'View details' %}&raquo;{% endautoescape %}</a></p>
+            </div>
+            <div class="col-sm-4">
+                <h2 class="bg-danger text-center" style="padding:10px;">{% trans 'Gloves Are Off' %}</h2>
+                <p class="text-justify">{% trans 'No more sweet comments and boring photo feeds. Find out what you are really worth as a photographer and as an photo critic.' %}</p>
+                <p><a class="btn btn-default" href="#gloves" role="button">{% autoescape off %}{% trans 'View details' %}&raquo;{% endautoescape %}</a></p>
+            </div>
+        </div>
+    </div> <!-- /container -->
+
+    <div class="jumbotron" id="buildempire" style="margin-bottom: 50px;">
+        <div class="container">
+            <h2>{% trans 'Build Your Photo Empire' %}</h2>
+            <p>
+                {% trans 'Welcome to the breakthrough game for photographers. It is time to show off your photography skills against world-class photographers. Discover this revolutionary game now and become #1!' %}
+            </p>
+            <p><a class="btn btn-primary btn-lg" href="#singnupform" role="button">{%  trans 'Sign up' %}&raquo;</a></p>
+        </div>
+    </div>
+
+    <div class="jumbotron" id="compete" style="margin-bottom: 50px;">
+        <div class="container">
+            <h2>{% trans 'Compete With Others' %}</h2>
+            <p>
+                {% trans 'Welcome to the breakthrough game for photographers. It is time to show off your photography skills against world-class photographers. Discover this revolutionary game now and become #1!' %}
+            </p>
+            <p><a class="btn btn-primary btn-lg" href="#singnupform" role="button">{%  trans 'Sign up' %}&raquo;</a></p>
+        </div>
+    </div>
+
+    <div class="jumbotron" id="gloves" style="margin-bottom: 50px;">
+        <div class="container">
+            <h2>{% trans 'Gloves Are Off' %}</h2>
+            <p>
+                {% trans 'Welcome to the breakthrough game for photographers. It is time to show off your photography skills against world-class photographers. Discover this revolutionary game now and become #1!' %}
+            </p>
+            <p><a class="btn btn-primary btn-lg" href="#singnupform" role="button">{%  trans 'Sign up' %}&raquo;</a></p>
+        </div>
+    </div>
+
+    <div class="container">
+    <hr>
+    <footer>
+
+        <div class="container-fluid">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <p class="label label-default">&copy; Funtograph 2015</p>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+    </div>
+{% endblock bootstrap3_content %}
+
