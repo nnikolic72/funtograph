@@ -40,7 +40,7 @@
                 {% trans 'Welcome to Funtograph, breakthrough game for photographers. It is time to show off your photography skills against world-class photographers. Discover this revolutionary game now and become #1!' %}
             </p>
             <h2 class="text-primary" style="padding-bottom: 20px;">{% trans 'COMING SOON' %} <small>{% trans 'leave us your email address. We will notify you when the game starts.' %}</small></h2>
-            <form class="form-inline" role="form" action="{% url 'lander:signupemail' %}" id="singnupform">
+            <form class="form-inline" method="POST" role="form" action="{% url 'lander:signupemail' %}" id="singnupform">
                 {% csrf_token %}
 
                 <div class="form-group">

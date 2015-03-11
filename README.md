@@ -15,7 +15,8 @@ git push heroku master
 heroku <command> --app funtograph-dev
 
 // Heroku migrate django models
-heroku run python manage.py migrate
+heroku run python manage.py migrate --app funtograph-dev
+heroku run python manage.py migrate --app funtograph-prod
 
 // collect static files
 heroku run python manage.py collectstatic
@@ -28,6 +29,8 @@ heroku logs
 //Heroku environment settings
 heroku config:set S3_KEY=8N029N81
 heroku config:set DJANGO_SETTINGS_MODULE=funtograph.settings.devheroku --app funtograph-dev
+heroku config:set DJANGO_SETTINGS_MODULE=funtograph.settings.prodheroku --app funtograph-prod
+heroku config:set SECRET_KEY="jdsjdsdhsjdh"
 
 //Heroku check for problems
 heroku run "python manage.py check" --app funtograph-dev
