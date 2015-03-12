@@ -2,6 +2,11 @@
 {% load i18n %}
 {% load bootstrap3 %}
 
+
+{% block bootstrap3_extra_head %}
+    {{ block.super }}
+{% endblock bootstrap3_extra_head %}
+
 {% block bootstrap3_content %}
     {{ block.super }}
     {% bootstrap_messages %}
@@ -12,6 +17,25 @@
             <p>
                 {% trans 'We will send you an announcement when the game is ready!' %}
             </p>
+            <small>
+                {% trans 'Sincirely,' %}
+            </small>
+            <img class="img-responsive" style=" margin-bottom:10px;" src="{{ STATIC_URL }}img/funtograph-logo-sq-200.png"></img>
         </div>
+    </div>
+
+    <div class="container well bg-success">
+        <div class="row">
+            <p class="text-center btn-success">{% trans 'Please take your time to share Funtograph on your social networks. We really appreciate it!' %}</p>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 text-center" style="padding: 10px;"><!-- Facebook button -->
+                <div class="fb-like" data-href="https://www.funtograph.com/" data-width="350" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+            </div>
+            <div class="col-sm-6 text-center" style="padding: 10px;"><!-- Twitter button -->
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.funtograph.com" data-text="Check out this - a game for photographers!" data-related="funtograph" data-hashtags="funtograph">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>            </div>
+        </div>
+    </div>
     </div>
 {% endblock bootstrap3_content %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block bootstrap3_content %}
+    {{ block.super }}
+    <!-- Todo: create registration page -->
+
+    <div class="content">
+        <h1>Register with Funtograph</h1>
+
+        {% if registered %}
+            Funtograph says: <strong>thank you for registering!</strong>
+            <a href="{% url 'lander:index' %}">Return to the homepage.</a><br />
+        {% else %}
+            Funtograph says: <strong>register here!</strong><br />
+
+            <form id="user_form" method="post" action="{% url 'members:register' %}"
+                  enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <!-- Display each form. The as_p method wraps each element in a paragraph
+                     (<p>) element. This ensures each element appears on a new line,
+                     making everything look neater. -->
+                {{ user_form.as_p }}
+                {{ profile_form.as_p }}
+
+                <!-- Provide a button to click to submit the form. -->
+                <input type="submit" name="submit" value="Register" />
+            </form>
+        {% endif %}
+    </div>
+{%  endblock bootstrap3_content %}

@@ -18,12 +18,19 @@ class LanderHomePageView(TemplateView):
     template_name = 'lander/index.html'
 
     def get(self, request, *args, **kwargs):
-        '''Serve GET request'''
+        """
+        Serve GET request
+        """
 
-        return render(request, self.template_name,
-                      dict(request=request, form=SignUpForm(),
-                           SHOW_TRANSLATIONS=SHOW_TRANSLATIONS,)
-        )
+        if request.user.is_authenticated():
+            return HttpResponseRedirect(reverse('members:index'))
+        else:
+            self.template_name = 'lander/index.html'
+
+            return render(request, self.template_name,
+                          dict(form=SignUpForm(),
+                               SHOW_TRANSLATIONS=SHOW_TRANSLATIONS,)
+            )
 
 class LanderSignUpView(TemplateView):
     """ Thank you page
@@ -52,7 +59,7 @@ class LanderSignUpView(TemplateView):
             new_signup = Lander(name=name, email=email)
             new_signup.save()
             return render(request, self.template_name,
-                          dict(request=request,  error=False ))
+                          dict(error=False ))
         else:
             #template_name = 'lander/index.html'
             return HttpResponseRedirect(reverse('lander:index'))
