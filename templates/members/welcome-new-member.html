@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-Welcome new member
-<!-- Todo: create welcome new member page -->
-</body>
-</html>
+{% extends "memberbase.html" %}
+{% load i18n %}
+
+{% block content %}
+    {{ block.super }}
+    <h1>Welcome to Funtograph @{{ user }}!</h1>
+{% endblock content %}
