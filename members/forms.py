@@ -50,7 +50,7 @@ class UserForm(Form):
                                  )
 
     last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control',
-                                                              'placeholder': _('Your real first name'),
+                                                              'placeholder': _('Your real last name'),
                                                               }),
                                 required=False,
                                 )

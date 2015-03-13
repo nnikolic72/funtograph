@@ -10,11 +10,11 @@
     <div class="container">
         <div class="row" style="padding-bottom:50px;" >
             <div class="col-sm-3 text-center">
-                <img class="img-responsive" style="margin: 20px;" src="{{ STATIC_URL }}img/funtograph-logo-sq-200.png">
+                <img class="img-responsive"  src="{{ STATIC_URL }}img/funtograph-logo-sq-200.png">
             </div>
             <div class="col-sm-9 text-center">
                 <div class="well">
-                <h1 class="text-success">{% trans 'Register with Funtograph' %}</h1>
+                    <h1 class="text-success">{% trans 'Register with Funtograph' %}</h1>
                 </div>
             </div>
         </div>
@@ -25,10 +25,9 @@
             Funtograph says: <strong>@{{ user }}{% trans 'thank you for registering!' %}</strong>
             <a href="{% url 'lander:index' %}">{% trans 'Return to the homepage.' %}</a><br />
         {% else %}
-            <h2>{% trans 'Fill registration form' %}:</h2>
 
-            <form id="user_form" method="post" action="{% url 'members:register' %}"
-                  enctype="multipart/form-data" style="width: 300px;">
+            <form id="user_form" class="form-horizontal" method="post" action="{% url 'members:register' %}"
+                  enctype="multipart/form-data" >
 
                 {% csrf_token %}
 
@@ -52,79 +51,99 @@
                 {% endif %}
 
                 <div class="form-group">
-                    <label for="username">{% trans 'Screen name' %}:</label>
-                    {{ user_form.username }}
-                    {% if errors_user != None %}
+                    <label for="username" class="col-sm-5 control-label">{% trans 'Screen name' %}:</label>
+                    <div class="col-sm-7">
+                        {{ user_form.username }}
+                        {% if errors_user != None %}
 
-                        {%  for key, error in errors_user.items %}
-                            {%  if key == 'username' %}
-                                <p class="help-block">{{ error }}</p>
-                            {%  endif %}
-                        {% endfor %}
-                    {% endif %}
+                            {%  for key, error in errors_user.items %}
+                                {%  if key == 'username' %}
+                                    <p class="help-block">{{ error }}</p>
+                                {%  endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
                 </div>
 
                 <div class="form-group">
-                    <label for="email">{% trans 'Valid email address' %}:</label>
-                    {{ user_form.email }}
-                    {% if errors_user != None %}
-                        {%  for key, error in errors_user.items %}
-                            {%  if key == 'email' %}
-                                <h4 class="text-danger text-uppercase">{{ error }}</h4>
-                            {%  endif %}
-                        {% endfor %}
-                    {% endif %}
+                    <label for="email" class="col-sm-5 control-label">{% trans 'Valid email address' %}:</label>
+                    <div class="col-sm-7">
+                        {{ user_form.email }}
+                        {% if errors_user != None %}
+                            {%  for key, error in errors_user.items %}
+                                {%  if key == 'email' %}
+                                    <h4 class="text-danger text-uppercase">{{ error }}</h4>
+                                {%  endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
                 </div>
 
                 <div class="form-group">
-                    <label for="password1">{% trans 'Password' %}:</label>
-                    {{ user_form.password1 }}
+                    <label for="password1" class="col-sm-5 control-label">{% trans 'Password' %}:</label>
+                    <div class="col-sm-7">
+                        {{ user_form.password1 }}
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="password2">{% trans 'Repeat password' %}:</label>
-                    {{ user_form.password2 }}
-                </div>
-
-                <div class="form-group">
-                    <label for="first_name">{% trans 'Your first name' %}:</label>
-                    {{ user_form.first_name }}
-                    {% if errors_user != None %}
-                        {%  for key, error in errors_user.items %}
-                            {%  if key == 'first_name' %}
-                                <h4 class="text-danger text-uppercase">{{ error }}</h4>
-                            {%  endif %}
-                        {% endfor %}
-                    {% endif %}
+                    <label for="password2" class="col-sm-5 control-label">{% trans 'Repeat password' %}:</label>
+                    <div class="col-sm-7">
+                        {{ user_form.password2 }}
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="first_name">{% trans 'Your last name' %}:</label>
-                    {{ user_form.last_name }}
-                    {% if errors_user != None %}
-                        {%  for key, error in errors_user.items %}
-                            {%  if key == 'last_name' %}
-                                <h4 class="text-danger text-uppercase">{{ error }}</h4>
-                            {%  endif %}
-                        {% endfor %}
-                    {% endif %}
+                    <label for="first_name" class="col-sm-5 control-label">{% trans 'Your first name' %}:</label>
+                    <div class="col-sm-7">
+                        {{ user_form.first_name }}
+                        {% if errors_user != None %}
+                            {%  for key, error in errors_user.items %}
+                                {%  if key == 'first_name' %}
+                                    <h4 class="text-danger text-uppercase">{{ error }}</h4>
+                                {%  endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
                 </div>
 
                 <div class="form-group">
-                    <label for="picture">{% trans 'Upload your profile photo' %}:</label>
-                    {{ profile_form.picture }}
-                    <p class="help-block">{% trans 'You can change your profile photo later' %}.</p>
-                    {% if errors_user != None %}
-                        {%  for key, error in errors_user.items %}
-                            {%  if key == 'picture' %}
-                                <p class="help-block bg-danger">{{ error }}</p>
-                            {%  endif %}
-                        {% endfor %}
-                    {% endif %}
+                    <label for="last_name" class="col-sm-5 control-label">{% trans 'Your last name' %}:</label>
+                    <div class="col-sm-7">
+                        {{ user_form.last_name }}
+                        {% if errors_user != None %}
+                            {%  for key, error in errors_user.items %}
+                                {%  if key == 'last_name' %}
+                                    <h4 class="text-danger text-uppercase">{{ error }}</h4>
+                                {%  endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="picture" class="col-sm-5 control-label">{% trans 'Upload your profile photo' %}:</label>
+                    <div class="col-sm-7">
+                        {{ profile_form.picture }}
+                        <p class="help-block">{% trans 'You can change your profile photo later' %}.</p>
+                        {% if errors_user != None %}
+                            {%  for key, error in errors_user.items %}
+                                {%  if key == 'picture' %}
+                                    <p class="help-block bg-danger">{{ error }}</p>
+                                {%  endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                 </div>
 
 
                 <!-- Provide a button to click to submit the form. -->
-                <input type="submit" class="btn btn-default" name="submit" value="Register" />
+                <div class="col-sm-12 text-right">
+                    <input type="submit" class="btn btn-default" name="submit" value="Register" />
+                </div>
             </form>
         {% endif %}
     </div>
