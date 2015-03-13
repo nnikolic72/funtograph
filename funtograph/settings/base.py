@@ -15,6 +15,9 @@ import os
 from unipath import Path
 from ConfigParser import ConfigParser
 
+#this is overriden in other config files
+FUNTOGRAPH_IS_LIVE = True
+
 #BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PROJECT_DIR = Path(__file__).ancestor(3)
 BASE_DIR = PROJECT_DIR.child('funtograph')
@@ -137,7 +140,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
-LOGIN_REDIRECT_URL = '/members/'
+LOGIN_URL = '/members/login'
+LOGOUT_URL = '/members/logout'
+LOGIN_REDIRECT_URL = '/members/dashboard'
 
 

@@ -1,13 +1,18 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.views.generic.base import TemplateView
 from django.http import HttpResponseRedirect, HttpResponse
+from django.utils.translation import ugettext as _
 
 from .forms import (
-UserForm,
-MemberForm
+    UserForm,
+    MemberForm,
+    LoginForm
 )
+
+from .models import User
+
 from funtograph.settings.base import SHOW_TRANSLATIONS
 
 # Create your views here.
@@ -24,99 +29,154 @@ class MemberHomePageView(TemplateView):
             self.template_name = 'members/index.html'
 
             return render(request, self.template_name,
-                          dict(request=request, SHOW_TRANSLATIONS=SHOW_TRANSLATIONS,)
+                          dict(request=request, )
             )
         else:
             return HttpResponseRedirect(reverse('lander:index'))
 
+
 class MemberRegisterView(TemplateView):
+    """
+    Handles showing and parsing registration form.
+    """
 
     def post(self, request, *args, **kwargs):
-        return HttpResponseRedirect(reverse('members:welcome'))
+        """
+        Serve POST request - when user submits registration form
+        """
+
+        # Attempt to grab information from the raw form information.
+        # Note that we make use of both UserForm and UserProfileForm.
+        user_form = UserForm(data=request.POST)
+        profile_form = MemberForm(data=request.POST)
+
+        # If the two forms are valid...
+        if user_form.is_valid() and profile_form.is_valid():
+            # Save the user's form data to the database.
+            user_form.clean()
+            profile_form.clean()
+
+            user = User(username=user_form.cleaned_data[u'username'],
+                        email=user_form.cleaned_data[u'email']
+            )
+
+            # Now we hash the password with the set_password method.
+            # Once hashed, we can update the user object.
+            user.set_password(user_form.cleaned_data[u'password1'])
+            user.save()
+
+            # Now sort out the UserProfile instance.
+            # Since we need to set the user attribute ourselves, we set commit=False.
+            # This delays saving the model until we're ready to avoid integrity problems.
+            profile = profile_form.save(commit=False)
+            profile.user = user
+
+            # Did the user provide a profile picture?
+            # If so, we need to get it from the input form and put it in the UserProfile model.
+            if 'picture' in request.FILES:
+                profile.picture = request.FILES['picture']
+
+            # Now we save the UserProfile model instance.
+            profile.save()
+
+            #Login this new user so they can get Welcome page
+            try:
+                user = authenticate(username=user.username, password=user.password)
+            except:
+                raise
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    # Redirect to a success page.
+                    return HttpResponseRedirect(reverse('members:welcome'))
+                else:
+                    # Return a 'disabled account' error message
+                    return HttpResponseRedirect(reverse('members:disabled'))
+            else:
+                # Return an 'invalid login' error message.
+                return render(request,
+                              'members/login.html',
+                              dict(
+                                  # Todo: insert Login form here
+                                  errors_login=_('Username or password invalid. Please try again.'),
+                                  )
+                )
+
+
+
+        # Invalid form or forms - mistakes or something else?
+        # Print problems to the terminal.
+        # They'll also be shown to the user.
+        else:
+            # redirect to registration form
+            new_user_form = UserForm()
+            new_profile_form = MemberForm()
+            return render(request,
+                          'members/register.html',
+                          dict(
+                              user_form=new_user_form,
+                              profile_form=new_profile_form,
+                              errors_user=user_form.errors,
+                              errors_profile=profile_form.errors,
+                          )
+            )
+
+
+
 
     def get(self, request, *args, **kwargs):
-        '''Serve GET request'''
+        """
+        Serve GET request - swoh registration form
+        """
+
         registered = False
 
-        # If it's a HTTP POST, we're interested in processing form data.
-        if request.method == 'POST':
-            # Attempt to grab information from the raw form information.
-            # Note that we make use of both UserForm and UserProfileForm.
-            user_form = UserForm(data=request.POST)
-            profile_form = MemberForm(data=request.POST)
-
-            # If the two forms are valid...
-            if user_form.is_valid() and profile_form.is_valid():
-                # Save the user's form data to the database.
-                user = user_form.save()
-
-                # Now we hash the password with the set_password method.
-                # Once hashed, we can update the user object.
-                user.set_password(user.password)
-                user.save()
-
-                # Now sort out the UserProfile instance.
-                # Since we need to set the user attribute ourselves, we set commit=False.
-                # This delays saving the model until we're ready to avoid integrity problems.
-                profile = profile_form.save(commit=False)
-                profile.user = user
-
-                # Did the user provide a profile picture?
-                # If so, we need to get it from the input form and put it in the UserProfile model.
-                if 'picture' in request.FILES:
-                    profile.picture = request.FILES['picture']
-
-                # Now we save the UserProfile model instance.
-                profile.save()
-
-                # Update our variable to tell the template registration was successful.
-                registered = True
-
-            # Invalid form or forms - mistakes or something else?
-            # Print problems to the terminal.
-            # They'll also be shown to the user.
-            else:
-                print user_form.errors, profile_form.errors
-
-        # Not a HTTP POST, so we render our form using two ModelForm instances.
-        # These forms will be blank, ready for user input.
-        else:
-            user_form = UserForm()
-            profile_form = MemberForm()
+        user_form = UserForm()
+        profile_form = MemberForm()
 
         # Render the template depending on the context.
         return render(request,
-                'members/register.html',
-                dict(
-                    user_form=user_form,
-                    profile_form=profile_form,
-                    registered=registered
-                )
+                      'members/register.html',
+                      dict(
+                          user_form=user_form,
+                          profile_form=profile_form,
+                          errors_user=None,
+                          errors_profile=None,
+                      )
         )
+
 
 class MemberLoginView(TemplateView):
     """
 
     """
+
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated():
             return HttpResponseRedirect(reverse('members:dashboard'))
         else:
-            return HttpResponseRedirect(reverse('members:register'))
+            #return HttpResponseRedirect(reverse('members:login'))
+            login_form = LoginForm()
+
+            return render(request,
+                          'members/login.html',
+                          dict(
+                              login_form=login_form,
+                              errors_login=None,
+                              )
+            )
 
     def post(self, request, *args, **kwargs):
-        if request.method == 'POST':
-            # Gather the username and password provided by the user.
-            # This information is obtained from the login form.
-                    # We use request.POST.get('<variable>') as opposed to request.POST['<variable>'],
-                    # because the request.POST.get('<variable>') returns None, if the value does not exist,
-                    # while the request.POST['<variable>'] will raise key error exception
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-
+        login_form = LoginForm(data=request.POST)
+        if login_form.is_valid():
             # Use Django's machinery to attempt to see if the username/password
             # combination is valid - a User object is returned if it is.
-            user = authenticate(username=username, password=password)
+            login_form.clean()
+            username = login_form.cleaned_data[u'username']
+            password = login_form.cleaned_data[u'password']
+            user = authenticate(username=username,
+                                password=password
+            )
 
             # If we have a User object, the details are correct.
             # If None (Python's way of representing the absence of a value), no user
@@ -127,29 +187,38 @@ class MemberLoginView(TemplateView):
                     # If the account is valid and active, we can log the user in.
                     # We'll send the user back to the homepage.
                     login(request, user)
-                    return HttpResponseRedirect(reverse('members:index'))
+                    return HttpResponseRedirect(reverse('members:dashboard'))
                 else:
                     # An inactive account was used - no logging in!
-                    return HttpResponse("Your Funtograph account is disabled.")
-            else:
-                # Bad login details were provided. So we can't log the user in.
-                print ("Invalid login details: {0}, {1}".format(username, password))
-                return HttpResponse("Invalid login details supplied.")
+                    #return HttpResponse("Your Funtograph account is disabled.")
+                    return HttpResponseRedirect(reverse('members:disabled'))
 
-        # The request is not a HTTP POST, so display the login form.
-        # This scenario would most likely be a HTTP GET.
+            else:
+                login_form = LoginForm()
+                return render(request,
+                              'members/login.html',
+                              dict(
+                                  login_form=login_form,
+                                  errors_login=_('Username or password invalid. Please try again.'),
+                                  )
+                )
         else:
-            # No context variables to pass to the template system, hence the
-            # blank dictionary object...
-            return HttpResponseRedirect(reverse('members:index'))
+            login_form = LoginForm()
+            return render(request,
+                          'members/login.html',
+                          dict(
+                              login_form=login_form,
+                              errors_login=_('Username or password invalid. Please try again.'),
+                              )
+            )
+
+
 
 
 class MemberWelcomeView(TemplateView):
-
     template_name = 'members/welcome-new-member.html'
 
     def get(self, request, *args, **kwargs):
-        # Todo: Open a new user and log them in
         if request.user.is_authenticated():
             return render(request,
                           self.template_name,
@@ -160,13 +229,34 @@ class MemberWelcomeView(TemplateView):
             return HttpResponseRedirect(reverse('members:register'))
 
 
-
 class MemberDashboardView(TemplateView):
-
     template_name = 'members/dashboard.html'
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated():
+            return render(request,
+                          self.template_name,
+                          dict(
+                          )
+            )
+
+class MemberDisabledView(TemplateView):
+    template_name = 'members/disabled.html'
+
+    def get(self, request, *args, **kwargs):
+
+        return render(request,
+                      self.template_name,
+                      dict(
+                      )
+        )
+
+class MemberLogoutView(TemplateView):
+    template_name = 'members/logout.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            logout(request)
             return render(request,
                           self.template_name,
                           dict(

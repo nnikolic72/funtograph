@@ -9,7 +9,10 @@ from django.views.generic.base import TemplateView
 
 from .models import Lander
 from .forms import SignUpForm
-from funtograph.settings.base import SHOW_TRANSLATIONS
+from funtograph.settings.base import (
+    SHOW_TRANSLATIONS,
+    FUNTOGRAPH_IS_LIVE,
+)
 
 class LanderHomePageView(TemplateView):
     ''' Home page of lander app
@@ -29,7 +32,8 @@ class LanderHomePageView(TemplateView):
 
             return render(request, self.template_name,
                           dict(form=SignUpForm(),
-                               SHOW_TRANSLATIONS=SHOW_TRANSLATIONS,)
+                               SHOW_TRANSLATIONS=SHOW_TRANSLATIONS,
+                               FUNTOGRAPH_IS_LIVE=FUNTOGRAPH_IS_LIVE,)
             )
 
 class LanderSignUpView(TemplateView):

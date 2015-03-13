@@ -9,6 +9,8 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
+FUNTOGRAPH_IS_LIVE = True
+
 config = ConfigParser()
 settings_path = PROJECT_DIR.child('funtograph').child("settings")
 settings_path = Path(settings_path, 'settings.ini')

@@ -1,20 +1,62 @@
 {% extends 'base.html' %}
 
+{% load i18n %}
+{% load bootstrap3 %}
+
 {% block bootstrap3_content %}
     {{ block.super }}
 
-    <!-- Todo: format members login page -->
-    <div class="content">
-        <h1>Login with Funtograph</h1>
+    <div class="container">
+        <div class="row" style="padding-bottom:50px;" >
+            <div class="col-sm-3 text-center">
+                <img class="img-responsive" style="margin: 20px;" src="{{ STATIC_URL }}img/funtograph-logo-sq-200.png">
+            </div>
+            <div class="col-sm-9 text-center">
+                <div class="well">
+                    <h1 class="text-success">{% trans 'Login with Funtograph' %}</h1>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <form id="login_form" method="post" action="{% url 'members:login' %}">
-        {% csrf_token %}
-        Username: <input type="text" name="username" value="" size="50" />
-        <br />
-        Password: <input type="password" name="password" value="" size="50" />
-        <br />
+    <div class="container">
+        {% if errors_login %}
+            <div class="form-group">
+                <p>Login error: {{ errors_login }}</p>
+            </div>
+        {% endif %}
 
-        <input type="submit" value="submit" />
-    </form>
+        <form id="login_form" method="POST" action="{% url 'members:login' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">{% trans 'Screen name' %}:</label>
+                {{ login_form.username }}
+            </div>
+
+            <div class="form-group">
+                <label for="password">{% trans 'Password' %}:</label>
+                {{ login_form.password }}
+            </div>
+
+            <button class="btn btn-success" type="submit" value="submit">{% trans 'Login' %}</button>
+        </form>
+    </div>
+
+    {% block footer %}
+        <div class="container">
+            <hr>
+            <footer>
+
+                <div class="container">
+                    <!-- Example row of columns -->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p class="label label-default">&copy; Funtograph 2015</p>
+                        </div>
+
+                    </div>
+                </div>
+            </footer>
+        </div>
+    {%  endblock footer %}
 {% endblock bootstrap3_content %}

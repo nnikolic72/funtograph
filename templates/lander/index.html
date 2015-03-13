@@ -36,41 +36,57 @@
         <div class="container">
             <div class="container">
                 <!-- Example row of columns -->
-                <div class="row" style="padding-bottom:50px;" >
+                <div class="row" style="padding-bottom:10px;" >
                     <div class="col-sm-3">
+                        <div class="center-block">
+                            <img class="img-responsive" src="{{ STATIC_URL }}img/funtograph-logo-sq-200.png" style="display:inline-block;">
+                        </div>
                     </div>
                     <div class="col-sm-9">
                         <h1 class="text-center text-success">{% trans 'Hello, photographer!' %}</h1>
-                    </div>
-                </div>
-
-            <div class="container">
-                <!-- Example row of columns -->
-                <div class="row" style="padding-bottom:50px;" >
-                    <div class="col-sm-3 text-center">
-                        <img class="img-responsive img-thumbnail" style="box-shadow: 0 0 30px black; margin: 20px; margin-bottom:50px;" src="{{ STATIC_URL }}img/funtograph-logo-sq-200.png"></img>
-                    </div>
-                    <div class="col-sm-9">
                         <p class="text-justify">
                             {% trans 'Welcome to Funtograph, breakthrough game for photographers. It is time to show off your photography skills against world-class photographers. Discover this revolutionary game now and become #1!' %}
                         </p>
-                        <div class="text-center well">
-                            <h2 class="text-warning" style="padding-bottom: 20px;" id="singnupform">{% trans 'COMING SOON' %}<br><small>{% trans 'leave us your email address. We will notify you when the game starts.' %}</small></h2>
-                            <form class="form-inline" method="POST" role="form" action="{% url 'lander:signupemail' %}">
-                                {% csrf_token %}
+                    </div>
+                </div>
 
-                                <div class="form-group">
-                                    <label class="text-primary" for="email">{% trans 'Your email:' %}</label> {{ form.email }}<span class="glyphicon glyphicon-asterisk text-danger" aria-hidden="true"></span>
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-sm-3 text-center">
+                        </div>
+                        <div class="col-sm-9 text-center">
+                            <div class="text-center well">
+                                <h2 class="text-warning" style="padding-bottom: 20px;" id="singnupform">{% trans 'COMING SOON' %}<br>
+                                    <small>{% trans 'Leave us your email address. We will notify you when the game starts.' %}</small></h2>
+                                <div class="center-block">
+                                    <form method="POST" role="form" action="{% url 'lander:signupemail' %}" style="width: 300px; display:inline-block;">
+                                        {% csrf_token %}
+
+                                        <div class="form-group">
+                                            <label class="text-primary" for="email">{% trans 'Your email:' %}</label>
+                                            {{ form.email }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="text-primary" for="name">{% trans 'Your name:' %}</label>
+                                            {{ form.name }}
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary">{% trans 'Sign up' %}</button>
+                                        </div>
+                                    </form>
                                 </div>
-                                <div class="form-group">
-                                    <label class="text-primary" for="name">{% trans 'Your name:' %}</label> {{ form.name }}
+                            </div>
+
+                            {% if FUNTOGRAPH_IS_LIVE == True %}
+                                <div class="text-center well">
+                                    <a href="{% url 'members:login' %}"><button class="btn btn-primary">{% trans 'Login' %}</button></a>
+                                    <a href="{% url 'members:register' %}"><button class="btn btn-success">{% trans 'Register as new user' %}</button></a>
                                 </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary">{% trans 'Sign up' %}</button>
-                                </div>
-                            </form>
+                            {%  endif %}
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -135,19 +151,19 @@
     </div>
 
     <div class="container">
-    <hr>
-    <footer>
+        <hr>
+        <footer>
 
-        <div class="container-fluid">
-            <!-- Example row of columns -->
-            <div class="row">
-                <div class="col-xs-12">
-                    <p class="label label-default">&copy; Funtograph 2015</p>
+            <div class="container-fluid">
+                <!-- Example row of columns -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p class="label label-default">&copy; Funtograph 2015</p>
+                    </div>
+
                 </div>
-
             </div>
-        </div>
-    </footer>
+        </footer>
     </div>
 {% endblock bootstrap3_content %}
 
