@@ -38,12 +38,23 @@
                 <!-- Example row of columns -->
                 <div class="row" style="padding-bottom:10px;" >
                     <div class="col-sm-3">
+                        <span class="hidden-xs">
                         <div class="center-block">
                             <img class="img-responsive" src="{{ STATIC_URL }}img/funtograph-logo-sq-200.png" style="display:inline-block;">
                         </div>
+                        </span>
                     </div>
                     <div class="col-sm-9">
-                        <h1 class="text-center text-success">{% trans 'Hello, photographer!' %}</h1>
+                           <span class="visible-xs">
+                               <div align="center">
+                                <img class="img-responsive" style="margin: 20px;" src="{{ STATIC_URL }}img/funtograph-onlypic-sq-40.png">
+                                Funtograph
+                                   </div>
+                           </span>
+                        <h1 class="text-center text-success">
+
+                            {% trans 'Hello, photographer!' %}
+                        </h1>
                         <p class="text-justify">
                             {% trans 'Welcome to Funtograph, breakthrough game for photographers. It is time to show off your photography skills against world-class photographers. Discover this revolutionary game now and become #1!' %}
                         </p>

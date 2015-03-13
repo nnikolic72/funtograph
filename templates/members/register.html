@@ -10,10 +10,18 @@
     <div class="container">
         <div class="row" style="padding-bottom:50px;" >
             <div class="col-sm-3 text-center">
-                <img class="img-responsive"  src="{{ STATIC_URL }}img/funtograph-logo-sq-200.png">
+                <span class="hidden-xs">
+                    <img class="img-responsive"  src="{{ STATIC_URL }}img/funtograph-logo-sq-200.png">
+                </span>
+
             </div>
             <div class="col-sm-9 text-center">
                 <div class="well">
+                    <div class="visible-xs">
+                        <div align="center">
+                            <img class="img-responsive" style="margin: 20px;" src="{{ STATIC_URL }}img/funtograph-onlypic-sq-40.png">
+                        </div>
+                    </div>
                     <h1 class="text-success">{% trans 'Register with Funtograph' %}</h1>
                 </div>
             </div>
@@ -27,7 +35,7 @@
         {% else %}
 
             <form id="user_form" class="form-horizontal" method="post" action="{% url 'members:register' %}"
-                  enctype="multipart/form-data" >
+                  enctype="multipart/form-data" role="form">
 
                 {% csrf_token %}
 
