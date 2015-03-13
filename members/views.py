@@ -20,6 +20,7 @@ class MemberHomePageView(TemplateView):
     """
     Member home page
     """
+
     template_name = 'members/index.html'
 
     def get(self, request, *args, **kwargs):
@@ -56,20 +57,20 @@ class MemberRegisterView(TemplateView):
             user_form.clean()
             profile_form.clean()
 
-            user = User(username=user_form.cleaned_data[u'username'],
-                        email=user_form.cleaned_data[u'email']
+            new_user = User(username=user_form.cleaned_data[u'username'],
+                            email=user_form.cleaned_data[u'email']
             )
 
             # Now we hash the password with the set_password method.
             # Once hashed, we can update the user object.
-            user.set_password(user_form.cleaned_data[u'password1'])
-            user.save()
+            new_user.set_password(user_form.cleaned_data[u'password1'])
+            new_user.save()
 
             # Now sort out the UserProfile instance.
             # Since we need to set the user attribute ourselves, we set commit=False.
             # This delays saving the model until we're ready to avoid integrity problems.
             profile = profile_form.save(commit=False)
-            profile.user = user
+            profile.user = new_user
 
             # Did the user provide a profile picture?
             # If so, we need to get it from the input form and put it in the UserProfile model.
@@ -79,14 +80,13 @@ class MemberRegisterView(TemplateView):
             # Now we save the UserProfile model instance.
             profile.save()
 
-            #Login this new user so they can get Welcome page
-            try:
-                user = authenticate(username=user.username, password=user.password)
-            except:
-                raise
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
+            # Login this new user so they can get Welcome page
+
+            new_user_login = authenticate(username=new_user.username, password=new_user.password)
+
+            if new_user_login is not None:
+                if new_user_login.is_active:
+                    login(request, new_user)
                     # Redirect to a success page.
                     return HttpResponseRedirect(reverse('members:welcome'))
                 else:
@@ -94,12 +94,14 @@ class MemberRegisterView(TemplateView):
                     return HttpResponseRedirect(reverse('members:disabled'))
             else:
                 # Return an 'invalid login' error message.
+                login_form = LoginForm()
                 return render(request,
                               'members/login.html',
                               dict(
                                   # Todo: insert Login form here
-                                  errors_login=_('Username or password invalid. Please try again.'),
-                                  )
+                                  login_form=login_form,
+                                  errors_login=_('You can now login.'),
+                              )
                 )
 
 
@@ -120,8 +122,6 @@ class MemberRegisterView(TemplateView):
                               errors_profile=profile_form.errors,
                           )
             )
-
-
 
 
     def get(self, request, *args, **kwargs):
@@ -155,7 +155,7 @@ class MemberLoginView(TemplateView):
         if request.user.is_authenticated():
             return HttpResponseRedirect(reverse('members:dashboard'))
         else:
-            #return HttpResponseRedirect(reverse('members:login'))
+            # return HttpResponseRedirect(reverse('members:login'))
             login_form = LoginForm()
 
             return render(request,
@@ -163,7 +163,7 @@ class MemberLoginView(TemplateView):
                           dict(
                               login_form=login_form,
                               errors_login=None,
-                              )
+                          )
             )
 
     def post(self, request, *args, **kwargs):
@@ -190,7 +190,7 @@ class MemberLoginView(TemplateView):
                     return HttpResponseRedirect(reverse('members:dashboard'))
                 else:
                     # An inactive account was used - no logging in!
-                    #return HttpResponse("Your Funtograph account is disabled.")
+                    # return HttpResponse("Your Funtograph account is disabled.")
                     return HttpResponseRedirect(reverse('members:disabled'))
 
             else:
@@ -200,7 +200,7 @@ class MemberLoginView(TemplateView):
                               dict(
                                   login_form=login_form,
                                   errors_login=_('Username or password invalid. Please try again.'),
-                                  )
+                              )
                 )
         else:
             login_form = LoginForm()
@@ -209,10 +209,8 @@ class MemberLoginView(TemplateView):
                           dict(
                               login_form=login_form,
                               errors_login=_('Username or password invalid. Please try again.'),
-                              )
+                          )
             )
-
-
 
 
 class MemberWelcomeView(TemplateView):
@@ -240,16 +238,17 @@ class MemberDashboardView(TemplateView):
                           )
             )
 
+
 class MemberDisabledView(TemplateView):
     template_name = 'members/disabled.html'
 
     def get(self, request, *args, **kwargs):
-
         return render(request,
                       self.template_name,
                       dict(
                       )
         )
+
 
 class MemberLogoutView(TemplateView):
     template_name = 'members/logout.html'
