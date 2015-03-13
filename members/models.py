@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+import cloudinary
+
 # Create your models here.
 from django.utils.datetime_safe import datetime
 
@@ -11,7 +13,7 @@ class Member(models.Model):
 
     # The additional attributes we wish to include.
     website = models.URLField(blank=True)
-    picture = models.ImageField(upload_to='profile_images', blank=True)
+    picture = cloudinary.models.CloudinaryField('image')
 
     created_at = models.DateTimeField(editable=False)
     updated_at = models.DateTimeField()

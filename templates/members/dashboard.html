@@ -1,9 +1,13 @@
 {% extends "memberbase.html" %}
 {% load i18n %}
+{% load cloudinary %}
+
 
 {% block content %}
     {{ block.super }}
     <div class="well">
+
+    {% cloudinary profile_picture crop="thumb" gravity="face" width=150 height=150 %}
             <span class="hidden-xs">
                 <h2>@{{ user }}&nbsp;{% trans 'Dashboard' %}</h2>
             </span>

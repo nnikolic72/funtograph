@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm, Form
 from django.utils.translation import ugettext as _
 
+import cloudinary
 from .models import Member
 
 __author__ = 'n.nikolic'
@@ -94,13 +95,7 @@ class LoginForm(Form):
 
 class MemberForm(ModelForm):
 
-    picture = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control',
-                                                             'placeholder': 'Your profile picture',
-                                                             }
-                                                      ),
-                               required=False
-
-    )
+    picture = cloudinary.forms.CloudinaryFileField(required=False)
     class Meta:
         model = Member
         fields = ('picture',)

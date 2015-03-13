@@ -4,6 +4,11 @@ from django.core.urlresolvers import reverse
 from django.views.generic.base import TemplateView
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.translation import ugettext as _
+from django.core.exceptions import ObjectDoesNotExist
+
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 from .forms import (
     UserForm,
@@ -11,7 +16,9 @@ from .forms import (
     LoginForm
 )
 
-from .models import User
+from .models import ( User,
+                      Member
+)
 
 from funtograph.settings.base import SHOW_TRANSLATIONS
 
@@ -76,6 +83,21 @@ class MemberRegisterView(TemplateView):
             # If so, we need to get it from the input form and put it in the UserProfile model.
             if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
+                profile_pic_data = cloudinary.uploader.upload(
+                    request.FILES['picture'],
+                    public_id='sample_id',
+                    crop='limit',
+                    width=2000,
+                    height=2000,
+                    eager=[
+                        {'width': 200, 'height': 200,
+                         'crop': 'thumb', 'gravity': 'face',
+                         'radius': 20},
+                        {'width': 100, 'height': 150,
+                         'crop': 'fit', 'format': 'png'}
+                    ],
+                    tags=['profile', 'avatar']
+                )
 
             # Now we save the UserProfile model instance.
             profile.save()
@@ -232,9 +254,16 @@ class MemberDashboardView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated():
+
+            try:
+                logged_member = Member.objects.get(user__username=request.user)
+                profile_picture = logged_member.picture
+            except ObjectDoesNotExist:
+                profile_picture = None
+
             return render(request,
                           self.template_name,
-                          dict(
+                          dict(profile_picture=profile_picture,
                           )
             )
 

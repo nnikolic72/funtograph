@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
+
 import os
 from unipath import Path
 from ConfigParser import ConfigParser
@@ -73,6 +75,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'bootstrap3',
+    'cloudinary',
 
     'lander',
     'members',

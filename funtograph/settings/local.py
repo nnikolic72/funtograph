@@ -37,6 +37,24 @@ DATABASES = {
 
 MEDIA_ROOT = PROJECT_DIR.child("media")
 STATIC_ROOT = PROJECT_DIR.child("static")
+MEDIA_URL = '/media/'
 STATICFILES_DIRS = (
     PROJECT_DIR.child("assets"),
 )
+
+#  Cloudinary settings
+# Cloudinary settings for Django. Add to your settings file.
+CLOUDINARY = {
+    'cloud_name': config.get('cloudinary', 'CLOUDINARY_CLOUD_NAME'),
+    'api_key': config.get('cloudinary', 'CLOUDINARY_API_KEY'),
+    'api_secret': config.get('cloudinary', 'CLOUDINARY_SECRET_KEY'),
+    }
+
+import cloudinary
+cloudinary.config(
+  cloud_name = CLOUDINARY['cloud_name'],
+  api_key = CLOUDINARY['api_key'],
+  api_secret = CLOUDINARY['api_secret']
+)
+
+
