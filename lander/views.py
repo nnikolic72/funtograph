@@ -26,7 +26,7 @@ class LanderHomePageView(TemplateView):
         """
 
         if request.user.is_authenticated():
-            return HttpResponseRedirect(reverse('members:index'))
+            return HttpResponseRedirect(reverse('members:dashboard'))
         else:
             self.template_name = 'lander/index.html'
 
