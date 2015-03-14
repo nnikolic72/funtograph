@@ -79,6 +79,8 @@ INSTALLED_APPS = (
 
     'lander',
     'members',
+    'characters',
+    'photos',
 )
 
 
