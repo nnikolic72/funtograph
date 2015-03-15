@@ -4,12 +4,14 @@ from django.utils.datetime_safe import datetime
 
 import cloudinary
 # Create your models here.
+from members.models import Member
 
 
 class Character(models.Model):
     def is_character_active(self):
         return self.character_active
 
+    member = models.ForeignKey(Member, null=True)
     name = models.CharField(max_length=50, blank=False, null=False)
     level = models.IntegerField(default=1, blank=False, null=False)
     current_xp = models.IntegerField(default=0, blank=False, null=False)

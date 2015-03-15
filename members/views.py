@@ -16,8 +16,14 @@ from .forms import (
     LoginForm
 )
 
-from .models import ( User,
-                      Member
+from .models import (User,
+                      Member)
+
+from characters.models import (
+    Photographer,
+    PhotoArtLover,
+    PhotoJudge,
+    PhotoTeamManager
 )
 
 from funtograph.settings.base import SHOW_TRANSLATIONS
@@ -85,23 +91,26 @@ class MemberRegisterView(TemplateView):
                 profile.picture = request.FILES['picture']
                 profile_pic_data = cloudinary.uploader.upload(
                     request.FILES['picture'],
-                    public_id='sample_id',
+                    public_id=new_user.username,
                     crop='limit',
-                    width=2000,
-                    height=2000,
-                    eager=[
-                        {'width': 200, 'height': 200,
-                         'crop': 'thumb', 'gravity': 'face',
-                         'radius': 20},
-                        {'width': 100, 'height': 150,
-                         'crop': 'fit', 'format': 'png'}
-                    ],
+                    width=200,
+                    height=200,
                     tags=['profile', 'avatar']
                 )
 
             # Now we save the UserProfile model instance.
             profile.save()
 
+            # create four in game role characters for each member
+            # initialize their properties
+            member_char_photographer = Photographer(name=new_user.username, member=profile)
+            member_char_photographer.save()
+            member_char_photo_art_lover = PhotoArtLover(name=new_user.username, member=profile)
+            member_char_photo_art_lover.save()
+            member_char_photo_judge = PhotoJudge(name=new_user.username, member=profile)
+            member_char_photo_judge.save()
+            member_char_team_manager = PhotoTeamManager(name=new_user.username, member=profile)
+            member_char_team_manager.save()
             # Login this new user so they can get Welcome page
 
             new_user_login = authenticate(username=new_user.username, password=new_user.password)
@@ -260,13 +269,37 @@ class MemberDashboardView(TemplateView):
 
             try:
                 logged_member = Member.objects.get(user__username=request.user)
-                profile_picture = logged_member.picture
+                profile_photo_url = logged_member.picture.build_url(width=100, height=100, crop='fill',
+                                                                    gravity='face')
+
+                try:
+                    photo_art_lover = PhotoArtLover.objects.get(id=logged_member.id)
+                except ObjectDoesNotExist:
+                    photo_art_lover = None
+                try:
+                    photographer = Photographer.objects.get(id=logged_member.id)
+                except ObjectDoesNotExist:
+                    photographer = None
+                try:
+                    photo_judge = PhotoJudge.objects.get(id=logged_member.id)
+                except ObjectDoesNotExist:
+                    photo_judge = None
+                try:
+                    photo_team_manager = PhotoTeamManager.objects.get(id=logged_member.id)
+                except ObjectDoesNotExist:
+                    photo_team_manager = None
+
             except ObjectDoesNotExist:
                 logged_member = None
 
             return render(request,
                           self.template_name,
                           dict(logged_member=logged_member,
+                               profile_photo_url=profile_photo_url,
+                               photo_art_lover=photo_art_lover,
+                               photographer=photographer,
+                               photo_judge=photo_judge,
+                               photo_team_manager=photo_team_manager
                                )
             )
 

@@ -10,8 +10,10 @@
 {% block content %}
     {{ block.super }}
     <div class="well">
-
-    {% cloudinary logged_member.profile_picture crop="thumb" gravity="face" width=150 height=150 %}
+        {% comment %}
+        {% cloudinary logged_member.picture crop="thumb" gravity="face" width=150 height=150 %}
+        {% endcomment %}
+        <img src="{{ profile_photo_url }}" class="img-responsive img-circle">
             <span class="hidden-xs">
                 <h2>@{{ user }}&nbsp;{% trans 'Dashboard' %}</h2>
             </span>
@@ -39,9 +41,58 @@
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="home">
             <div class="container">
-                <h3>{%  trans 'Overview' %}</h3>
-                <h4>{%  trans 'Levels' %}</h4>
-                <p></p>
+                <div class="well">@{{ user }} {%  trans 'Funtograph Levels and experience' %}</div>
+                <table class="table">
+                    <tr>
+                        <th></th>
+                        <th>{%  trans 'Level' %}</th>
+                        <th>{%  trans 'Current experience' %}</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {%  trans 'Photographer' %}
+                        </td>
+                        <td>
+                            {{ photographer.level }}
+                        </td>
+                        <td>
+                            {{ photographer.current_xp }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {%  trans 'Art lover' %}
+                        </td>
+                        <td>
+                            {{ photo_art_lover.level }}
+                        </td>
+                        <td>
+                            {{ photo_art_lover.current_xp }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {%  trans 'Photo judge' %}
+                        </td>
+                        <td>
+                            {{ photo_judge.level }}
+                        </td>
+                        <td>
+                            {{ photo_judge.current_xp }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {%  trans 'Photo team manager' %}
+                        </td>
+                        <td>
+                            {{ photo_team_manager.level }}
+                        </td>
+                        <td>
+                            {{ photo_team_manager.current_xp }}
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="profile">

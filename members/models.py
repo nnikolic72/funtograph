@@ -77,9 +77,9 @@ class Member(models.Model):
     website = models.URLField(blank=True, null=True,
                               verbose_name=_('Web Site URL'),
                               help_text=_('Your web site URL')
-    )
+                              )
     picture = cloudinary.models.CloudinaryField('image'
-    )
+                                                )
     instagram_handle = models.CharField(max_length=30, null=True, blank=True,
                                         verbose_name=_('Instagram user name'),
                                         help_text=_('Your Instagram account user name')
@@ -104,7 +104,10 @@ class Member(models.Model):
                                                 verbose_name=_('EyeEm handle verified'),
                                                 help_text=_('Checked if mods verified member''s EyeEm handle')
     )
-
+    flickr_handle_verified = models.BooleanField(default=False, null=False, blank=False,
+                                                verbose_name=_('Flickr handle verified'),
+                                                help_text=_('Checked if mods verified member''s Flickr handle')
+    )
     facebook_url_verified = models.BooleanField(default=False, null=False, blank=False,
                                                 verbose_name=_('Facebook URL verified'),
                                                 help_text=_('Checked if mods verified member''s Facebook URL')
