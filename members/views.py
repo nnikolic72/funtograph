@@ -120,10 +120,9 @@ class MemberRegisterView(TemplateView):
                 return render(request,
                               'members/login.html',
                               dict(
-                                  # Todo: insert Login form here
                                   login_form=login_form,
                                   errors_login=_('You can now login.'),
-                              )
+                                  )
                 )
 
 
@@ -135,6 +134,7 @@ class MemberRegisterView(TemplateView):
             # show registration form
             new_user_form = UserForm()
             new_profile_form = MemberForm()
+            member = Member()
             return render(request,
                           'members/register.html',
                           dict(
@@ -142,7 +142,7 @@ class MemberRegisterView(TemplateView):
                               profile_form=new_profile_form,
                               errors_user=user_form.errors,
                               errors_profile=profile_form.errors,
-                              member=Member()
+                              member=member
                           )
             )
 
@@ -165,6 +165,7 @@ class MemberRegisterView(TemplateView):
                           profile_form=profile_form,
                           errors_user=None,
                           errors_profile=None,
+                          member=Member()
                       )
         )
 
@@ -186,7 +187,7 @@ class MemberLoginView(TemplateView):
                           dict(
                               login_form=login_form,
                               errors_login=None,
-                          )
+                              )
             )
 
     def post(self, request, *args, **kwargs):
@@ -223,7 +224,7 @@ class MemberLoginView(TemplateView):
                               dict(
                                   login_form=login_form,
                                   errors_login=_('Username or password invalid. Please try again.'),
-                              )
+                                  )
                 )
         else:
             login_form = LoginForm()
@@ -232,7 +233,7 @@ class MemberLoginView(TemplateView):
                           dict(
                               login_form=login_form,
                               errors_login=_('Username or password invalid. Please try again.'),
-                          )
+                              )
             )
 
 
@@ -254,18 +255,19 @@ class MemberDashboardView(TemplateView):
     template_name = 'members/dashboard.html'
 
     def get(self, request, *args, **kwargs):
+        dbg = 1
         if request.user.is_authenticated():
 
             try:
                 logged_member = Member.objects.get(user__username=request.user)
                 profile_picture = logged_member.picture
             except ObjectDoesNotExist:
-                profile_picture = None
+                logged_member = None
 
             return render(request,
                           self.template_name,
-                          dict(profile_picture=profile_picture,
-                          )
+                          dict(logged_member=logged_member,
+                               )
             )
 
 

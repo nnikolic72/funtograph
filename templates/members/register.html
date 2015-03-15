@@ -9,24 +9,22 @@
 
 
     <div class="container">
-        <div class="row" style="padding-bottom:50px;" >
-            <div class="col-sm-3 text-center">
-                <span class="hidden-xs">
-                    <img class="img-responsive"  src="{{ STATIC_URL }}img/funtograph-logo-sq-200.png">
+        <div class="well" >
+            <div align="center">
+                <span class="hidden-xs center">
+                    <a href="{% url 'lander:index' %}">
+                        <img class="img-responsive"  src="{{ STATIC_URL }}img/funtograph-logo-sq-200.png">
+                    </a>
                 </span>
-
-            </div>
-            <div class="col-sm-9 text-center">
-                <div class="well">
-                    <div class="visible-xs">
-                        <div align="center">
-                            <img class="img-responsive" style="margin: 20px;" src="{{ STATIC_URL }}img/Funtograph-onlypic-sq-40.png">
-                        </div>
-                    </div>
-                    <h1 class="text-success">{% trans 'Register with Funtograph' %}</h1>
+                <div class="visible-xs">
+                    <a href="{% url 'lander:index' %}">
+                        <img class="img-responsive" style="margin: 20px;" src="{{ STATIC_URL }}img/Funtograph-onlypic-sq-40.png">
+                    </a>
                 </div>
+                <h1 class="text-success">{% trans 'Register with Funtograph' %}</h1>
             </div>
         </div>
+    </div>
     </div>
 
     <div class="container">
@@ -136,7 +134,7 @@
                     <label for="picture" class="col-sm-5 control-label">{% trans "Upload profile photo" %}:</label>
                     <div class="col-sm-7">
                         {{ profile_form.picture }}
-                        <p class="help-block">{% trans 'You can change your profile photo later. Best results if photo has your face.' %}.</p>
+                        <p class="help-block">{% trans 'You can change your profile photo later. Best results if photo includes your face.' %}</p>
                         {% if errors_user != None %}
                             {%  for key, error in errors_user.items %}
                                 {%  if key == 'picture' %}
@@ -150,10 +148,24 @@
                 <div class="form-group">
                     <label for="last_name" class="col-sm-5 control-label">{% get_verbose_field_name member "instagram_handle" %}:</label>
                     <div class="col-sm-7">
-                        {{ user_form.instagram_handle }}
+                        {{ profile_form.instagram_handle }}
                         {% if errors_user != None %}
                             {%  for key, error in errors_user.items %}
-                                {%  if key == 'last_name' %}
+                                {%  if key == 'instagram_handle' %}
+                                    <h4 class="text-danger text-uppercase">{{ error }}</h4>
+                                {%  endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name" class="col-sm-5 control-label">{% get_verbose_field_name member "eyeem_handle" %}:</label>
+                    <div class="col-sm-7">
+                        {{ profile_form.eyeem_handle }}
+                        {% if errors_user != None %}
+                            {%  for key, error in errors_user.items %}
+                                {%  if key == 'eyeem_handle' %}
                                     <h4 class="text-danger text-uppercase">{{ error }}</h4>
                                 {%  endif %}
                             {% endfor %}

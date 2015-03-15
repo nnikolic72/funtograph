@@ -1,13 +1,17 @@
 {% extends "memberbase.html" %}
 {% load i18n %}
 {% load cloudinary %}
-{% load verbose_names %}
+{% load members_verbose_names %}
+
+{%  block title %}
+    @{{ user }}&nbsp;{% trans 'Dashboard' %}
+{% endblock title %}
 
 {% block content %}
     {{ block.super }}
     <div class="well">
 
-    {% cloudinary profile_picture crop="thumb" gravity="face" width=150 height=150 %}
+    {% cloudinary logged_member.profile_picture crop="thumb" gravity="face" width=150 height=150 %}
             <span class="hidden-xs">
                 <h2>@{{ user }}&nbsp;{% trans 'Dashboard' %}</h2>
             </span>
@@ -35,7 +39,9 @@
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="home">
             <div class="container">
-                <h2>{%  trans 'Overview' %}</h2>
+                <h3>{%  trans 'Overview' %}</h3>
+                <h4>{%  trans 'Levels' %}</h4>
+                <p></p>
             </div>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="profile">
