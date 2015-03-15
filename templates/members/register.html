@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load bootstrap3 %}
+{% load members_verbose_names %}
 
 {% block bootstrap3_content %}
     {{ block.super }}
@@ -129,14 +130,13 @@
                             {% endfor %}
                         {% endif %}
                     </div>
-
                 </div>
 
                 <div class="form-group">
-                    <label for="picture" class="col-sm-5 control-label">{% trans 'Upload your profile photo' %}:</label>
+                    <label for="picture" class="col-sm-5 control-label">{% trans "Upload profile photo" %}:</label>
                     <div class="col-sm-7">
                         {{ profile_form.picture }}
-                        <p class="help-block">{% trans 'You can change your profile photo later' %}.</p>
+                        <p class="help-block">{% trans 'You can change your profile photo later. Best results if photo has your face.' %}.</p>
                         {% if errors_user != None %}
                             {%  for key, error in errors_user.items %}
                                 {%  if key == 'picture' %}
@@ -147,6 +147,19 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="last_name" class="col-sm-5 control-label">{% get_verbose_field_name member "instagram_handle" %}:</label>
+                    <div class="col-sm-7">
+                        {{ user_form.instagram_handle }}
+                        {% if errors_user != None %}
+                            {%  for key, error in errors_user.items %}
+                                {%  if key == 'last_name' %}
+                                    <h4 class="text-danger text-uppercase">{{ error }}</h4>
+                                {%  endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
 
                 <!-- Provide a button to click to submit the form. -->
                 <div class="col-sm-12 text-right">

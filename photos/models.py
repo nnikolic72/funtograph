@@ -4,15 +4,24 @@ from django.utils.datetime_safe import datetime
 
 from  cloudinary.models import CloudinaryField
 
-from characters.models import Character
+from characters.models import (Character,
+                               Photographer)
 
 
 # Create your models here.
 
-class Photo(models.Model):
 
+
+
+
+class Photo(models.Model):
+    """
+    Model for storing members photos, and their metadata
+    """
     title = models.CharField(max_length=100)
-    owner = models.ManyToManyField(Character, through=PhotoToCharacter)
+    author = models.ManyToManyField(Photographer, through='PhotoToPhotographer',
+                                    through_fields=('photo', 'photographer')
+    )
 
     photo = CloudinaryField('image')
 
@@ -47,11 +56,10 @@ class Photo(models.Model):
         verbose_name_plural = _('Members')
 
 
-class PhotoToCharacter(models.Model):
+class PhotoToPhotographer(models.Model):
 
     photo = models.ForeignKey(Photo)
-    Character = models.ForeignKey(Character)
+    photographer = models.ForeignKey(Photographer)
 
     is_author = models.BooleanField(default=True, null=False, blank=False)
     is_manager = models.BooleanField(default=False, null=False, blank=False)
-

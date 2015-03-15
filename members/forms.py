@@ -96,6 +96,13 @@ class LoginForm(Form):
 class MemberForm(ModelForm):
 
     picture = cloudinary.forms.CloudinaryFileField(required=False)
+
+    instagram_handle = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                     'placeholder': unicode(Member._meta.get_field('name').help_text),
+                                                                     }),
+                                       required=False,
+                                       )
+
     class Meta:
         model = Member
         fields = ('picture',)

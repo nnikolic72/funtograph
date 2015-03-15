@@ -132,7 +132,7 @@ class MemberRegisterView(TemplateView):
         # Print problems to the terminal.
         # They'll also be shown to the user.
         else:
-            # redirect to registration form
+            # show registration form
             new_user_form = UserForm()
             new_profile_form = MemberForm()
             return render(request,
@@ -142,6 +142,7 @@ class MemberRegisterView(TemplateView):
                               profile_form=new_profile_form,
                               errors_user=user_form.errors,
                               errors_profile=profile_form.errors,
+                              member=Member()
                           )
             )
 

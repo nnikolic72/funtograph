@@ -42,7 +42,7 @@ class PhotoArtLover(Character):
 
     character_type = _('Photo Art Lover')
 
-    class Meta(Character):
+    class Meta(Character.Meta):
         verbose_name = _('Photo Art Lover')
         verbose_name_plural = _('Photo Art Lovers')
 
@@ -55,7 +55,7 @@ class PhotoJudge(Character):
 
     character_type = _('Photo Judge')
 
-    class Meta(Character):
+    class Meta(Character.Meta):
         verbose_name = _('Photo Judge')
         verbose_name_plural = _('Photo Judges')
 
@@ -68,7 +68,7 @@ class PhotoTeamManager(Character):
 
     character_type = _('Photo Team Manager')
 
-    class Meta(Character):
+    class Meta(Character.Meta):
         verbose_name = _('Photo Team Manager')
         verbose_name_plural = _('Photo Team Managers')
 
@@ -80,7 +80,7 @@ class Photographer(Character):
 
     character_type = _('Photographer')
 
-    class Meta(Character):
+    class Meta(Character.Meta):
         verbose_name = _('Photographer')
         verbose_name_plural = _('Photographers')
 
