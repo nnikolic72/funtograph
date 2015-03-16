@@ -81,7 +81,7 @@ class LoginForm(Form):
     Login form - for logging in to Funtograph
     """
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control',
-                                                                 'placeholder': '8 characters minimum',
+                                                                 'placeholder': '',
                                                                  }),
                                required=True,
                                )

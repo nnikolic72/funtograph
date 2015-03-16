@@ -24,6 +24,14 @@ class Character(models.Model):
 
     #loot = many to many field to Loot class, with through class LootAmount
 
+    def __unicode__(self):
+        """
+
+        :return: Name of the character
+        :rtype: String
+        """
+        return self.name
+
     def save(self, *args, **kwargs):
         """ On save, update timestamps """
         if not self.id:
@@ -42,7 +50,7 @@ class PhotoArtLover(Character):
     Role: PhotoArtLover
     """
 
-    character_type = _('Photo Art Lover')
+    character_type = models.CharField(max_length=50, default=_('Photo Art Lover'))
 
     class Meta(Character.Meta):
         verbose_name = _('Photo Art Lover')
@@ -55,7 +63,7 @@ class PhotoJudge(Character):
     Role: PhotoArtLover
     """
 
-    character_type = _('Photo Judge')
+    character_type = models.CharField(max_length=50, default=_('Photo Judge'))
 
     class Meta(Character.Meta):
         verbose_name = _('Photo Judge')
@@ -68,7 +76,7 @@ class PhotoTeamManager(Character):
     Role: PhotoArtLover
     """
 
-    character_type = _('Photo Team Manager')
+    character_type = models.CharField(max_length=50, default=_('Photo Team Manager'))
 
     class Meta(Character.Meta):
         verbose_name = _('Photo Team Manager')
@@ -80,7 +88,7 @@ class Photographer(Character):
     Role: PhotoArtLover
     """
 
-    character_type = _('Photographer')
+    character_type = models.CharField(max_length=50, default=_('Photographer'))
 
     class Meta(Character.Meta):
         verbose_name = _('Photographer')

@@ -1,0 +1,18 @@
+{% extends "memberbase.html" %}
+{% load i18n %}
+{% load cloudinary %}
+
+{% block content %}
+    {{ block.super }}
+    <div class="container">
+        {%  if photographer_photos %}
+            {% for photo in photographer_photos %}
+
+                {% cloudinary photo.photo width=150 height=150 %}
+
+            {%  endfor %}
+        {%  else %}
+            <p>No photos found for photographer {{ photographer.name }}</p>
+        {%  endif %}
+    </div>
+{% endblock content %}

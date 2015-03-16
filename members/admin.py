@@ -8,6 +8,8 @@ class MemberAdmin(admin.ModelAdmin):
                     'picture',
                     'created_at',
                     'updated_at',
+                    'pk',
+                    'id',
     )
 
     readonly_fields = ('created_at', 'updated_at')

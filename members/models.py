@@ -78,7 +78,7 @@ class Member(models.Model):
                               verbose_name=_('Web Site URL'),
                               help_text=_('Your web site URL')
                               )
-    picture = cloudinary.models.CloudinaryField('image'
+    picture = cloudinary.models.CloudinaryField('image', null=True
                                                 )
     instagram_handle = models.CharField(max_length=30, null=True, blank=True,
                                         verbose_name=_('Instagram user name'),

@@ -10,26 +10,114 @@ from characters.models import (Character,
 
 # Create your models here.
 
+class PhotoCategory(models.Model):
+    """
+    Categories that can be assigned to a photo
+    """
+
+    def __unicode__(self):
+        '''return text for this class'''
+        return self.name
+
+    name = models.CharField(max_length=200, null=False, blank=False, default='',
+                            verbose_name=_('Photo category name')
+    )
+    description = models.CharField(max_length=200, null=True, blank=True, default='',
+                                   verbose_name=_('Photo category description')
+    )
+    slug = models.SlugField(max_length=50, null=True, blank=True, default='',
+                            verbose_name=_('Photo category slug')
+    )
+
+    created_at = models.DateTimeField(editable=False)
+    updated_at = models.DateTimeField()
+
+    def save(self, *args, **kwargs):
+        """ On save, update timestamps """
+        if not self.id:
+            self.created_at = datetime.today()
+        self.updated_at = datetime.today()
+        return super(PhotoCategory, self).save(*args, **kwargs)
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = _('Photo Category')
+        verbose_name_plural = _('Photo Categories')
 
 
+class PhotoAttribute(models.Model):
+    """Provide attributes that can be assigned to a photo"""
+
+    def __unicode__(self):
+        """return text for this class"""
+        return self.name
+
+    name = models.CharField(max_length=50, null=False, blank=False, default='',
+                            verbose_name=_('Photo attribute name')
+    )
+    description = models.CharField(max_length=200, null=True, blank=True, default='',
+                                   verbose_name=_('Photo attribute description')
+    )
+    slug = models.SlugField(max_length=50, null=True, blank=True, default='',
+                            verbose_name=_('Photo attribute slug')
+    )
+
+    created_at = models.DateTimeField(editable=False)
+    updated_at = models.DateTimeField()
+
+    def save(self, *args, **kwargs):
+        """ On save, update timestamps """
+        if not self.id:
+            self.created_at = datetime.today()
+        self.updated_at = datetime.today()
+        return super(PhotoAttribute, self).save(*args, **kwargs)
+
+    class Meta:
+        ordering = ('name', )
+        verbose_name = _('Photo Attribute')
+        verbose_name_plural = _('Photo Attributes')
 
 
 class Photo(models.Model):
     """
     Model for storing members photos, and their metadata
     """
-    title = models.CharField(max_length=100)
-    author = models.ManyToManyField(Photographer, through='PhotoToPhotographer',
+    title = models.CharField(max_length=100,
+                             verbose_name=_('Photo title'))
+    owner = models.ManyToManyField(Photographer, through='PhotoToPhotographer',
                                     through_fields=('photo', 'photographer')
     )
 
-    photo = CloudinaryField('image')
+    photo = CloudinaryField('image', null=False)
 
-    avg_photo_rating = models.DecimalField(max_digits=3,decimal_places=2, default=0,
-                                           null=True, blank=True
+    photo_wear = models.IntegerField(null=False, blank=False,
+                                      default=0,
+                                      verbose_name=_('Photo wear')
     )
 
+    photo_price = models.IntegerField(null=False, blank=False,
+                                      default=0,
+                                      verbose_name=_('Photo price')
+    )
 
+    avg_photo_rating = models.DecimalField(max_digits=3,decimal_places=2, default=0,
+                                           null=True, blank=True,
+                                           verbose_name=_('Average photo rating')
+    )
+
+    categories = models.ManyToManyField(PhotoCategory, null=True, blank=True,
+                                        verbose_name=_('Photo Categories')
+    )
+    attributes = models.ManyToManyField(PhotoAttribute, null=True, blank=True,
+                                        verbose_name=_('Photo Attributes')
+    )
+
+    for_sale = models.BooleanField(null=False, blank=False, default=False,
+                                   verbose_name=_('Photo is for sale')
+    )
+    active = models.BooleanField(null=False, blank=False, default=True,
+                                 verbose_name=_('Photo is active')
+    )
 
     def __unicode__(self):
         try:
@@ -48,12 +136,12 @@ class Photo(models.Model):
         if not self.id:
             self.created_at = datetime.today()
         self.updated_at = datetime.today()
-        return super(Character, self).save(*args, **kwargs)
+        return super(Photo, self).save(*args, **kwargs)
 
     class Meta:
-        ordering = ['user__username']
-        verbose_name = _('Member')
-        verbose_name_plural = _('Members')
+        ordering = ['title']
+        verbose_name = _('Photo')
+        verbose_name_plural = _('Photos')
 
 
 class PhotoToPhotographer(models.Model):

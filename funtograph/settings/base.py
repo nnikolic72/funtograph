@@ -81,6 +81,7 @@ INSTALLED_APPS = (
     'members',
     'characters',
     'photos',
+    'interactions',
 )
 
 

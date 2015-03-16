@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
+from django.template import RequestContext
 from django.views.generic.base import TemplateView
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.translation import ugettext as _
@@ -25,6 +26,8 @@ from characters.models import (
     PhotoJudge,
     PhotoTeamManager
 )
+
+from photos.models import Photo
 
 from funtograph.settings.base import SHOW_TRANSLATIONS
 
@@ -70,7 +73,7 @@ class MemberRegisterView(TemplateView):
             user_form.clean()
             profile_form.clean()
 
-            new_user = User(username=user_form.cleaned_data[u'username'],
+            new_user = User(username=user_form.cleaned_data[u'username'].lower(),
                             email=user_form.cleaned_data[u'email']
             )
 
@@ -155,7 +158,6 @@ class MemberRegisterView(TemplateView):
                           )
             )
 
-
     def get(self, request, *args, **kwargs):
         """
         Serve GET request - swoh registration form
@@ -196,8 +198,10 @@ class MemberLoginView(TemplateView):
                           dict(
                               login_form=login_form,
                               errors_login=None,
-                              )
-            )
+
+                              ),
+                          RequestContext(request)
+                          )
 
     def post(self, request, *args, **kwargs):
         login_form = LoginForm(data=request.POST)
@@ -205,7 +209,7 @@ class MemberLoginView(TemplateView):
             # Use Django's machinery to attempt to see if the username/password
             # combination is valid - a User object is returned if it is.
             login_form.clean()
-            username = login_form.cleaned_data[u'username']
+            username = login_form.cleaned_data[u'username'].lower()
             password = login_form.cleaned_data[u'password']
             user = authenticate(username=username,
                                 password=password
@@ -269,25 +273,30 @@ class MemberDashboardView(TemplateView):
 
             try:
                 logged_member = Member.objects.get(user__username=request.user)
-                profile_photo_url = logged_member.picture.build_url(width=100, height=100, crop='fill',
-                                                                    gravity='face')
+                # Todo: Make generic profile photo and assign to profile_photo_url
+                profile_photo_url = None
+                if logged_member.picture:
+                    profile_photo_url = logged_member.picture.build_url(width=100, height=100, crop='fill',
+                                                                        gravity='face')
 
                 try:
-                    photo_art_lover = PhotoArtLover.objects.get(id=logged_member.id)
+                    photo_art_lover = PhotoArtLover.objects.get(member=logged_member)
                 except ObjectDoesNotExist:
                     photo_art_lover = None
                 try:
-                    photographer = Photographer.objects.get(id=logged_member.id)
+                    photographer = Photographer.objects.get(member=logged_member)
                 except ObjectDoesNotExist:
                     photographer = None
                 try:
-                    photo_judge = PhotoJudge.objects.get(id=logged_member.id)
+                    photo_judge = PhotoJudge.objects.get(member=logged_member)
                 except ObjectDoesNotExist:
                     photo_judge = None
                 try:
-                    photo_team_manager = PhotoTeamManager.objects.get(id=logged_member.id)
+                    photo_team_manager = PhotoTeamManager.objects.get(member=logged_member)
                 except ObjectDoesNotExist:
                     photo_team_manager = None
+
+                photographer_photos_cnt = Photo.objects.filter(owner=photographer).count()
 
             except ObjectDoesNotExist:
                 logged_member = None
@@ -299,7 +308,8 @@ class MemberDashboardView(TemplateView):
                                photo_art_lover=photo_art_lover,
                                photographer=photographer,
                                photo_judge=photo_judge,
-                               photo_team_manager=photo_team_manager
+                               photo_team_manager=photo_team_manager,
+                               photographer_photos_cnt=photographer_photos_cnt
                                )
             )
 

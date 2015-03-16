@@ -13,7 +13,11 @@
         {% comment %}
         {% cloudinary logged_member.picture crop="thumb" gravity="face" width=150 height=150 %}
         {% endcomment %}
+        {% if profile_photo_url %}
         <img src="{{ profile_photo_url }}" class="img-responsive img-circle">
+        {% else %}
+            <small>No profile photo available. You can upload one here.</small>
+        {% endif %}
             <span class="hidden-xs">
                 <h2>@{{ user }}&nbsp;{% trans 'Dashboard' %}</h2>
             </span>
@@ -31,7 +35,6 @@
             <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">{%  trans 'Overview' %}</a></li>
             <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">{%  trans 'Portfolio' %}</a></li>
             <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">{%  trans 'Stats' %}</a></li>
-            <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">{%  trans 'Messages' %}<span class="badge">4</span></a></li>
         </ul>
     </div>
 
@@ -98,6 +101,12 @@
         <div role="tabpanel" class="tab-pane fade" id="profile">
             <div class="container">
                 <h2>{%  trans 'Portfolio' %}</h2>
+                {%  if photographer_photos_cnt > 0%}
+                {% blocktrans %}Number of photos: {{ photographer_photos_cnt }}{% endblocktrans %}
+                {% else %}
+                    <p>{% trans 'There are no your photos on Funtograph.' %}</p>
+                {% endif %}
+                <a class="btn btn-default" href="{% url 'photos:upload' %}">{% trans 'Upload photo' %}</a>
             </div>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="messages">
@@ -105,12 +114,6 @@
                 <h2>{%  trans 'Stats' %}</h2>
             </div>
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="settings">
-            <div class="container">
-                <h2>{%  trans 'Messages' %}</h2>
-            </div>
-        </div>
-
     </div>
 
 {% endblock content %}
