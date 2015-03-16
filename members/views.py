@@ -200,7 +200,7 @@ class MemberLoginView(TemplateView):
                               errors_login=None,
 
                               ),
-                          RequestContext(request)
+
                           )
 
     def post(self, request, *args, **kwargs):
