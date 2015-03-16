@@ -269,6 +269,14 @@ class MemberDashboardView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         dbg = 1
+        logged_member = None
+        profile_photo_url = None
+        photo_art_lover = None
+        photographer = None
+        photo_judge = None
+        photo_team_manager = None
+        photographer_photos_cnt = None
+
         if request.user.is_authenticated():
 
             try:
