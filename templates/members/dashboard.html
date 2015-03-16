@@ -14,11 +14,11 @@
         {% cloudinary logged_member.picture crop="thumb" gravity="face" width=150 height=150 %}
         {% endcomment %}
         {% if profile_photo_url %}
-        <img src="{{ profile_photo_url }}" class="img-responsive img-circle">
+            <img src="{{ profile_photo_url }}" class="img-responsive img-circle">
         {% else %}
             <small>No profile photo available. You can upload one here.</small>
         {% endif %}
-            <span class="hidden-xs">
+        <span class="hidden-xs">
                 <h2>@{{ user }}&nbsp;{% trans 'Dashboard' %}</h2>
             </span>
             <span class="visible-xs">
@@ -43,7 +43,7 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="home">
-            <div class="container">
+
                 <div class="well">@{{ user }} {%  trans 'Funtograph Levels and experience' %}</div>
                 <table class="table">
                     <tr>
@@ -96,17 +96,22 @@
                         </td>
                     </tr>
                 </table>
-            </div>
+
         </div>
         <div role="tabpanel" class="tab-pane fade" id="profile">
             <div class="container">
                 <h2>{%  trans 'Portfolio' %}</h2>
                 {%  if photographer_photos_cnt > 0%}
-                {% blocktrans %}Number of photos: {{ photographer_photos_cnt }}{% endblocktrans %}
+                    {% blocktrans %}Number of photos: {{ photographer_photos_cnt }}{% endblocktrans %}
+                    <div class="content-block">
+                        <a class="btn btn-default" href="{% url 'photos:photographer' photographer.name  %}">{% trans 'View my photos' %}</a>
+                    </div>
                 {% else %}
                     <p>{% trans 'There are no your photos on Funtograph.' %}</p>
                 {% endif %}
-                <a class="btn btn-default" href="{% url 'photos:upload' %}">{% trans 'Upload photo' %}</a>
+                <div class="content-block">
+                    <a class="btn btn-default" href="{% url 'photos:upload' %}">{% trans 'Upload photo' %}</a>
+                </div>
             </div>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="messages">
