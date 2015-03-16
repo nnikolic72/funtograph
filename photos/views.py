@@ -40,7 +40,7 @@ class PhotosUploadView(TemplateView):
                               )
             )
         else:
-            return HttpResponseRedirect(reverse('lander:index'))
+            return HttpResponseRedirect(reverse('members:register'))
 
     def post(self, request, *args, **kwargs):
         """

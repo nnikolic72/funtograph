@@ -53,7 +53,11 @@
                     </tr>
                     <tr>
                         <td>
-                            {%  trans 'Photographer' %}
+                            <a href="{% url 'characters:photographer' p_photographer_name=photographer.name %}"
+                                    class="btn btn-success">
+                                {%  trans 'Photographer' %} {{ photographer.name }}
+                            </a>
+                            <a href="" class="btn btn-default">Change name</a>
                         </td>
                         <td>
                             {{ photographer.level }}

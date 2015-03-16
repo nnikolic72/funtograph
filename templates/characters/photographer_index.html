@@ -1,0 +1,32 @@
+{% extends "memberbase.html" %}
+{% load i18n %}
+{% load cloudinary %}
+
+{% block content %}
+    {{ block.super }}
+
+    <div class="well">
+        <h2>{%  trans 'Photographers list' %}</h2>
+    </div>
+    <div class="container">
+        {%  if photographers %}
+            <div class="row">
+                <div class="col-xs-3"><span class="bg-success">{% trans 'Photographer name' %}</span></div>
+                <div class="col-xs-2"><span class="bg-success">{% trans 'Level' %}</span></div>
+                <div class="col-xs-2"><span class="bg-success">{% trans 'Current XP' %}</span></div>
+                <div class="col-xs-5"></div>
+            </div>
+            {% for photographer in photographers %}
+                <div class="row">
+                    <div class="col-xs-3"><a href="{% url 'characters:photographer' p_photographer_name=photographer.name %}">{{ photographer.name }}</a></div>
+                    <div class="col-xs-2">{{ photographer.level }}</div>
+                    <div class="col-xs-2">{{ photographer.current_xp }}</div>
+                    <div class="col-xs-5"></div>
+                </div>
+            {%  endfor %}
+        {% else %}
+            <p>{% trans 'There are no photographers on Funtograph.' %}</p>
+        {% endif %}
+
+    </div>
+{% endblock content %}

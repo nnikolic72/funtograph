@@ -90,16 +90,16 @@ class MemberRegisterView(TemplateView):
 
             # Did the user provide a profile picture?
             # If so, we need to get it from the input form and put it in the UserProfile model.
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
-                profile_pic_data = cloudinary.uploader.upload(
-                    request.FILES['picture'],
-                    public_id=new_user.username,
-                    crop='limit',
-                    width=200,
-                    height=200,
-                    tags=['profile', 'avatar']
-                )
+            #if 'picture' in request.FILES:
+            #    profile.picture = request.FILES['picture']
+            #    profile_pic_data = cloudinary.uploader.upload(
+            #        request.FILES['picture'],
+            #        public_id=new_user.username,
+            #        crop='limit',
+            #        width=200,
+            #        height=200,
+            #        tags=['profile', 'avatar']
+            #    )
 
             # Now we save the UserProfile model instance.
             profile.save()

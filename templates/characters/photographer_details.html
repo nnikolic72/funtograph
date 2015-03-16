@@ -1,0 +1,37 @@
+{% extends "memberbase.html" %}
+{% load i18n %}
+{% load cloudinary %}
+
+{% block content %}
+    {{ block.super }}
+
+    <div class="well">
+        <h2>{% trans 'Photographer: ' %}{{ photographer.name }}</h2>
+        <p>{% trans 'Level: ' %}{{ photographer.level }}</p>
+        <p>{% trans 'Current XP: ' %}{{ photographer.current_xp }}</p>
+    </div>
+
+    <div class="content">
+        <h3 class="text-center">{% trans 'Photo Portfolio' %}</h3>
+        {% if photographers_photos %}
+            {% for photo in  photographers_photos%}
+                <div class="row text-center">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            {% cloudinary photo.photo transformation='media_big_thumb'  %}
+                        </div>
+                        <div class="panel-body">
+                            <p>{% trans 'Title:' %}{{ photo.title }}</p>
+                            <p>{% trans 'Likes:' %}{{ photo.likes }}</p>
+                            <p>{% trans 'Comments:' %}{{ photo.comments }}</p>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>{% trans 'No uploaded photos.' %}</p>
+        {% endif %}
+    </div>
+
+{% endblock %}
