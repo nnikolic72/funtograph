@@ -1,0 +1,28 @@
+{% extends "memberbase.html" %}
+{% load i18n %}
+{% load cloudinary %}
+
+{% block content %}
+    {{ block.super }}
+    <div class="container">
+        <div class="well">
+            Upload photo to Funtograph.
+        </div>
+        <form id="photo_upload_form" class="form-horizontal" method="POST" action="{% url 'photos:upload' %}"
+              enctype="multipart/form-data" role="form">
+            {% csrf_token %}
+            {%  if form_errors %}
+                <div class="well text-danger">
+                <p>{% trans 'Please correct the following errors and try to upload again:' %}</p>
+                {{ form_errors }}
+                </div>
+            {%  endif %}
+            <table class="table">
+            {{ upload_form }}
+            </table>
+            <input type="submit" class="btn btn-default" name="submit" value="{% trans 'Upload' %}" />
+
+        </form>
+    </div>
+
+{% endblock content %}

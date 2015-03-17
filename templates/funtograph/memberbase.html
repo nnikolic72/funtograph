@@ -1,0 +1,100 @@
+{% extends 'bootstrap.html' %}
+{% load i18n %}
+{% load bootstrap3 %}
+{% load cloudinary %}
+
+{% block bootstrap3_title %}
+    {%  block title %}
+    {% endblock title %}
+{% endblock %}
+
+{% block bootstrap3_extra_head %}
+    {{ block.super }}
+    {%  block extra_head %}
+        <link rel="stylesheet" href="{{STATIC_URL}}css/funtograph-common.css">
+    {% endblock extra_head %}
+{% endblock %}
+
+{% block bootstrap3_extra_script %}
+    {{ block.super }}
+    {%  block extra_script %}
+    {% endblock extra_script %}
+{% endblock %}
+
+
+
+{% block bootstrap3_content %}
+    {%  block navbar %}
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{% url 'lander:index' %}"><img src="{{ STATIC_URL }}img/Funtograph-onlypic-sq-20.png"></a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{% url 'members:dashboard' %}">{% trans 'Dashboard' %}</a></li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{% trans 'Characters' %} <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{% url 'characters:index' %}">{% trans 'Photographers' %}</a></li>
+                                <li><a href="#">{% trans 'Photo Teams' %}</a></li>
+                                <li><a href="#">{% trans 'Photo Judges' %}</a></li>
+                                <li><a href="#">{% trans 'Photo Art Lovers' %}</a></li>
+                            </ul>
+                        </li>
+                        <li class="divider"></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{% trans 'Contests' %} <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">{% trans 'Duels' %}</a></li>
+                                <li><a href="#">{% trans 'Tournaments' %}</a></li>
+                                <li><a href="#">{% trans 'Leagues' %}</a></li>
+                            </ul>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="#">{% trans 'Collectives' %}</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{% url 'members:logout' %}">Logout</a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+    {%  endblock navbar %}
+    {{ block.super }}
+
+
+
+    <div class="container">
+        {% block content %}
+
+        {%  endblock content %}
+    </div> <!--main container-->
+
+    {% block footer %}
+        <div class="container">
+            <hr>
+            <footer>
+
+                <div class="container">
+                    <!-- Example row of columns -->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p class="label label-default">&copy; Funtograph 2015</p>
+                        </div>
+
+                    </div>
+                </div>
+            </footer>
+        </div>
+    {%  endblock footer %}
+
+{% endblock bootstrap3_content %}

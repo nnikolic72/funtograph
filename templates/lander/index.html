@@ -10,51 +10,98 @@
     <div class="jumbotron">
         <div class="container">
             <div class="col-xs-12 text-right">
-            {% if SHOW_TRANSLATIONS == True %}
-                {% get_current_language as LANGUAGE_CODE %}
-                <span class="label label-default">Current Language: {{ LANGUAGE_CODE }}</span>
-                <form action="/i18n/setlang/" method="post">
-                    {% csrf_token %}
+                {% if SHOW_TRANSLATIONS == True %}
+                    {% get_current_language as LANGUAGE_CODE %}
+                    <span class="label label-default">Current Language: {{ LANGUAGE_CODE }}</span>
+                    <form action="/i18n/setlang/" method="post">
+                        {% csrf_token %}
                                     <span>
                                         <input name="next" type="hidden" value="{{ request.get_full_path }}" />
                                     </span>
-                    <div class="form-group" style="margin-top: 5px;">
-                        <!--<select name="language" class="btn btn-default btn-xs">-->
-                        {% for lang in LANGUAGES %}
-                            <!--<option value="{{ lang.0 }}">{{ lang.1 }}</option>-->
-                            <input type="hidden" name="language" value="{{lang.0}}"/>
-                            <input id="lang_{{lang.0}}" type = "image" src="{{ STATIC_URL }}img/{{ lang.0 }}.png" alt="{{ lang.1 }}"/>
-                        {% endfor %}
-                        <!--</select>-->
-                        <!--<input type="submit" class="btn btn-success btn-xs" value="Go" />-->
-                    </div>
-                </form>
-            {% endif %}
+                        <div class="form-group" style="margin-top: 5px;">
+                            <!--<select name="language" class="btn btn-default btn-xs">-->
+                            {% for lang in LANGUAGES %}
+                                <!--<option value="{{ lang.0 }}">{{ lang.1 }}</option>-->
+                                <input type="hidden" name="language" value="{{lang.0}}"/>
+                                <input id="lang_{{lang.0}}" type = "image" src="{{ STATIC_URL }}img/{{ lang.0 }}.png" alt="{{ lang.1 }}"/>
+                            {% endfor %}
+                            <!--</select>-->
+                            <!--<input type="submit" class="btn btn-success btn-xs" value="Go" />-->
+                        </div>
+                    </form>
+                {% endif %}
             </div>
         </div>
 
         <div class="container">
-            <h1>{% trans 'Hello, photographer!' %}</h1>
-            <img class="img-responsive img-thumbnail" style="box-shadow: 0 0 30px black; margin: 20px;" src="{{ STATIC_URL }}img/funtographlogo.png"></img>
-            <p>
-                {% trans 'Welcome to Funtograph, breakthrough game for photographers. It is time to show off your photography skills against world-class photographers. Discover this revolutionary game now and become #1!' %}
-            </p>
-            <h2 class="text-primary" style="padding-bottom: 20px;">{% trans 'COMING SOON' %} <small>{% trans 'leave us your email address. We will notify you when the game starts.' %}</small></h2>
-            <form class="form-inline" role="form" action="{% url 'lander:signupemail' %}" id="singnupform">
-                {% csrf_token %}
+            <div class="container">
+                <!-- Example row of columns -->
+                <div class="row" style="padding-bottom:10px;" >
+                    <div class="col-sm-3">
+                        <span class="hidden-xs">
+                        <div class="center-block">
+                            <img class="img-responsive" src="{{ STATIC_URL }}img/funtograph-logo-sq-200.png" style="display:inline-block;">
+                        </div>
+                        </span>
+                    </div>
+                    <div class="col-sm-9">
+                           <span class="visible-xs">
+                               <div align="center">
+                                <img class="img-responsive" style="margin: 20px;" src="{{ STATIC_URL }}img/Funtograph-onlypic-sq-40.png">
+                                Funtograph
+                                   </div>
+                           </span>
+                        <h1 class="text-center text-success">
 
-                <div class="form-group">
-                    <label class="text-primary" for="email">Your email: </label> {{ form.email }}
+                            {% trans 'Hello, photographer!' %}
+                        </h1>
+                        <p class="text-justify">
+                            {% trans 'Welcome to Funtograph, breakthrough game for photographers. It is time to show off your photography skills against world-class photographers. Discover this revolutionary game now and become #1!' %}
+                        </p>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="text-primary" for="name">Your name: </label> {{ form.name }}
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">{% trans 'Sign up' %}</button>
-                </div>
-            </form>
 
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-sm-3 text-center">
+                        </div>
+                        <div class="col-sm-9 text-center">
+                            <div class="text-center well">
+                                <h2 class="text-warning" style="padding-bottom: 20px;" id="singnupform">{% trans 'COMING SOON' %}<br>
+                                    <small>{% trans 'Leave us your email address. We will notify you when the game starts.' %}</small></h2>
+                                <div class="center-block">
+                                    <form method="POST" role="form" action="{% url 'lander:signupemail' %}" style="width: 180px; display:inline-block;">
+                                        {% csrf_token %}
+
+                                        <div class="form-group">
+                                            <label class="text-primary" for="email">{% trans 'Your email:' %}</label>
+                                            {{ form.email }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="text-primary" for="name">{% trans 'Your name:' %}</label>
+                                            {{ form.name }}
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary">{% trans 'Sign up' %}</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            {% if FUNTOGRAPH_IS_LIVE == True %}
+                                <div class="text-center well">
+                                    <a href="{% url 'members:login' %}"><button class="btn btn-primary">{% trans 'Login' %}</button></a>
+                                    <a href="{% url 'members:register' %}"><button class="btn btn-success">{% trans 'Register as new user' %}</button></a>
+                                </div>
+                            {%  endif %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
+    </div>
     </div>
 
 
@@ -65,17 +112,20 @@
         <div class="row" style="padding-bottom:50px;" >
             <div class="col-sm-4">
                 <h2 class="bg-primary text-center" style="padding:10px;">{% trans 'Build Your Photo Empire' %}</h2>
+                <img src="{{ STATIC_URL }}img/empire-300-md.png" class="center-block img-responsive" alt="Responsive image">
                 <p class="text-justify">{% trans 'Start from scratch and become the most prominent photographer. Build your empire step by step and rule the photo world!' %}</p>
                 <p><a class="btn btn-default" href="#buildempire" role="button">{% autoescape off %}{% trans 'View details' %}&raquo;{% endautoescape %}</a></p>
             </div>
             <div class="col-sm-4">
                 <h2 class="bg-success text-center" style="padding:10px;">{% trans 'Compete With Others' %}</h2>
+                <img src="{{ STATIC_URL }}img/compete-300-md.png" class="center-block img-responsive" alt="Responsive image">
                 <p class="text-justify">{% trans 'Use your best photos as your weapons. Compete against other players and win. Duels and leagues await you!' %}</p>
                 <p><a class="btn btn-default" href="#compete" role="button">{% autoescape off %}{% trans 'View details' %}&raquo;{% endautoescape %}</a></p>
             </div>
             <div class="col-sm-4">
                 <h2 class="bg-danger text-center" style="padding:10px;">{% trans 'Gloves Are Off' %}</h2>
-                <p class="text-justify">{% trans 'No more sweet comments and boring photo feeds. Find out what you are really worth as a photographer and as an photo critic.' %}</p>
+                <img src="{{ STATIC_URL }}img/gloves-300-md.png" class="center-block img-responsive" alt="Responsive image">
+                <p class="text-justify">{% trans 'No more sweet comments and boring photo feeds. Find out what you are really worth as a photographer and as photo critic.' %}</p>
                 <p><a class="btn btn-default" href="#gloves" role="button">{% autoescape off %}{% trans 'View details' %}&raquo;{% endautoescape %}</a></p>
             </div>
         </div>
@@ -112,19 +162,19 @@
     </div>
 
     <div class="container">
-    <hr>
-    <footer>
+        <hr>
+        <footer>
 
-        <div class="container-fluid">
-            <!-- Example row of columns -->
-            <div class="row">
-                <div class="col-xs-12">
-                    <p class="label label-default">&copy; Funtograph 2015</p>
+            <div class="container-fluid">
+                <!-- Example row of columns -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p class="label label-default">&copy; Funtograph 2015</p>
+                    </div>
+
                 </div>
-
             </div>
-        </div>
-    </footer>
+        </footer>
     </div>
 {% endblock bootstrap3_content %}
 

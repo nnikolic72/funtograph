@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load bootstrap3 %}
+
+{% block bootstrap3_extra_head %}
+    {{ block.super }}
+    <!-- Custom CSS -->
+    <link href="{{ STATIC_URL }}css/landing-page.css" rel="stylesheet">
+{% endblock bootstrap3_extra_head %}
+
+{% block bootstrap3_title %}
+    {% trans 'Funtograph - Sign Up Page' %}
+{% endblock bootstrap3_title %}
+
+{% block bootstrap3_content %}
+    {% bootstrap_messages %}
+
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand topnav" href="#">Funtograph</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="https://www.facebook.com/pages/Funtograph/817243425022621" target="_blank">Facebook</a>
+                    </li>
+                    <li>
+                        <a href="http://www.instagram.com/funtographapp" target="_blank">Instagram</a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/funtograph" target="_blank">Twitter</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+
+    <!-- Header -->
+    <a name="about"></a>
+    <div class="intro-header">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div align="center"><img class="img-responsive" src="{{ STATIC_URL }}img/funtograph-logo-sq-200.png"></div>
+                    <div class="intro-message">
+
+                        <h1>Funtograph</h1>
+                        <h3>{% trans 'Do you have what it takes to be known as the best photographer in the world?' %}</h3>
+
+                        <h3><span class="glyphicon glyphicon-time"></span> {% trans 'COMING SOON' %} <span class="glyphicon glyphicon-time"></span></h3>
+                        <hr class="intro-divider">
+                        <ul class="list-inline intro-social-buttons">
+                            <li>
+                                <a href="#signup" class="btn btn-danger btn-lg">Signup</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.intro-header -->
+
+    <!-- Page Content -->
+
+    <a  name="services"></a>
+    <div class="content-section-a">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">{% trans 'Build your empire' %}</h2>
+                    <p class="lead">{% trans 'Join a fun, challenging environment where photographers push themselves to the limit to find out who’s best!' %}</p>
+                    <p class="lead">{% trans 'Based on your own experiences as a photography enthusiast or working photographer, you’ll face off head-to-head with some of the best and most promising photographic artists in the world!' %}</p>
+                    <a href="#signup" class="btn btn-success btn-lg" style="margin-bottom: 20px;">{% trans 'Signup' %}</a>
+                </div>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                    <img class="img-responsive img-thumbnail" src="{{ STATIC_URL }}img/empire.jpg" alt="">
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-a -->
+
+    <div class="content-section-b">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">{% trans 'Real photographers.' %}<br>{% trans 'Epic photos.' %}<br>{% trans 'One champion.' %}</h2>
+                    <p class="lead">{% trans 'Duel against other photographers, photo vs. photo, where winner is determined by the amount of votes.' %}</p>
+                    <p class="lead">{% trans 'You can also compete in tournaments and leagues. Did we mention you can form Photo Collectives and compete against other Collectives? Oh, yes we have that, too.' %}</p>
+                    <a href="#signup" class="btn btn-success btn-lg" style="margin-bottom: 20px;">{% trans 'Signup' %}</a>
+                </div>
+                <div class="col-lg-5 col-sm-pull-6  col-sm-6">
+                    <img class="img-responsive img-thumbnail" src="{{ STATIC_URL }}img/compete.jpg" alt="">
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-b -->
+
+    <div class="content-section-a">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">{% trans 'Challenge some of the best photographers in the world' %}</h2>
+                    <p class="lead">{% trans 'Funtograph aims to provide a fun and challenging environment for photographers to push themselves creatively by engaging in exciting, friendly competition.' %}</p>
+
+                    <p class="lead">{% trans 'Not only is this an opportunity for photographic artists to discover their talent, it’s a chance to build confidence and take your career to the next level.' %}</p>
+                    <a href="#signup" class="btn btn-success btn-lg" style="margin-bottom: 20px;">{% trans 'Signup' %}</a>
+                </div>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                    <img class="img-responsive img-thumbnail" src="{{ STATIC_URL }}img/number1.jpg" alt="">
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-a -->
+
+    <div class="banner">
+
+        <div class="container">
+
+            <div class="row" id="signup">
+                <div class="col-lg-6">
+                    <h2>{%  trans 'Sign up for Funtograph' %}</h2><br><h4>{%  trans 'Find out first when we open the gates of fun! We will send you an e-mail to address you provide as soon as time comes!' %}</h4>
+                </div>
+                <div class="col-lg-6">
+                    <div class="center-block">
+                        <form method="POST" role="form" action="{% url 'lander:signupemail' %}" style="display:inline-block;">
+                            {% csrf_token %}
+                            <small>{% trans 'Leave us your email address. We will notify you when the game starts.' %}</small>
+                            <div class="form-group">
+                                <label class="text-default" for="email">{% trans 'Your email:' %}</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="form-group">
+                                <label class="text-default" for="name">{% trans 'Your name:' %}</label>
+                                {{ form.name }}
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-default">{% trans 'Sign up for info' %}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% if FUNTOGRAPH_IS_LIVE == True %}
+                    <div class="col-lg-3 col-lg-offset-6">
+                    <a href="{% url 'members:login' %}"><button class="btn btn-primary" style="padding-bottom: 10px; padding-top: 10px;">{% trans 'Login' %}</button></a>
+                    <a href="{% url 'members:register' %}"><button class="btn btn-success" style="padding-bottom: 10px; padding-top: 10px;">{% trans 'Register as new user' %}</button></a>
+                    </div>
+                {%  endif %}
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.banner -->
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul class="list-inline">
+                            <li>
+                                <a href="https://www.facebook.com/pages/Funtograph/817243425022621" target="_blank">Facebook</a>
+                            </li>
+                            <li class="footer-menu-divider">&sdot;</li>
+                            <li>
+                                <a href="http://www.instagram.com/funtographapp" target="_blank">Instagram</a>
+                            </li>
+                            <li class="footer-menu-divider">&sdot;</li>
+                            <li>
+                                <a href="https://twitter.com/funtograph" target="_blank">Twitter</a>
+                            </li>
+                        </ul>
+                        <p class="copyright text-muted small">Copyright &copy; Funtograph 2015. All Rights Reserved</p>
+                    </div>
+                </div>
+            </div>
+            </footer>
+
+{% endblock bootstrap3_content %}

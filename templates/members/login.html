@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load bootstrap3 %}
+
+{% block bootstrap3_extra_head %}
+    {% trans 'Funtograph - Login' %}
+{% endblock bootstrap3_extra_head %}
+
+{% block bootstrap3_content %}
+    {{ block.super }}
+
+    <div class="container">
+        <div class="well" >
+            <div align="center">
+                <span class="hidden-xs center">
+                    <a href="{% url 'lander:index' %}">
+                        <img class="img-responsive"  src="{{ STATIC_URL }}img/funtograph-logo-sq-200.png">
+                    </a>
+                </span>
+                <div class="visible-xs">
+                    <a href="{% url 'lander:index' %}">
+                        <img class="img-responsive" style="margin: 20px;" src="{{ STATIC_URL }}img/Funtograph-onlypic-sq-40.png">
+                    </a>
+                </div>
+                <h1 class="text-success">{% trans 'Login on Funtograph' %}</h1>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="container">
+        {% if errors_login %}
+            <div class="form-group">
+                <p>{{ errors_login }}</p>
+            </div>
+        {% endif %}
+
+        <form id="login_form" method="POST" action="{% url 'members:login' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">{% trans 'Screen name' %}:</label>
+                {{ login_form.username }}
+            </div>
+
+            <div class="form-group">
+                <label for="password">{% trans 'Password' %}:</label>
+                {{ login_form.password }}
+            </div>
+
+            <button class="btn btn-success" type="submit" value="submit">{% trans 'Login' %}</button>
+        </form>
+    </div>
+
+    {% block footer %}
+        <div class="container">
+            <hr>
+            <footer>
+
+                <div class="container">
+                    <!-- Example row of columns -->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p class="label label-default">&copy; Funtograph 2015</p>
+                        </div>
+
+                    </div>
+                </div>
+            </footer>
+        </div>
+    {%  endblock footer %}
+{% endblock bootstrap3_content %}

@@ -11,9 +11,14 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
+
 import os
 from unipath import Path
 from ConfigParser import ConfigParser
+
+#this is overriden in other config files
+FUNTOGRAPH_IS_LIVE = True
 
 #BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PROJECT_DIR = Path(__file__).ancestor(3)
@@ -70,8 +75,13 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'bootstrap3',
+    'cloudinary',
 
     'lander',
+    'members',
+    'characters',
+    'photos',
+    'interactions',
 )
 
 
@@ -135,5 +145,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGIN_URL = '/members/login'
+LOGOUT_URL = '/members/logout'
+LOGIN_REDIRECT_URL = '/members/dashboard'
 
 

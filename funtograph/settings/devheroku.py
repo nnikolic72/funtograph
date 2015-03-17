@@ -9,10 +9,11 @@ import dj_database_url
 #CACHES = memcacheify()
 
 
-SECRET_KEY =  os.environ['SECRET_KEY']
+SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = True
 
 TEMPLATE_DEBUG = True
+FUNTOGRAPH_IS_LIVE = True
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
@@ -27,3 +28,9 @@ DATABASES = {
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']
 MIDDLEWARE_CLASSES += ('django.middleware.clickjacking.XFrameOptionsMiddleware',)
+
+CLOUDINARY = {
+    'cloud_name': os.environ['CLOUDINARY_CLOUD_NAME'],
+    'api_key': os.environ['CLOUDINARY_API_KEY'],
+    'api_secret': os.environ['CLOUDINARY_API_SECRET'],
+    }

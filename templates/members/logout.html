@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load bootstrap3 %}
+
+{% block bootstrap3_content %}
+    {{ block.super }}
+
+    <div class="container">
+        <div class="row" style="padding-bottom:50px;" >
+            <div class="col-sm-3 text-center">
+                <a href="{% url 'lander:index' %}">
+                    <img class="img-responsive" style="margin: 20px;" src="{{ STATIC_URL }}img/funtograph-logo-sq-200.png">
+                </a>
+            </div>
+            <div class="col-sm-9 text-center">
+                <div class="well">
+                    <h2 class="text-success">{% trans 'You have logged out of Funtograph. See you soon!' %}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% block footer %}
+        <div class="container">
+            <hr>
+            <footer>
+
+                <div class="container">
+                    <!-- Example row of columns -->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p class="label label-default">&copy; Funtograph 2015</p>
+                        </div>
+
+                    </div>
+                </div>
+            </footer>
+        </div>
+    {%  endblock footer %}
+{% endblock bootstrap3_content %}

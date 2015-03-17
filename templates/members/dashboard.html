@@ -1,0 +1,128 @@
+{% extends "memberbase.html" %}
+{% load i18n %}
+{% load cloudinary %}
+{% load members_verbose_names %}
+
+{%  block title %}
+    @{{ user }}&nbsp;{% trans 'Dashboard' %}
+{% endblock title %}
+
+{% block content %}
+    {{ block.super }}
+    <div class="well">
+        {% comment %}
+        {% cloudinary logged_member.picture crop="thumb" gravity="face" width=150 height=150 %}
+        {% endcomment %}
+        {% if profile_photo_url %}
+            <img src="{{ profile_photo_url }}" class="img-responsive img-circle">
+        {% else %}
+            <small>No profile photo available. You can upload one here.</small>
+        {% endif %}
+        <span class="hidden-xs">
+                <h2>@{{ user }}&nbsp;{% trans 'Dashboard' %}</h2>
+            </span>
+            <span class="visible-xs">
+                <h4>@{{ user }}&nbsp;{% trans 'Dashboard' %}</h4>
+            </span>
+
+    </div>
+
+
+
+    <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-pills" role="tablist">
+            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">{%  trans 'Overview' %}</a></li>
+            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">{%  trans 'Portfolio' %}</a></li>
+            <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">{%  trans 'Stats' %}</a></li>
+        </ul>
+    </div>
+
+
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade in active" id="home">
+
+                <div class="well">@{{ user }} {%  trans 'Funtograph Levels and experience' %}</div>
+                <table class="table">
+                    <tr>
+                        <th></th>
+                        <th>{%  trans 'Level' %}</th>
+                        <th>{%  trans 'Current experience' %}</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{% url 'characters:photographer' p_photographer_name=photographer.name %}"
+                                    class="btn btn-success">
+                                {%  trans 'Photographer' %} {{ photographer.name }}
+                            </a>
+                            <a href="" class="btn btn-default">Change name</a>
+                        </td>
+                        <td>
+                            {{ photographer.level }}
+                        </td>
+                        <td>
+                            {{ photographer.current_xp }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {%  trans 'Art lover' %}
+                        </td>
+                        <td>
+                            {{ photo_art_lover.level }}
+                        </td>
+                        <td>
+                            {{ photo_art_lover.current_xp }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {%  trans 'Photo judge' %}
+                        </td>
+                        <td>
+                            {{ photo_judge.level }}
+                        </td>
+                        <td>
+                            {{ photo_judge.current_xp }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {%  trans 'Photo team manager' %}
+                        </td>
+                        <td>
+                            {{ photo_team_manager.level }}
+                        </td>
+                        <td>
+                            {{ photo_team_manager.current_xp }}
+                        </td>
+                    </tr>
+                </table>
+
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="profile">
+            <div class="container">
+                <h2>{%  trans 'Portfolio' %}</h2>
+                {%  if photographer_photos_cnt > 0%}
+                    {% blocktrans %}Number of photos: {{ photographer_photos_cnt }}{% endblocktrans %}
+                    <div class="content-block">
+                        <a class="btn btn-default" href="{% url 'photos:photographer' photographer.name  %}">{% trans 'View my photos' %}</a>
+                    </div>
+                {% else %}
+                    <p>{% trans 'There are no your photos on Funtograph.' %}</p>
+                {% endif %}
+                <div class="content-block">
+                    <a class="btn btn-default" href="{% url 'photos:upload' %}">{% trans 'Upload photo' %}</a>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="messages">
+            <div class="container">
+                <h2>{%  trans 'Stats' %}</h2>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
