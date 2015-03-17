@@ -9,15 +9,16 @@ import dj_database_url
 #CACHES = memcacheify()
 
 
-SECRET_KEY =  os.environ['SECRET_KEY']
-DEBUG = True
+SECRET_KEY = os.environ['SECRET_KEY']
+DEBUG = False
 
-TEMPLATE_DEBUG = True
-FUNTOGRAPH_IS_LIVE = False
+TEMPLATE_DEBUG = False
+FUNTOGRAPH_IS_LIVE = True
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, '../../static'),
