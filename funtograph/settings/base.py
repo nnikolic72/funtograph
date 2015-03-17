@@ -19,9 +19,14 @@ from ConfigParser import ConfigParser
 
 #this is overriden in other config files
 FUNTOGRAPH_IS_LIVE = True
-if os.environ['FUNTOGRAPH_IS_LIVE']:
-    FUNTOGRAPH_IS_LIVE = os.environ['FUNTOGRAPH_IS_LIVE']
+try:
+    if os.environ['FUNTOGRAPH_IS_LIVE']:
+        FUNTOGRAPH_IS_LIVE = os.environ['FUNTOGRAPH_IS_LIVE']
+except:
+    pass
 
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-14845987-3'
+GOOGLE_ANALYTICS_DOMAIN = 'funtograph.com'
 
 #BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PROJECT_DIR = Path(__file__).ancestor(3)
@@ -54,6 +59,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
+    'funtograph.context-processors.google_analytics',
 )
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -79,6 +85,7 @@ INSTALLED_APPS = (
 
     'bootstrap3',
     'cloudinary',
+
 
     'lander',
     'members',

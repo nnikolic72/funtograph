@@ -6,6 +6,7 @@ __author__ = 'tanja'
 from ConfigParser import ConfigParser
 
 DEBUG = True
+ALLOWED_HOSTS = ['*']
 
 TEMPLATE_DEBUG = True
 
