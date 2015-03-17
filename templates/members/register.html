@@ -4,6 +4,10 @@
 {% load bootstrap3 %}
 {% load members_verbose_names %}
 
+{% block bootstrap3_extra_head %}
+    {% trans 'Funtograph - Register as a new user' %}
+{% endblock bootstrap3_extra_head %}
+
 {% block bootstrap3_content %}
     {{ block.super }}
 

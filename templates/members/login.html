@@ -3,6 +3,10 @@
 {% load i18n %}
 {% load bootstrap3 %}
 
+{% block bootstrap3_extra_head %}
+    {% trans 'Funtograph - Login' %}
+{% endblock bootstrap3_extra_head %}
+
 {% block bootstrap3_content %}
     {{ block.super }}
 

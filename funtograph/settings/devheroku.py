@@ -10,9 +10,9 @@ import dj_database_url
 
 
 SECRET_KEY = os.environ['SECRET_KEY']
-DEBUG = False
+DEBUG = True
 
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
 FUNTOGRAPH_IS_LIVE = True
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
