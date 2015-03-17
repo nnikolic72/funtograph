@@ -18,7 +18,7 @@ class LanderHomePageView(TemplateView):
     ''' Home page of lander app
     '''
 
-    template_name = 'lander/index.html'
+    template_name = 'lander/index_v2.html'
 
     def get(self, request, *args, **kwargs):
         """
@@ -28,8 +28,6 @@ class LanderHomePageView(TemplateView):
         if request.user.is_authenticated():
             return HttpResponseRedirect(reverse('members:dashboard'))
         else:
-            self.template_name = 'lander/index.html'
-
             return render(request, self.template_name,
                           dict(form=SignUpForm(),
                                SHOW_TRANSLATIONS=SHOW_TRANSLATIONS,
