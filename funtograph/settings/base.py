@@ -19,6 +19,9 @@ from ConfigParser import ConfigParser
 
 #this is overriden in other config files
 FUNTOGRAPH_IS_LIVE = True
+if os.environ['FUNTOGRAPH_IS_LIVE']:
+    FUNTOGRAPH_IS_LIVE = os.environ['FUNTOGRAPH_IS_LIVE']
+
 
 #BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PROJECT_DIR = Path(__file__).ancestor(3)
