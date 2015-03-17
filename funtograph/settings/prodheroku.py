@@ -8,6 +8,7 @@ import dj_database_url
 #from memcacheify import memcacheify  # @UnresolvedImport
 #CACHES = memcacheify()
 
+#Prod environment settings
 
 SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = False
