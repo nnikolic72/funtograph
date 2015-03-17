@@ -3,12 +3,13 @@
 {% load i18n %}
 {% load bootstrap3 %}
 
-{% block bootstrap3_extra_head %}
+{% block bootstrap3_title %}
     {% trans 'Funtograph - Login' %}
-{% endblock bootstrap3_extra_head %}
+{% endblock bootstrap3_title %}
 
 {% block bootstrap3_content %}
     {{ block.super }}
+
 
     <div class="container">
         <div class="well" >
@@ -36,19 +37,22 @@
             </div>
         {% endif %}
 
-        <form id="login_form" method="POST" action="{% url 'members:login' %}">
+        <form class="form col-sm-12  center-block" id="login_form" method="POST" action="{% url 'members:login' %}">
             {% csrf_token %}
-            <div class="form-group">
-                <label for="username">{% trans 'Screen name' %}:</label>
-                {{ login_form.username }}
-            </div>
+            <div class="col-sm-offset-3 col-sm-6 col-sm-offset-3">
+                <div class="form-group">
+                    <label for="username">{% trans 'Screen name' %}:</label>
+                    {{ login_form.username }}
+                </div>
 
-            <div class="form-group">
-                <label for="password">{% trans 'Password' %}:</label>
-                {{ login_form.password }}
-            </div>
+                <div class="form-group">
+                    <label for="password">{% trans 'Password' %}:</label>
+                    {{ login_form.password }}
+                </div>
 
-            <button class="btn btn-success" type="submit" value="submit">{% trans 'Login' %}</button>
+
+                <button class="btn btn-success" type="submit" value="submit">{% trans 'Login' %}</button>
+            </div>
         </form>
     </div>
 

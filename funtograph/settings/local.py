@@ -10,7 +10,7 @@ ALLOWED_HOSTS = ['*']
 
 TEMPLATE_DEBUG = True
 
-FUNTOGRAPH_IS_LIVE = True
+#FUNTOGRAPH_IS_LIVE = True
 
 config = ConfigParser()
 settings_path = PROJECT_DIR.child('funtograph').child("settings")
