@@ -181,9 +181,10 @@
                 </div>
             </div>
             <div class="row">
-            <p>Funtograph is live: "{{ FUNTOGRAPH_IS_LIVE }}"</p>
+
                 {% if FUNTOGRAPH_IS_LIVE == True %}
                     <div class="col-lg-3 col-lg-offset-6">
+                    <p>Funtograph is live: "{{ FUNTOGRAPH_IS_LIVE }}"</p>
                     <a href="{% url 'members:login' %}"><button class="btn btn-primary" style="padding-bottom: 10px; padding-top: 10px;">{% trans 'Login' %}</button></a>
                     <a href="{% url 'members:register' %}"><button class="btn btn-success" style="padding-bottom: 10px; padding-top: 10px;">{% trans 'Register as new user' %}</button></a>
                     </div>
