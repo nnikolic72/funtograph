@@ -3,9 +3,9 @@
 {% load bootstrap3 %}
 
 
-{% block bootstrap3_extra_head %}
+{% block bootstrap3_title %}
     {% trans 'Thank you for signing up.' %}
-{% endblock bootstrap3_extra_head %}
+{% endblock bootstrap3_title %}
 
 {% block bootstrap3_content %}
     {{ block.super }}
@@ -20,7 +20,7 @@
             <small>
                 {% trans 'Sincirely,' %}
             </small>
-            <img class="img-responsive" style=" margin-bottom:10px;" src="{{ STATIC_URL }}img/funtograph-logo-sq-200.png"></img>
+            <img class="img-responsive" style=" margin-bottom:10px;" src="{{ STATIC_URL }}img/funtograph-logo-sq-200.png">
         </div>
     </div>
 
