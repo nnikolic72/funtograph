@@ -14,7 +14,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = False
 
 TEMPLATE_DEBUG = False
-FUNTOGRAPH_IS_LIVE = True
+FUNTOGRAPH_IS_LIVE = False
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
