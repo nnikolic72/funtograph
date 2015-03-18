@@ -1,5 +1,5 @@
 {% extends 'bootstrap.html' %}
-
+{% load dajaxice_templatetags %}
 
 {% block bootstrap3_extra_head %}
     {{ block.super }}
@@ -7,6 +7,7 @@
                                      initial-scale=1.0,
                                      maximum-scale=1.0,
                                      user-scalable=no">
+    {% dajaxice_js_import %}
 {% endblock bootstrap3_extra_head %}
 
 {% block bootstrap3_content %}

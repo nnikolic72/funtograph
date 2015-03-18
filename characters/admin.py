@@ -37,7 +37,8 @@ class PhotoArtLoverAdmin(admin.ModelAdmin):
         ('In-game information', {'fields': [
             'current_xp',
             'total_xp',
-            'character_active'
+            'character_active',
+            'max_photos_to_upload'
         ]
         }
         ),

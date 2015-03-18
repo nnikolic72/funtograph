@@ -1,5 +1,5 @@
 {% extends 'bootstrap.html' %}
-
+{% load dajaxice_templatetags %}
 {% load i18n %}
 {% load bootstrap3 %}
 {% load cloudinary %}
@@ -11,6 +11,7 @@
 
 {% block bootstrap3_extra_head %}
     {{ block.super }}
+    {% dajaxice_js_import %}
     {%  block extra_head %}
         <link rel="stylesheet" href="{{STATIC_URL}}css/funtograph-common.css">
     {% endblock extra_head %}

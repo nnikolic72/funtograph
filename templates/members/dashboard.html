@@ -47,7 +47,7 @@
                 <div class="well">@{{ user }} {%  trans 'Funtograph Levels and experience' %}</div>
                 <table class="table">
                     <tr>
-                        <th></th>
+                        <th>{% trans 'Your roles' %}</th>
                         <th>{%  trans 'Level' %}</th>
                         <th>{%  trans 'Current experience' %}</th>
                     </tr>
@@ -57,7 +57,6 @@
                                     class="btn btn-success">
                                 {%  trans 'Photographer' %} {{ photographer.name }}
                             </a>
-                            <a href="" class="btn btn-default">Change name</a>
                         </td>
                         <td>
                             {{ photographer.level }}
@@ -68,7 +67,7 @@
                     </tr>
                     <tr>
                         <td>
-                            {%  trans 'Art lover' %}
+                            <a href="#" class="btn btn-danger">{%  trans 'Art lover' %}</a>
                         </td>
                         <td>
                             {{ photo_art_lover.level }}
@@ -79,7 +78,7 @@
                     </tr>
                     <tr>
                         <td>
-                            {%  trans 'Photo judge' %}
+                            <a href="#" class="btn btn-warning">{%  trans 'Photo judge' %}</a>
                         </td>
                         <td>
                             {{ photo_judge.level }}
@@ -90,7 +89,8 @@
                     </tr>
                     <tr>
                         <td>
-                            {%  trans 'Photo team manager' %}
+                            <a href="#" class="btn btn-info">{%  trans 'Photo team manager' %}</a>
+
                         </td>
                         <td>
                             {{ photo_team_manager.level }}

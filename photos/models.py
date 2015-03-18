@@ -2,13 +2,18 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from django.utils.datetime_safe import datetime
 
-from  cloudinary.models import CloudinaryField
+from cloudinary.models import CloudinaryField
 
 from characters.models import (Character,
                                Photographer)
 
-
+from interactions.models import (
+    Like,
+    Comment,
+    Favorite
+)
 # Create your models here.
+
 
 class PhotoCategory(models.Model):
     """
@@ -82,6 +87,71 @@ class Photo(models.Model):
     """
     Model for storing members photos, and their metadata
     """
+
+    @property
+    def get_thumbnail_url(self):
+        """
+
+        :return: Url of thumbnail image
+        :rtype: String
+        """
+        photo_thumb_url = self.photo.build_url(transformation='media_lib_thumb')
+        return photo_thumb_url
+
+    @property
+    def get_src_url(self):
+        """
+
+        :return: Url of thumbnail image
+        :rtype: String
+        """
+        photo_thumb_url = self.photo.build_url()
+        return photo_thumb_url
+
+    @property
+    def get_number_of_likes(self):
+        """
+
+        :return: Number of likes on a photo
+        :rtype: Integer
+        """
+
+        likes_count = Like.objects.filter(photo=self).count()
+        return likes_count
+
+    @property
+    def get_number_of_comments(self):
+        """
+
+        :return: Number of likes on a photo
+        :rtype: Integer
+        """
+
+        comments_count = Comment.objects.filter(photo=self).count()
+        return comments_count
+
+    @property
+    def get_comments(self):
+        """
+
+        :return: Number of likes on a photo
+        :rtype: Comments object
+        """
+
+        photo_comments = Comment.objects.filter(photo=self)
+        return photo_comments
+
+    @property
+    def get_number_of_favorites(self):
+        """
+
+        :return: Number of likes on a photo
+        :rtype: Integer
+        """
+
+        favorites_count = Favorite.objects.filter(photo=self).count()
+        return favorites_count
+
     title = models.CharField(max_length=100,
                              verbose_name=_('Photo title'))
     owner = models.ManyToManyField(Photographer, through='PhotoToPhotographer',

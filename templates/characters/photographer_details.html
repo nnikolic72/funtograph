@@ -1,6 +1,14 @@
 {% extends "memberbase.html" %}
 {% load i18n %}
 {% load cloudinary %}
+{% load photo_extras %}
+
+{%  block extra_script %}
+    {{ block.super }}
+    <script src="{{ STATIC_URL }}js/vendor/jquery.ba-serializeobject.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ STATIC_URL }}js/interactions.js" type="text/javascript" charset="utf-8"></script>
+
+{% endblock extra_script %}
 
 {% block content %}
     {{ block.super }}
@@ -12,16 +20,115 @@
     </div>
 
     <div class="content">
-        <h3>{% trans 'Photo Portfolio' %}</h3>
+
         {% if photographers_photos %}
             <div class="row">
-                {% for photo in  photographers_photos %}
-                    {% cloudinary photo.photo transformation='media_big_thumb'  %}
+                <div class="col-xs-12 text-center">
+                    <h3>{% trans 'Photo Portfolio' %}</h3>
+                </div>
+            </div>
 
-                    <p>{% trans 'Title:' %}{{ photo.title }}</p>
-                    <p>{% trans 'Likes:' %}{{ photo.likes }}</p>
-                    <p>{% trans 'Comments:' %}{{ photo.comments }}</p>
-                {% endfor %}
+            <div class="row">
+                <div class="col-xs-12 col-lg-offset-3 col-lg-6 col-lg-offset-3">
+
+                    {% for photo in  photographers_photos %}
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="text-center">
+                                    <h4 class="btn btn-default" style="margin: 10px;">{% trans 'Title:' %} {% if photo.title %}{{ photo.title }}{% else %}{% trans '[untitled]' %}{% endif %}</h4>
+                                </div>
+                                <img class="img-responsive" src="{{  photo.get_src_url }}" alt="{{ photo.title }}" style="margin: 10px">
+
+                                <div class="text-center">
+                                    {%  if photo in liked_photos %}
+                                        <span
+                                                class="glyphicon glyphicon-heart text-default btn btn-sm btn-success"
+                                                id="likes_id_{{ photo.id }}"
+                                                onclick="like('{{ photo.id }}', '{{STATIC_URL}}');"
+                                                title={% trans 'Likes' %}
+                                                >
+                                        </span>
+                                    {% else %}
+                                        <span
+                                                class="glyphicon glyphicon-heart-empty text-default btn btn-sm btn-default"
+                                                id="likes_id_{{ photo.id }}"
+                                                onclick="like('{{ photo.id }}', '{{STATIC_URL}}');"
+                                                title={% trans 'Likes' %}
+                                                >
+                                        </span>
+                                    {% endif %}
+
+                                    <span id="likes_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_likes }}</span>
+
+
+                                    {%  if photo in favorited_photos %}
+                                        <span
+                                                class="glyphicon glyphicon-star text-default btn btn-sm btn-success"
+                                                id="favorites_id_{{ photo.id }}"
+                                                onclick="favorite('{{ photo.id }}', '{{STATIC_URL}}');"
+                                                title={% trans 'Favorites' %}
+                                                ></span>
+                                        <span id="favorites_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_favorites }}</span>
+                                    {% else %}
+                                        <span
+                                                class="glyphicon glyphicon-star-empty text-default btn btn-sm btn-default"
+                                                id="favorites_id_{{ photo.id }}"
+                                                onclick="favorite('{{ photo.id }}', '{{STATIC_URL}}');"
+                                                title={% trans 'Favorites' %}
+                                                ></span>
+                                        <span id="favorites_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_favorites }}</span>
+                                    {% endif %}
+
+
+
+                                    <span
+                                            class="glyphicon glyphicon-comment btn btn-sm btn-default"
+                                            title={% trans 'Comments' %}
+                                            data-toggle="modal"
+                                            data-target="#comments{{ photo.id }}"></span>
+                                    <span id="comments_num_{{ photo.id }}">{{ photo.get_number_of_comments }}</span>
+
+                                </div>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="comments{{ photo.id }}" tabindex="-1" role="dialog" aria-labelledby="comentslabel{{ photo.id }}" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="comentslabel{{ photo.id }}">{% trans 'Comments' %}</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                {%  with photo.get_comments as comments %}
+                                                    {% if comments %}
+                                                        {% for comment in comments %}
+                                                            <!-- Todo: Insert check for member  -->
+                                                            <span class="glyphicon glyphicon-thumbs-up text-default" id="comment_id{{ comment.id }}"></span> <strong>{{ comment.members_commenters }}</strong>: {{ comment.comment_text }}
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <p>{% trans 'No comments on this photo. Be the first one to comment!' %}</p>
+                                                    {% endif %}
+                                                {% endwith %}
+                                                <hr>
+                                                <form id="comment_form_{{ photo.id }}" class="form" role="form" action="#">
+                                                    {% csrf_token %}
+                                                    {{ comment_form.comment_text }}
+                                                    <div class="form-group">
+                                                        <button class="btn btn-primary" type="submit"
+                                                                onclick="send_comment({{ photo.id }});"
+                                                                >Add comment</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         {% else %}
             <p>{% trans 'No uploaded photos.' %}</p>

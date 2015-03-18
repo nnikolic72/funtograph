@@ -2,16 +2,16 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from django.utils.datetime_safe import datetime
 
+from funtograph.settings.base import MAX_UPLOAD_PHOTOS_DEFAULT
 import cloudinary
 # Create your models here.
-from members.models import Member
 
 
 class Character(models.Model):
     def is_character_active(self):
         return self.character_active
 
-    member = models.ForeignKey(Member, null=True)
+    member = models.ForeignKey('members.Member', null=True)
     name = models.CharField(max_length=50, blank=False, null=False)
     level = models.IntegerField(default=1, blank=False, null=False)
     current_xp = models.IntegerField(default=0, blank=False, null=False)
@@ -89,6 +89,9 @@ class Photographer(Character):
     """
 
     character_type = models.CharField(max_length=50, default=_('Photographer'))
+
+    max_photos_to_upload = models.IntegerField(default=MAX_UPLOAD_PHOTOS_DEFAULT,
+                                               null=False, blank=False)
 
     class Meta(Character.Meta):
         verbose_name = _('Photographer')

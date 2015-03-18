@@ -7,12 +7,18 @@
     {% trans 'Funtograph - Login' %}
 {% endblock bootstrap3_title %}
 
+{% block bootstrap3_extra_head %}
+    {{ block.super }}
+    <!-- Custom CSS -->
+    <link href="{{ STATIC_URL }}css/login.css" rel="stylesheet">
+{% endblock bootstrap3_extra_head %}
 {% block bootstrap3_content %}
     {{ block.super }}
 
 
     <div class="container">
-        <div class="well" >
+        <div class="intro-header">
+
             <div align="center">
                 <span class="hidden-xs center">
                     <a href="{% url 'lander:index' %}">
@@ -24,8 +30,12 @@
                         <img class="img-responsive" style="margin: 20px;" src="{{ STATIC_URL }}img/Funtograph-onlypic-sq-40.png">
                     </a>
                 </div>
-                <h1 class="text-success">{% trans 'Login on Funtograph' %}</h1>
+                <div class="intro-message">
+                    <h1>{% trans 'Login on Funtograph' %}</h1>
+                </div>
             </div>
+
+
         </div>
     </div>
     </div>

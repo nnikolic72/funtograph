@@ -19,6 +19,14 @@ from photos.models import (
     PhotoToPhotographer
 )
 
+from interactions.models import (
+    Like,
+    Favorite,
+    Comment
+)
+
+from interactions.forms import CommentForm
+
 class CharactersIndexView(TemplateView):
     """
     View to show top Photographers and search form
@@ -68,7 +76,12 @@ class CharactersPhotographerIndexView(TemplateView):
         :rtype:
         """
         if request.user.is_authenticated():
+
             photographer_name = kwargs['p_photographer_name']
+            photographer_interactions = None
+            photographers_photos = None
+            photographer = None
+            photographers_photos = []
 
             try:
                 photographer = Photographer.objects.get(name=photographer_name)
@@ -77,15 +90,37 @@ class CharactersPhotographerIndexView(TemplateView):
 
 
                 #photo_to_photographer = PhotoToPhotographer(photographer=photographer, is_author=True)
-            photographers_photos = Photo.objects.filter(owner=photographer)
+            if photographer:
+                photographers_photos = Photo.objects.filter(owner=photographer)
+                liked_photos_set = \
+                    Like.objects.filter(
+                        members_likers=photographer,
+                        photo__in=photographers_photos
+                    ).select_related('photo')
+
+                favorited_photos_set = \
+                    Favorite.objects.filter(
+                        members_favoriters=photographer,
+                        photo__in=photographers_photos
+                    ).select_related('photo')
+
+                liked_photos = []
+                for p in liked_photos_set:
+                    liked_photos.extend([p.photo])
+
+                favorited_photos = []
+                for p in favorited_photos_set:
+                    favorited_photos.extend([p.photo])
 
             return render(request,
                           self.template_name,
                           dict(
                               photographer=photographer,
                               photographers_photos=photographers_photos,
-
-                              )
+                              liked_photos=liked_photos,
+                              favorited_photos=favorited_photos,
+                              comment_form=CommentForm,
+                          )
             )
         else:
             return HttpResponseRedirect(reverse('members:register'))
