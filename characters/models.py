@@ -42,7 +42,7 @@ class Character(models.Model):
     class Meta:
         abstract = True
         get_latest_by = _('created_at')
-        ordering = (_('name'),)
+        ordering = (_('-level'), _('-current_xp'), _('name'),)
 
 
 class PhotoArtLover(Character):
