@@ -15,4 +15,13 @@ h6 {
     font-weight: 700;
 }
 
-body { padding-top: 70px; }
+body { padding-top: 51px; }
+
+.statusbar {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    font-size: 1em;
+    background-color: #f4f379;
+    color: firebrick;
+}

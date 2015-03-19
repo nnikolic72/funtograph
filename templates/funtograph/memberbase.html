@@ -71,6 +71,20 @@
             </div>
         </nav>
     {%  endblock navbar %}
+
+    {%  block statusbar %}
+        <nav class="statusbar">
+            <div class="container statusbar">
+                    <ul class="nav navbar-nav">
+                        <li style="padding-right: 5px;">Lvl: {{ level }}</li>
+                        <li style="padding-right: 5px;">XP: {{ xp }}</li>
+                        <li style="padding-right: 5px;">Funtocredits: {{ funtocredits }}</li>
+                        <li style="padding-right: 5px;">Energy: {{ funtocredits }}</li>
+                    </ul>
+            </div>
+        </nav>
+
+    {%  endblock statusbar %}
     {{ block.super }}
 
 
@@ -99,8 +113,8 @@
         </div>
     {%  endblock footer %}
 
-{% if GOOGLE_ANALYTICS_PROPERTY_ID %}
-  {% include "ga.html" %}
-{% endif %}
+    {% if GOOGLE_ANALYTICS_PROPERTY_ID %}
+        {% include "ga.html" %}
+    {% endif %}
 
 {% endblock bootstrap3_content %}

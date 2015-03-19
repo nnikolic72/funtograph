@@ -61,7 +61,8 @@
                 <tr>
                     <th>{% trans 'Your roles' %}</th>
                     <th>{%  trans 'Level' %}</th>
-                    <th>{%  trans 'Current experience' %}</th>
+                    <th>{%  trans 'Current XP' %}</th>
+                    <th>{%  trans 'Ranking' %}</th>
                 </tr>
                 <tr>
                     <td>
@@ -76,6 +77,9 @@
                     <td>
                         {{ photographer.current_xp }}
                     </td>
+                    <td>
+                        {{ photographer.get_current_ranking_photographer }}
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -86,6 +90,9 @@
                     </td>
                     <td>
                         {{ photo_art_lover.current_xp }}
+                    </td>
+                    <td>
+
                     </td>
                 </tr>
                 <tr>
@@ -98,6 +105,9 @@
                     <td>
                         {{ photo_judge.current_xp }}
                     </td>
+                    <td>
+
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -109,6 +119,9 @@
                     </td>
                     <td>
                         {{ photo_team_manager.current_xp }}
+                    </td>
+                    <td>
+
                     </td>
                 </tr>
             </table>

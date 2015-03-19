@@ -56,13 +56,14 @@
                                                 >
                                         </span>
                                     {% endif %}
+                                    <span id="likes_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_likes }}</span>
 
                                     {%  if photo in unliked_photos %}
                                         <span
                                                 class="glyphicon glyphicon-remove-sign text-default btn btn-sm btn-danger"
                                                 id="unlikes_id_{{ photo.id }}"
                                                 onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'unlike_button');"
-                                                title={% trans 'Likes' %}
+                                                title={% trans 'Disikes' %}
                                                 >
                                         </span>
                                     {% else %}
@@ -70,13 +71,13 @@
                                                 class="glyphicon glyphicon-remove-sign text-default btn btn-sm btn-default"
                                                 id="unlikes_id_{{ photo.id }}"
                                                 onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'unlike_button');"
-                                                title={% trans 'Likes' %}
+                                                title={% trans 'Disikes' %}
                                                 >
                                         </span>
                                     {% endif %}
 
 
-                                    <span id="likes_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_likes }}</span>
+                                    <span id="dislikes_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_dislikes }}</span>
 
 
                                     {%  if photo in favorited_photos %}

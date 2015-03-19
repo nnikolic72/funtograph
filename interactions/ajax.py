@@ -105,10 +105,12 @@ def like(req, p_photo_id, p_pressed_button):
                             like_action_result = p_pressed_button + '-pressed'
 
         no_of_likes = photo_instance.get_number_of_likes
+        no_of_dislikes = photo_instance.get_number_of_dislikes
 
         return json.dumps({'p_photo_id': p_photo_id,
                            'like_action_result': like_action_result,
-                           'no_of_likes': no_of_likes
+                           'no_of_likes': no_of_likes,
+                           'no_of_dislikes': no_of_dislikes
         }
         )
 

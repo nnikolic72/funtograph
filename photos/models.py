@@ -117,10 +117,21 @@ class Photo(models.Model):
         """
 
         likes_count = Like.objects.filter(photo=self, like_value=True).count()
-        unlikes_count = Like.objects.filter(photo=self, like_value=False).count()
-        likes_count = likes_count - unlikes_count
 
         return likes_count
+
+    @property
+    def get_number_of_dislikes(self):
+        """
+
+        :return: Number of likes on a photo
+        :rtype: Integer
+        """
+
+        #likes_count = Like.objects.filter(photo=self, like_value=True).count()
+        dislikes_count = Like.objects.filter(photo=self, like_value=False).count()
+
+        return dislikes_count
 
     @property
     def get_number_of_comments(self):

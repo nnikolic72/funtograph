@@ -22,6 +22,8 @@ class Character(models.Model):
     created_at = models.DateTimeField(editable=False)
     updated_at = models.DateTimeField()
 
+
+
     #loot = many to many field to Loot class, with through class LootAmount
 
     def __unicode__(self):
@@ -97,3 +99,23 @@ class Photographer(Character):
         verbose_name = _('Photographer')
         verbose_name_plural = _('Photographers')
 
+
+def get_photographer_ranking(p_photographer):
+
+    """
+
+    @return: Ranking of character in game (integer)
+    """
+    ranking = 0
+    is_found = False
+    all_photographers = Photographer.objects.all()
+    for photographer in all_photographers:
+        ranking += 1
+        if photographer.id == p_photographer.id:
+            is_found = True
+            break
+
+    if is_found:
+        return ranking
+    else:
+        return None

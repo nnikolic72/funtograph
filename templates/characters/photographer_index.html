@@ -42,7 +42,7 @@
             {% for photographer in photographers %}
                 <tr>
                     <td>{{ forloop.counter }}.</td>
-                    <td><a href="{% url 'characters:photographer' p_photographer_name=photographer.name %}">{{ photographer.name }}</a></div>
+                    <td><a href="{% url 'characters:photographer' p_photographer_name=photographer.name %}">{{ photographer.name }}</a></td>
                     <td>{{ photographer.level }}</td>
                     <td>{{ photographer.current_xp }}</td>
 

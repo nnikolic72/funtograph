@@ -7,7 +7,8 @@ function like_callback(data) {
     var p_photo_id = data.p_photo_id;
     var id_name_likes = '#likes_id_' + p_photo_id;
     var id_name_unlikes = '#unlikes_id_' + p_photo_id;
-    var id_name_num = '#likes_num_' + p_photo_id;
+    var id_name_num_likes = '#likes_num_' + p_photo_id;
+    var id_name_num_dislikes = '#dislikes_num_' + p_photo_id;
 
     //alert(id_name)
     $(id_name_likes).addClass('btn-default').removeClass('btn-success')
@@ -28,7 +29,8 @@ function like_callback(data) {
         $(id_name_unlikes).addClass('btn-warning');
     }
 
-    $(id_name_num).html(data.no_of_likes);
+    $(id_name_num_likes).html(data.no_of_likes);
+    $(id_name_num_dislikes).html(data.no_of_dislikes);
 }
 
 function like(p_photo_id, static_url, pressed_button) {
