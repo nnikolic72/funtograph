@@ -13,7 +13,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = True
 
 TEMPLATE_DEBUG = True
-#FUNTOGRAPH_IS_LIVE = True
+FUNTOGRAPH_IS_LIVE = os.environ['FUNTOGRAPH_IS_LIVE']
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
