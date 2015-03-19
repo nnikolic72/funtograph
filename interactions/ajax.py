@@ -21,7 +21,7 @@ from photos.models import Photo
 from .forms import CommentForm
 
 @dajaxice_register
-def like(req, p_photo_id):
+def like(req, p_photo_id, p_pressed_button):
     """
     Like/unlike a photo in Funtograph
 
@@ -60,37 +60,57 @@ def like(req, p_photo_id):
                     # Logged member has a photo art lover character
                     #already_liked = False
                     like_instance = None
+
                     try:
                         like_instance = Like.objects.get(
                             members_likers=logged_photo_art_lover,
-                            photo=photo_instance
-                        )
-                        already_liked = True
+                            photo=photo_instance,
+                            )
+                        make_new_like = False
                     except ObjectDoesNotExist:
-                        already_liked = False
+                        make_new_like = True
 
-                    if already_liked:
-                        # we need to unlike the photo
-                        if like_instance:
-                            like_instance.delete()
-                            like_action_result = 'unliked'
-                    else:
-                        # we need to like the photo
+                    if make_new_like:
+                        if p_pressed_button == 'like_button':
+                            l_like_value = True
+                        else:
+                            #Then it's unlike button
+                            l_like_value = False
+
                         new_like = Like(
                             members_likers=logged_photo_art_lover,
-                            photo=photo_instance
+                            photo=photo_instance,
+                            like_value=l_like_value
                         )
                         new_like.save()
-                        like_action_result = 'liked'
+                        like_action_result = p_pressed_button + '-pressed'
+                    else:
+                        # we need to change existing like
+                        delete_existing_like = False
+                        if p_pressed_button == 'like_button':
+                            if like_instance.like_value:
+                                delete_existing_like = True
 
-            no_of_likes = Like.objects.filter(photo__id=p_photo_id).count()
+                        else:
+                            # then it's unlike button
+                            if not like_instance.like_value:
+                                delete_existing_like = True
 
-    return json.dumps({'p_photo_id': p_photo_id,
-                       'like_action_result': like_action_result,
-                       #'static_url': STATIC_URL,
-                       'no_of_likes': no_of_likes
-    }
-    )
+                        if delete_existing_like:
+                            like_instance.delete()
+                            like_action_result = p_pressed_button + '-unpressed'
+                        else:
+                            like_instance.like_value = not like_instance.like_value
+                            like_instance.save()
+                            like_action_result = p_pressed_button + '-pressed'
+
+        no_of_likes = photo_instance.get_number_of_likes
+
+        return json.dumps({'p_photo_id': p_photo_id,
+                           'like_action_result': like_action_result,
+                           'no_of_likes': no_of_likes
+        }
+        )
 
 
 @dajaxice_register
@@ -160,7 +180,6 @@ def favorite(req, p_photo_id):
 
     return json.dumps({'p_photo_id': p_photo_id,
                        'favorite_action_result': favorite_action_result,
-                       #'static_url': STATIC_URL,
                        'no_of_favorites': no_of_favorites
     }
     )
@@ -178,6 +197,8 @@ def send_comment(req, p_photo_id, form):
     """
 
     comment_form = CommentForm(form)
+    comment_added = False
+    commented_photo = Photo.objects.get(id=p_photo_id)
 
     if comment_form.is_valid():
         logged_user_id = req.user.id
@@ -185,6 +206,7 @@ def send_comment(req, p_photo_id, form):
             try:
                 # is logged user a member?
                 logged_member = Member.objects.get(user__id=logged_user_id)
+
             except ObjectDoesNotExist:
                 logged_member = None
 
@@ -196,20 +218,28 @@ def send_comment(req, p_photo_id, form):
 
                     #Create a comment
                     try:
-                        commented_photo = Photo.objects.get(id=p_photo_id)
-                        #photo_art_= PhotoArtLover.objects.get(id=p_photo_art_lover_id)
                         cleaned_comment = comment_form.cleaned_data[u'comment_text']
-                        new_comment = Comment(photo=commented_photo,
-                                              comment_text=cleaned_comment,
-                                              members_commenters=logged_photo_art_lover
-                                              )
-                        new_comment.save()
+                        if (cleaned_comment != '') and (cleaned_comment is not None):
+
+                            #photo_art_= PhotoArtLover.objects.get(id=p_photo_art_lover_id)
+
+                            new_comment = Comment(photo=commented_photo,
+                                                  comment_text=cleaned_comment,
+                                                  members_commenters=logged_photo_art_lover
+                            )
+                            new_comment.save()
+                            comment_added = True
                     except ObjectDoesNotExist:
+                        cleaned_comment = None
+                        logged_photo_art_lover = None
                         commented_photo = None
 
-
+    no_of_comments = commented_photo.get_number_of_comments
 
     return json.dumps({
-        'comment_text': form.comment_text
-    }
+        'comment_text': cleaned_comment,
+        'logged_photo_art_lover': logged_photo_art_lover,
+        'p_photo_id': commented_photo.id,
+        'no_of_comments': no_of_comments
+        }
     )

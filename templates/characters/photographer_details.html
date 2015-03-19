@@ -41,21 +41,40 @@
                                 <div class="text-center">
                                     {%  if photo in liked_photos %}
                                         <span
-                                                class="glyphicon glyphicon-heart text-default btn btn-sm btn-success"
+                                                class="glyphicon glyphicon-ok-sign text-default btn btn-sm btn-success"
                                                 id="likes_id_{{ photo.id }}"
-                                                onclick="like('{{ photo.id }}', '{{STATIC_URL}}');"
+                                                onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'like_button');"
                                                 title={% trans 'Likes' %}
                                                 >
                                         </span>
                                     {% else %}
                                         <span
-                                                class="glyphicon glyphicon-heart-empty text-default btn btn-sm btn-default"
+                                                class="glyphicon glyphicon-ok-sign text-default btn btn-sm btn-default"
                                                 id="likes_id_{{ photo.id }}"
-                                                onclick="like('{{ photo.id }}', '{{STATIC_URL}}');"
+                                                onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'like_button');"
                                                 title={% trans 'Likes' %}
                                                 >
                                         </span>
                                     {% endif %}
+
+                                    {%  if photo in unliked_photos %}
+                                        <span
+                                                class="glyphicon glyphicon-remove-sign text-default btn btn-sm btn-danger"
+                                                id="unlikes_id_{{ photo.id }}"
+                                                onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'unlike_button');"
+                                                title={% trans 'Likes' %}
+                                                >
+                                        </span>
+                                    {% else %}
+                                        <span
+                                                class="glyphicon glyphicon-remove-sign text-default btn btn-sm btn-default"
+                                                id="unlikes_id_{{ photo.id }}"
+                                                onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'unlike_button');"
+                                                title={% trans 'Likes' %}
+                                                >
+                                        </span>
+                                    {% endif %}
+
 
                                     <span id="likes_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_likes }}</span>
 
@@ -83,7 +102,7 @@
                                     <span
                                             class="glyphicon glyphicon-comment btn btn-sm btn-default"
                                             title={% trans 'Comments' %}
-                                            data-toggle="modal"
+                                                    data-toggle="modal"
                                             data-target="#comments{{ photo.id }}"></span>
                                     <span id="comments_num_{{ photo.id }}">{{ photo.get_number_of_comments }}</span>
 
@@ -100,23 +119,63 @@
                                             <div class="modal-body">
                                                 {%  with photo.get_comments as comments %}
                                                     {% if comments %}
-                                                        {% for comment in comments %}
-                                                            <!-- Todo: Insert check for member  -->
-                                                            <span class="glyphicon glyphicon-thumbs-up text-default" id="comment_id{{ comment.id }}"></span> <strong>{{ comment.members_commenters }}</strong>: {{ comment.comment_text }}
-                                                        {% endfor %}
+                                                        <div id="comment_photo_id_{{ photo.id }}">
+                                                            {% for comment in comments %}
+                                                                <p>
+                                                                    {% if user_is_gallery_owner %}
+                                                                        {% if my_photo_art_lover.id != comment.members_commenters.id %}
+                                                                            <span
+                                                                                    class="glyphicon glyphicon-thumbs-up text-default"
+                                                                                    id="comment_id_thumbs_up_{{ comment.id }}"
+                                                                                    onclick="like_comment({{ photo.id }}, {{ comment.id }});"
+                                                                                    >
+
+                                                                            </span>
+                                                                        {% endif %}
+
+                                                                    {% endif %}
+
+                                                                    <strong
+                                                                            {% if my_photo_art_lover.id == comment.members_commenters.id %}
+                                                                                class="text-info"
+                                                                            {% else %}
+                                                                                class="text-default"
+                                                                            {% endif %}
+
+                                                                            >{{ comment.members_commenters }}</strong>: {{ comment.comment_text }} &nbsp;
+
+                                                                               <span
+                                                                                    class="glyphicon glyphicon-trash text-default"
+                                                                                    id="comment_id_delete_comment_{{ comment.id }}"
+                                                                                    onclick="delete_comment({{ photo.id }}, {{ comment.id }});"
+                                                                                    >
+
+                                                                            </span>
+
+                                                                </p>
+                                                            {% endfor %}
+                                                        </div>
                                                     {% else %}
-                                                        <p>{% trans 'No comments on this photo. Be the first one to comment!' %}</p>
+                                                        <div id="comment_photo_id_{{ photo.id }}">
+                                                            <p>{% trans 'No comments on this photo. Be the first one to comment!' %}</p>
+                                                        </div>
                                                     {% endif %}
                                                 {% endwith %}
                                                 <hr>
-                                                <form id="comment_form_{{ photo.id }}" class="form" role="form" action="#">
+                                                <form id="comment_form_{{ photo.id }}" class="form" role="form" action="">
                                                     {% csrf_token %}
                                                     {{ comment_form.comment_text }}
                                                     <div class="form-group">
-                                                        <button class="btn btn-primary" type="submit"
+                                                        <button class="btn btn-primary"
+                                                                type="submit"
                                                                 onclick="send_comment({{ photo.id }});"
-                                                                >Add comment</button>
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                style="margin-top: 10px;"
+                                                                >{% trans 'Add comment' %}</button>
+                                                        <button type="button"
+                                                                class="btn btn-default"
+                                                                data-dismiss="modal"
+                                                                style="margin-top: 10px;"
+                                                                >{% trans 'Close' %}</button>
                                                     </div>
                                                 </form>
 

@@ -11,6 +11,7 @@ class Like(models.Model):
     """
     photo = models.ForeignKey('photos.Photo')
     members_likers = models.ForeignKey('characters.PhotoArtLover')
+    like_value = models.BooleanField(default=True, null=False, blank=False)
 
     created_at = models.DateTimeField(editable=False)
     updated_at = models.DateTimeField()
@@ -37,6 +38,8 @@ class Comment(models.Model):
     comment_text = models.CharField(max_length=300, blank=True, null=True,
                                     help_text=_('Comment up to 300 characters. Be polite!')
     )
+
+    reply_to = models.ForeignKey('interactions.Comment', null=True, blank=True)
 
     created_at = models.DateTimeField(editable=False)
     updated_at = models.DateTimeField()

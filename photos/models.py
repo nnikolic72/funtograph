@@ -116,7 +116,10 @@ class Photo(models.Model):
         :rtype: Integer
         """
 
-        likes_count = Like.objects.filter(photo=self).count()
+        likes_count = Like.objects.filter(photo=self, like_value=True).count()
+        unlikes_count = Like.objects.filter(photo=self, like_value=False).count()
+        likes_count = likes_count - unlikes_count
+
         return likes_count
 
     @property

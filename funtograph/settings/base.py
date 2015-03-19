@@ -88,6 +88,7 @@ INSTALLED_APPS = (
     'cloudinary',
     'dajaxice',
 
+
     'lander',
     'members',
     'characters',
@@ -166,4 +167,9 @@ LOGIN_URL = '/members/login'
 LOGOUT_URL = '/members/logout'
 LOGIN_REDIRECT_URL = '/members/dashboard'
 
+
+
+
 MAX_UPLOAD_PHOTOS_DEFAULT = 5
+
+

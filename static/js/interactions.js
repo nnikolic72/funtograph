@@ -3,35 +3,43 @@
  */
 
 function like_callback(data) {
+    //alert(data.like_action_result);
     var p_photo_id = data.p_photo_id;
-    var id_name = '#likes_id_' + p_photo_id;
+    var id_name_likes = '#likes_id_' + p_photo_id;
+    var id_name_unlikes = '#unlikes_id_' + p_photo_id;
     var id_name_num = '#likes_num_' + p_photo_id;
 
     //alert(id_name)
+    $(id_name_likes).addClass('btn-default').removeClass('btn-success')
+    $(id_name_unlikes).addClass('btn-default').removeClass('btn-danger')
 
-    if (data.like_action_result == 'liked') {
-        $(id_name).removeClass('glyphicon-heart-empty btn-default').addClass('glyphicon-heart btn-success');
+    if (data.like_action_result == 'like_button-pressed') {
+        $(id_name_likes).addClass('btn-success');
+        //alert('liked')
+    }
+   if (data.like_action_result == 'unlike_button-pressed') {
+        $(id_name_unlikes).addClass('btn-danger');
         //alert('liked')
     }
 
-    if (data.like_action_result == 'unliked') {
-        $(id_name).removeClass('glyphicon-heart btn-success').addClass('glyphicon-heart-empty btn-default');
-        //alert('unliked')
-    }
 
     if (data.like_action_result == 'error') {
-        $(id_name).addClass('btn-error');
+        $(id_name_likes).addClass('btn-warning');
+        $(id_name_unlikes).addClass('btn-warning');
     }
 
-    $(id_name_num).html(data.no_of_likes)
+    $(id_name_num).html(data.no_of_likes);
 }
 
-function like(p_photo_id, static_url) {
+function like(p_photo_id, static_url, pressed_button) {
+    //alert('in like');
+    Dajaxice.interactions.like(like_callback,
+        {   'p_photo_id':p_photo_id,
+            'p_pressed_button': pressed_button
 
-    Dajaxice.interactions.like(like_callback, {'p_photo_id':p_photo_id});
+        }
+    );
 }
-
-
 
 
 function favorite_callback(data) {
@@ -55,7 +63,7 @@ function favorite_callback(data) {
         $(id_name).addClass('btn-error');
     }
 
-    $(id_name_num).html(data.no_of_favorites)
+    $(id_name_num).html(data.no_of_favorites);
 }
 
 
@@ -66,7 +74,13 @@ function favorite(p_photo_id, static_url) {
 
 
 function send_comment_callback(data) {
-    alert('Send comment callback');
+    //alert('Send comment callback');
+    var p_photo_id = data.p_photo_id;
+    var id_name_num = '#comments_num_' + p_photo_id;
+
+    alert(id_name_num);
+
+    $(id_name_num).html(data.no_of_comments);
 
 }
 

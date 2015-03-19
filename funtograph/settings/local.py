@@ -8,7 +8,9 @@ from ConfigParser import ConfigParser
 DEBUG = True
 ALLOWED_HOSTS = ['*']
 
+
 TEMPLATE_DEBUG = True
+
 
 #FUNTOGRAPH_IS_LIVE = True
 

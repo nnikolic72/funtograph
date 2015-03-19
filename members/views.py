@@ -14,7 +14,7 @@ import cloudinary.api
 from .forms import (
     UserForm,
     MemberForm,
-    LoginForm
+    LoginForm,
 )
 
 from .models import (User,
