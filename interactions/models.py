@@ -10,7 +10,7 @@ class Like(models.Model):
     Likes data models
     """
     photo = models.ForeignKey('photos.Photo')
-    members_likers = models.ForeignKey('characters.PhotoArtLover')
+    members_likers = models.ForeignKey('characters.Photographer')
     like_value = models.BooleanField(default=True, null=False, blank=False)
 
     created_at = models.DateTimeField(editable=False)
@@ -34,7 +34,7 @@ class Comment(models.Model):
     Comments data models
     """
     photo = models.ForeignKey('photos.Photo')
-    members_commenters = models.ForeignKey('characters.PhotoArtLover')
+    members_commenters = models.ForeignKey('characters.Photographer')
     comment_text = models.CharField(max_length=300, blank=True, null=True,
                                     help_text=_('Comment up to 300 characters. Be polite!')
     )
@@ -62,7 +62,7 @@ class Favorite(models.Model):
     Comments data models
     """
     photo = models.ForeignKey('photos.Photo')
-    members_favoriters = models.ForeignKey('characters.PhotoArtLover')
+    members_favoriters = models.ForeignKey('characters.Photographer')
 
     created_at = models.DateTimeField(editable=False)
     updated_at = models.DateTimeField()

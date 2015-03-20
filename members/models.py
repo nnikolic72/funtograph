@@ -7,10 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import cloudinary
 
 from characters.models import (
-    PhotoArtLover,
     Photographer,
-    PhotoJudge,
-    PhotoTeamManager
 )
 
 # Create your models here.
@@ -82,21 +79,6 @@ class Member(models.Model):
     """
 
     @property
-    def get_my_photo_art_lover(self):
-        """
-
-        :return: PhotoArtLover object
-        :rtype:
-        """
-
-        try:
-            my_photo_art_lover = PhotoArtLover.objects.get(member=self)
-        except ObjectDoesNotExist:
-            my_photo_art_lover = None
-
-        return my_photo_art_lover
-
-    @property
     def get_my_photographer(self):
         """
 
@@ -110,36 +92,6 @@ class Member(models.Model):
             my_photographer = None
 
         return my_photographer
-
-    @property
-    def get_my_photo_judge(self):
-        """
-
-        :return: Photographer object
-        :rtype:
-        """
-
-        try:
-            my_photo_judge = PhotoJudge.objects.get(member=self)
-        except ObjectDoesNotExist:
-            my_photo_judge = None
-
-        return my_photo_judge
-
-    @property
-    def get_my_photo_team_manager(self):
-        """
-
-        :return: Photographer object
-        :rtype:
-        """
-
-        try:
-            my_photo_team_manager = PhotoTeamManager.objects.get(member=self)
-        except ObjectDoesNotExist:
-            my_photo_team_manager = None
-
-        return my_photo_team_manager
 
 
     # This line is required. Links UserProfile to a User model instance.

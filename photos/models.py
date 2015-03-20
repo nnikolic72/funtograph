@@ -4,7 +4,7 @@ from django.utils.datetime_safe import datetime
 
 from cloudinary.models import CloudinaryField
 
-from characters.models import (Character,
+from characters.models import (
                                Photographer)
 
 from interactions.models import (
@@ -13,6 +13,7 @@ from interactions.models import (
     Favorite
 )
 # Create your models here.
+from members.models import Member
 
 
 class PhotoCategory(models.Model):
@@ -128,7 +129,7 @@ class Photo(models.Model):
         :rtype: Integer
         """
 
-        #likes_count = Like.objects.filter(photo=self, like_value=True).count()
+        # likes_count = Like.objects.filter(photo=self, like_value=True).count()
         dislikes_count = Like.objects.filter(photo=self, like_value=False).count()
 
         return dislikes_count
@@ -168,15 +169,15 @@ class Photo(models.Model):
 
     title = models.CharField(max_length=100,
                              verbose_name=_('Photo title'))
-    owner = models.ManyToManyField(Photographer, through='PhotoToPhotographer',
-                                    through_fields=('photo', 'photographer')
-    )
+    owner = models.ManyToManyField(Photographer, null=True, blank=True)
+
+    author = models.ForeignKey(Member, null=True, blank=True)
 
     photo = CloudinaryField('image', null=False)
 
     photo_wear = models.IntegerField(null=False, blank=False,
-                                      default=0,
-                                      verbose_name=_('Photo wear')
+                                     default=0,
+                                     verbose_name=_('Photo wear')
     )
 
     photo_price = models.IntegerField(null=False, blank=False,
@@ -184,7 +185,7 @@ class Photo(models.Model):
                                       verbose_name=_('Photo price')
     )
 
-    avg_photo_rating = models.DecimalField(max_digits=3,decimal_places=2, default=0,
+    avg_photo_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0,
                                            null=True, blank=True,
                                            verbose_name=_('Average photo rating')
     )
@@ -192,6 +193,7 @@ class Photo(models.Model):
     categories = models.ManyToManyField(PhotoCategory, null=True, blank=True,
                                         verbose_name=_('Photo Categories')
     )
+
     attributes = models.ManyToManyField(PhotoAttribute, null=True, blank=True,
                                         verbose_name=_('Photo Attributes')
     )
@@ -213,7 +215,7 @@ class Photo(models.Model):
     created_at = models.DateTimeField(editable=False)
     updated_at = models.DateTimeField()
 
-    #loot = many to many field to Loot class, with through class LootAmount
+    # loot = many to many field to Loot class, with through class LootAmount
 
     def save(self, *args, **kwargs):
         """ On save, update timestamps """
@@ -227,11 +229,3 @@ class Photo(models.Model):
         verbose_name = _('Photo')
         verbose_name_plural = _('Photos')
 
-
-class PhotoToPhotographer(models.Model):
-
-    photo = models.ForeignKey(Photo)
-    photographer = models.ForeignKey(Photographer)
-
-    is_author = models.BooleanField(default=True, null=False, blank=False)
-    is_manager = models.BooleanField(default=False, null=False, blank=False)

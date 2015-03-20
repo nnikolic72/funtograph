@@ -124,7 +124,7 @@
                                                             {% for comment in comments %}
                                                                 <p>
                                                                     {% if user_is_gallery_owner %}
-                                                                        {% if my_photo_art_lover.id != comment.members_commenters.id %}
+                                                                        {% if my_photographer.id != comment.members_commenters.id %}
                                                                             <span
                                                                                     class="glyphicon glyphicon-thumbs-up text-default"
                                                                                     id="comment_id_thumbs_up_{{ comment.id }}"
@@ -137,7 +137,7 @@
                                                                     {% endif %}
 
                                                                     <strong
-                                                                            {% if my_photo_art_lover.id == comment.members_commenters.id %}
+                                                                            {% if my_photographer.id == comment.members_commenters.id %}
                                                                                 class="text-info"
                                                                             {% else %}
                                                                                 class="text-default"

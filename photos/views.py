@@ -7,11 +7,9 @@ from django.core.exceptions import ObjectDoesNotExist
 import cloudinary
 
 from .forms import PhotoUploadForm
-from .models import Photo, PhotoToPhotographer
+from .models import Photo
 from characters.models import Photographer
 from members.models import Member
-
-
 
 # Create your views here.
 class PhotosUploadView(TemplateView):
@@ -44,7 +42,8 @@ class PhotosUploadView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         """
-        Handle submitter form with POST method
+        Handle photo upload form with POST method
+
         :param request:
         :type request:
         :param args:
@@ -63,23 +62,17 @@ class PhotosUploadView(TemplateView):
             try:
                 new_photo_member = Member.objects.get(user__id=owner_user_id)
                 new_photo_owner = Photographer.objects.get(member=new_photo_member)
+                new_photo_author = new_photo_owner
             except ObjectDoesNotExist:
                 new_photo_owner = None
+                new_photo_author = None
 
             if new_photo_owner:
                 if 'photo' in request.FILES:
-                    #profile.picture = request.FILES['picture']
-
-                    #profile_pic_data = cloudinary.uploader.upload(
-                    #    request.FILES['picture'],
-                    #    crop='pad',
-                    #    width=600,
-                    #    height=600
-                    #)
-                    #debg = photo_upload_form.cleaned_data[u'photo']
-
                     new_photo = Photo(title=photo_upload_form.cleaned_data[u'title'],
-                                      photo=photo_upload_form.cleaned_data[u'photo']
+                                      photo=photo_upload_form.cleaned_data[u'photo'],
+                                      owner=new_photo_owner,
+                                      author=new_photo_author
                                       )
                     new_photo.save()
                     for new_category in photo_upload_form.cleaned_data[u'categories']:
@@ -87,12 +80,6 @@ class PhotosUploadView(TemplateView):
                     for new_attribute in photo_upload_form.cleaned_data[u'attributes']:
                         new_photo.attributes.add(new_attribute)
 
-                    PhotoToPhotographer.objects.create(
-                        photo=new_photo,
-                        photographer=new_photo_owner,
-                        is_author=True,
-                        is_manager=False
-                    )
                     new_photo.save()
                     # Todo: redirect to members photo page
                     return HttpResponseRedirect(
@@ -100,8 +87,6 @@ class PhotosUploadView(TemplateView):
                                 kwargs={'p_photographer_name': new_photo_owner.name}
                         )
                     )
-
-
         else:
             if request.user.is_authenticated():
                 upload_form = PhotoUploadForm()

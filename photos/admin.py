@@ -1,10 +1,10 @@
 from django.contrib import admin
+from members.models import Member
 
 from .models import (
     Photo,
     PhotoCategory,
     PhotoAttribute,
-    PhotoToPhotographer
 )
 
 # Register your models here.
@@ -42,13 +42,13 @@ class PhotoAttributeAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
-class OwnerInline(admin.TabularInline):
-    model = PhotoToPhotographer
-    fields = ('photographer',)
+#class OwnerInline(admin.TabularInline):
+#    model = Member
+#    fields = ('photographer',)
 
 class PhotoAdmin(admin.ModelAdmin):
 
-    inlines = (OwnerInline,)
+    #inlines = (OwnerInline,)
 
     list_display = ('title',
                     'photo',
@@ -66,6 +66,8 @@ class PhotoAdmin(admin.ModelAdmin):
         ('General Information', {'fields': [
             'title',
             'photo',
+            'author',
+            'owner',
             'active',
         ]
         }

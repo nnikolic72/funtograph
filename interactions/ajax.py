@@ -9,7 +9,7 @@ from dajaxice.utils import deserialize_form
 
 from funtograph.settings.base import STATIC_URL
 from members.models import Member
-from characters.models import PhotoArtLover
+from characters.models import Photographer
 from interactions.models import (
     Like,
     Favorite,
@@ -53,7 +53,7 @@ def like(req, p_photo_id, p_pressed_button):
                 logged_member = None
 
             if logged_member:
-                # Logged user is a member. Get their PhotoArtLover object
+                # Logged user is a member. Get their Photographer object
                 logged_photo_art_lover = logged_member.get_my_photo_art_lover
 
                 if logged_photo_art_lover:
@@ -148,7 +148,7 @@ def favorite(req, p_photo_id):
                 logged_member = None
 
             if logged_member:
-                # Logged user is a member. Get their PhotoArtLover object
+                # Logged user is a member. Get their Photographer object
                 logged_photo_art_lover = logged_member.get_my_photo_art_lover
 
                 if logged_photo_art_lover:
@@ -213,7 +213,7 @@ def send_comment(req, p_photo_id, form):
                 logged_member = None
 
             if logged_member:
-                # Logged user is a member. Get their PhotoArtLover object
+                # Logged user is a member. Get their Photographer object
                 logged_photo_art_lover = logged_member.get_my_photo_art_lover
 
                 if logged_photo_art_lover:
@@ -223,7 +223,7 @@ def send_comment(req, p_photo_id, form):
                         cleaned_comment = comment_form.cleaned_data[u'comment_text']
                         if (cleaned_comment != '') and (cleaned_comment is not None):
 
-                            #photo_art_= PhotoArtLover.objects.get(id=p_photo_art_lover_id)
+                            #photo_art_= Photographer.objects.get(id=p_photo_art_lover_id)
 
                             new_comment = Comment(photo=commented_photo,
                                                   comment_text=cleaned_comment,

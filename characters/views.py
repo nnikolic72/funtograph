@@ -8,15 +8,11 @@ from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 from .models import (
-    Photographer,
-    PhotoTeamManager,
-    PhotoJudge,
-    PhotoArtLover,
+    Photographer
 )
 
 from photos.models import (
     Photo,
-    PhotoToPhotographer
 )
 
 from interactions.models import (

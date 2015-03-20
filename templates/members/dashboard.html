@@ -59,7 +59,7 @@
             <div class="well">@{{ user }} {%  trans 'Funtograph Levels and experience' %}</div>
             <table class="table">
                 <tr>
-                    <th>{% trans 'Your roles' %}</th>
+                    <th>{% trans 'You' %}</th>
                     <th>{%  trans 'Level' %}</th>
                     <th>{%  trans 'Current XP' %}</th>
                     <th>{%  trans 'Ranking' %}</th>
@@ -68,7 +68,7 @@
                     <td>
                         <a href="{% url 'characters:photographer' p_photographer_name=photographer.name %}"
                            class="btn btn-success">
-                            {%  trans 'Photographer' %} {{ photographer.name }}
+                            {{ photographer.name }}
                         </a>
                     </td>
                     <td>
@@ -81,49 +81,7 @@
                         {{ photographer.get_current_ranking_photographer }}
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <a href="#" class="btn btn-danger">{%  trans 'Art lover' %} {{ photo_art_lover.name }}</a>
-                    </td>
-                    <td>
-                        {{ photo_art_lover.level }}
-                    </td>
-                    <td>
-                        {{ photo_art_lover.current_xp }}
-                    </td>
-                    <td>
 
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="#" class="btn btn-warning">{%  trans 'Photo judge' %} {{ photo_judge.name }}</a>
-                    </td>
-                    <td>
-                        {{ photo_judge.level }}
-                    </td>
-                    <td>
-                        {{ photo_judge.current_xp }}
-                    </td>
-                    <td>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="#" class="btn btn-info">{%  trans 'Photo team manager' %} {{ photo_team_manager.name }}</a>
-
-                    </td>
-                    <td>
-                        {{ photo_team_manager.level }}
-                    </td>
-                    <td>
-                        {{ photo_team_manager.current_xp }}
-                    </td>
-                    <td>
-
-                    </td>
-                </tr>
             </table>
 
         </div>

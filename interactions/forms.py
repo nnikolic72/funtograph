@@ -6,6 +6,7 @@ from django.utils.translation import ugettext as _
 
 from .models import Comment
 
+
 class CommentForm(Form):
     """
     Form for commenting on a photo

@@ -7,7 +7,7 @@ import cloudinary
 # Create your models here.
 
 
-class Character(models.Model):
+class Photographer(models.Model):
     def is_character_active(self):
         return self.character_active
 
@@ -18,6 +18,9 @@ class Character(models.Model):
     total_xp = models.IntegerField(default=0, blank=False, null=False)
 
     character_active = models.BooleanField(default=True, blank=False, null=False)
+
+    max_photos_to_upload = models.IntegerField(default=MAX_UPLOAD_PHOTOS_DEFAULT,
+                                               null=False, blank=False)
 
     created_at = models.DateTimeField(editable=False)
     updated_at = models.DateTimeField()
@@ -39,83 +42,10 @@ class Character(models.Model):
         if not self.id:
             self.created_at = datetime.today()
         self.updated_at = datetime.today()
-        return super(Character, self).save(*args, **kwargs)
+        return super(Photographer, self).save(*args, **kwargs)
 
     class Meta:
-        abstract = True
         get_latest_by = _('created_at')
         ordering = (_('-level'), _('-current_xp'), _('name'),)
 
 
-class PhotoArtLover(Character):
-    """
-    Role: PhotoArtLover
-    """
-
-    character_type = models.CharField(max_length=50, default=_('Photo Art Lover'))
-
-    class Meta(Character.Meta):
-        verbose_name = _('Photo Art Lover')
-        verbose_name_plural = _('Photo Art Lovers')
-
-
-
-class PhotoJudge(Character):
-    """
-    Role: PhotoArtLover
-    """
-
-    character_type = models.CharField(max_length=50, default=_('Photo Judge'))
-
-    class Meta(Character.Meta):
-        verbose_name = _('Photo Judge')
-        verbose_name_plural = _('Photo Judges')
-
-
-
-class PhotoTeamManager(Character):
-    """
-    Role: PhotoArtLover
-    """
-
-    character_type = models.CharField(max_length=50, default=_('Photo Team Manager'))
-
-    class Meta(Character.Meta):
-        verbose_name = _('Photo Team Manager')
-        verbose_name_plural = _('Photo Team Managers')
-
-
-class Photographer(Character):
-    """
-    Role: PhotoArtLover
-    """
-
-    character_type = models.CharField(max_length=50, default=_('Photographer'))
-
-    max_photos_to_upload = models.IntegerField(default=MAX_UPLOAD_PHOTOS_DEFAULT,
-                                               null=False, blank=False)
-
-    class Meta(Character.Meta):
-        verbose_name = _('Photographer')
-        verbose_name_plural = _('Photographers')
-
-
-def get_photographer_ranking(p_photographer):
-
-    """
-
-    @return: Ranking of character in game (integer)
-    """
-    ranking = 0
-    is_found = False
-    all_photographers = Photographer.objects.all()
-    for photographer in all_photographers:
-        ranking += 1
-        if photographer.id == p_photographer.id:
-            is_found = True
-            break
-
-    if is_found:
-        return ranking
-    else:
-        return None
