@@ -5,6 +5,8 @@ from django.views.generic import TemplateView
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.translation import ugettext as _
+
 # Create your views here.
 from members.models import Member
 

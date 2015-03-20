@@ -40,7 +40,7 @@
                                     <img class="img-responsive" src="{{  photo.get_src_url }}" alt="{{ photo.title }}">
                                 </a>
 
-                                <div class="text-center">
+                                <div class="text-center" style="margin-bottom: 20px;">
                                     {%  if photo in liked_photos %}
                                         <span
                                                 class="glyphicon glyphicon-ok-sign text-default btn btn-sm btn-success"
@@ -108,6 +108,7 @@
 
 
                                 </div>
+                                <hr>
                                 {%  with photo.get_last_four_comments as comments %}
                                     {% if comments %}
                                         <div id="comment_photo_id_{{ photo.id }}">
@@ -167,16 +168,16 @@
                                                             {# Hidden comment reply form #}
                                                             <div id="comment_reply_div_{{ comment.id }}" style="display: none;">
                                                                 <form id="reply_comment_form_{{ photo.id }}" class="form" method="post" role="form" action="">
-                                                                {% csrf_token %}
-                                                                {{ comment_form.comment_text }}
-                                                                <div class="form-group">
-                                                                    <button class="btn btn-primary"
-                                                                            type="button"
-                                                                            onclick="send_reply_comment({{ comment.id }});"
-                                                                            style="margin-top: 10px;"
-                                                                            >{% trans 'Reply' %}</button>
-                                                                </div>
-                                                            </form>
+                                                                    {% csrf_token %}
+                                                                    {{ comment_form.comment_text }}
+                                                                    <div class="form-group">
+                                                                        <button class="btn btn-primary"
+                                                                                type="button"
+                                                                                onclick="send_reply_comment({{ comment.id }});"
+                                                                                style="margin-top: 10px;"
+                                                                                >{% trans 'Reply' %}</button>
+                                                                    </div>
+                                                                </form>
                                                             </div>
                                                         {% endif %}
                                                     </p>

@@ -2,6 +2,7 @@ __author__ = 'n.nikolic'
 
 import json
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.translation import ugettext as _
 
 from dajaxice.decorators import dajaxice_register
 from dajaxice.utils import deserialize_form
@@ -202,6 +203,7 @@ def send_comment(req, p_photo_id, form):
     comment_form = CommentForm(form)
     comment_added = False
     commented_photo = Photo.objects.get(id=p_photo_id)
+    comments_text = _('Comments:')
 
     if comment_form.is_valid():
         logged_user_id = req.user.id
@@ -250,6 +252,7 @@ def send_comment(req, p_photo_id, form):
         'no_of_comments': no_of_comments,
         'p_is_first': p_is_first,
         'new_comment_id': new_comment.id,
+        'comments_text': comments_text,
         }
     )
 
@@ -271,6 +274,7 @@ def delete_comment(req, p_comment_id):
 
     action_result = 'error'
     no_of_comments = 0
+    no_more_comments_translation = None
 
     try:
         comment_instance = Comment.objects.get(id=p_comment_id)
@@ -297,10 +301,13 @@ def delete_comment(req, p_comment_id):
                     action_result = 'deleted'
 
             no_of_comments = Comment.objects.filter(photo=photo).count()
+            no_more_comments_translation = _('No comments on this photo. Be the first one to comment!')
 
     return json.dumps({'p_comment_id': p_comment_id,
                        'action_result': action_result,
-                       'no_of_comments': no_of_comments
+                       'no_of_comments': no_of_comments,
+                       'p_photo_id': photo.id,
+                       'no_more_comments_translation': no_more_comments_translation,
     }
     )
 
