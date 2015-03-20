@@ -15,6 +15,7 @@ class LikeAdmin(admin.ModelAdmin):
 
     list_display = ('photo',
                     'members_likers',
+                    'like_value',
                     'created_at',
                     'updated_at',
     )
@@ -25,6 +26,7 @@ class LikeAdmin(admin.ModelAdmin):
         ('General Information', {'fields': [
             'photo',
             'members_likers',
+            'like_value',
             ]
         }
         ),
