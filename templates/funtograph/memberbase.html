@@ -11,7 +11,13 @@
 
 {% block bootstrap3_extra_head %}
     {{ block.super }}
+    <meta name="viewport" content="width=device-width,
+                                     initial-scale=1.0,
+                                     maximum-scale=1.0,
+                                     user-scalable=no">
+
     {% dajaxice_js_import %}
+
     {%  block extra_head %}
         <link rel="stylesheet" href="{{STATIC_URL}}css/funtograph-common.css">
     {% endblock extra_head %}
