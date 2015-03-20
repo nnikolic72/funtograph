@@ -12,17 +12,17 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='phototophotographer',
-            name='photo',
-        ),
-        migrations.RemoveField(
-            model_name='phototophotographer',
-            name='photographer',
-        ),
-        migrations.DeleteModel(
-            name='PhotoToPhotographer',
-        ),
+        #migrations.RemoveField(
+        #    model_name='phototophotographer',
+        #    name='photo',
+        #),
+        #migrations.RemoveField(
+        #    model_name='phototophotographer',
+        #    name='photographer',
+        #),
+        #migrations.DeleteModel(
+        #    name='PhotoToPhotographer',
+        #),
         migrations.AddField(
             model_name='photo',
             name='author',
