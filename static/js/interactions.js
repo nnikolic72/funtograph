@@ -99,12 +99,12 @@ function send_comment_callback(data) {
         new_comment_to_append += ' id="comment_id_delete_comment_' + new_comment_id + '" ';
         new_comment_to_append += ' onclick="delete_comment(' + p_photo_id + ', ' + new_comment_id + ' );">';
         new_comment_to_append += '</button>';
-
-        new_comment_to_append += '&nbsp;<strong class="text-info">' + logged_photographer_name + '</strong>: ' + comment_text + '&nbsp;';
+        new_comment_to_append += '<br>';
+        new_comment_to_append += '<strong class="text-info">' + logged_photographer_name + '</strong>: ' + comment_text + '&nbsp;';
         new_comment_to_append += '</p>';
-
-        new_comment_to_append += '</div>';
         new_comment_to_append += '<hr>';
+        new_comment_to_append += '</div>';
+
         //alert(new_comment_to_append);
         $(id_comments_text).append(new_comment_to_append)
     }
