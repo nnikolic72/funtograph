@@ -40,7 +40,7 @@
     </div>
     </div>
 
-    <div class="container">
+    <div class="container" style="padding-bottom: 20px;">
         {% if errors_login %}
             <div class="form-group">
                 <p>{{ errors_login }}</p>
@@ -66,6 +66,9 @@
         </form>
     </div>
 
+    <div class="container" style="padding-bottom: 20px;">
+    <p>Do not have an account? Register <a href="{% url 'members:register' %}">here</a>.</p>
+    </div>
 
     {% block footer %}
         <div class="container">

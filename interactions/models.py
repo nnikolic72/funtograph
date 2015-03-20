@@ -40,6 +40,7 @@ class Comment(models.Model):
     )
 
     reply_to = models.ForeignKey('interactions.Comment', null=True, blank=True)
+    liked_by_author = models.BooleanField(default=False, null=False, blank=False)
 
     created_at = models.DateTimeField(editable=False)
     updated_at = models.DateTimeField()

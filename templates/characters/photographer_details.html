@@ -28,7 +28,7 @@
             </div>
 
             <div class="row">
-                <div class="col-xs-12 col-lg-offset-3 col-lg-6 col-lg-offset-3">
+                <div class="col-xs-12 col-md-offset-3 col-md-6 col-md-offset-3">
 
                     {% for photo in  photographers_photos %}
                         <div class="panel panel-default">
@@ -36,7 +36,9 @@
                                 <div class="text-center">
                                     <h4 class="btn btn-default" style="margin: 10px;">{% trans 'Title:' %} {% if photo.title %}{{ photo.title }}{% else %}{% trans '[untitled]' %}{% endif %}</h4>
                                 </div>
-                                <img class="img-responsive" src="{{  photo.get_src_url }}" alt="{{ photo.title }}" style="margin: 10px">
+                                <a href="{% url 'photos:id' p_photo_id=photo.id %}">
+                                    <img class="img-responsive" src="{{  photo.get_src_url }}" alt="{{ photo.title }}">
+                                </a>
 
                                 <div class="text-center">
                                     {%  if photo in liked_photos %}
@@ -98,93 +100,118 @@
                                         <span id="favorites_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_favorites }}</span>
                                     {% endif %}
 
-
-
                                     <span
                                             class="glyphicon glyphicon-comment btn btn-sm btn-default"
                                             title={% trans 'Comments' %}
-                                                    data-toggle="modal"
-                                            data-target="#comments{{ photo.id }}"></span>
+                                            ></span>
                                     <span id="comments_num_{{ photo.id }}">{{ photo.get_number_of_comments }}</span>
 
+
                                 </div>
+                                {%  with photo.get_last_four_comments as comments %}
+                                    {% if comments %}
+                                        <div id="comment_photo_id_{{ photo.id }}">
+                                            <p>{% trans 'Comments:' %}</p>
 
-                                <!-- Modal -->
-                                <div class="modal fade" id="comments{{ photo.id }}" tabindex="-1" role="dialog" aria-labelledby="comentslabel{{ photo.id }}" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="comentslabel{{ photo.id }}">{% trans 'Comments' %}</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                {%  with photo.get_comments as comments %}
-                                                    {% if comments %}
-                                                        <div id="comment_photo_id_{{ photo.id }}">
-                                                            {% for comment in comments %}
-                                                                <p>
-                                                                    {% if user_is_gallery_owner %}
-                                                                        {% if my_photographer.id != comment.members_commenters.id %}
-                                                                            <span
-                                                                                    class="glyphicon glyphicon-thumbs-up text-default"
-                                                                                    id="comment_id_thumbs_up_{{ comment.id }}"
-                                                                                    onclick="like_comment({{ photo.id }}, {{ comment.id }});"
-                                                                                    >
-
-                                                                            </span>
+                                            {% for comment in comments %}
+                                                <div id="comment_id_{{ comment.id }}">
+                                                    <p>
+                                                        {% if user_is_gallery_owner %}
+                                                            {% if my_photographer.id != comment.members_commenters.id %}
+                                                                {# Like icon #}
+                                                                <button
+                                                                        {% if comment.liked_by_author == True %}
+                                                                            class="btn btn-xs glyphicon glyphicon-thumbs-up btn-info"
+                                                                        {% else %}
+                                                                            class="btn btn-xs glyphicon glyphicon-thumbs-up btn-default"
                                                                         {% endif %}
+                                                                            id="comment_id_thumbs_up_{{ comment.id }}"
+                                                                            onclick="like_comment({{ comment.id }});"
+                                                                        >
 
-                                                                    {% endif %}
+                                                                </button>
+                                                            {% endif %}
+                                                        {% endif %}
 
-                                                                    <strong
-                                                                            {% if my_photographer.id == comment.members_commenters.id %}
-                                                                                class="text-info"
-                                                                            {% else %}
-                                                                                class="text-default"
-                                                                            {% endif %}
+                                                        {% if my_photographer.id != comment.members_commenters.id %}
+                                                            {# Reply icon #}
+                                                            <button
+                                                                    class="btn btn-xs glyphicon glyphicon-comment btn-default"
+                                                                    id="comment_id_reply_comment_{{ comment.id }}"
+                                                                    onclick="reply_comment({{ comment.id }});"
+                                                                    >
+                                                            </button>
+                                                        {% endif %}
 
-                                                                            >{{ comment.members_commenters }}</strong>: {{ comment.comment_text }} &nbsp;
+                                                        {% if user_is_gallery_owner or my_photographer.id == comment.members_commenters.id %}
+                                                            {# Trashcan icon #}
+                                                            &nbsp;<button
+                                                                class="btn btn-xs glyphicon glyphicon-trash btn-default"
+                                                                id="comment_id_delete_comment_{{ comment.id }}"
+                                                                onclick="delete_comment({{ comment.id }});"
+                                                                >
+                                                        </button>
+                                                        {% endif %}
+                                                        <br>
+                                                        <strong
+                                                                {% if my_photographer.id == comment.members_commenters.id %}
+                                                                    class="text-info"
+                                                                {% else %}
+                                                                    class="text-default"
+                                                                {% endif %}
 
-                                                                               <span
-                                                                                    class="glyphicon glyphicon-trash text-default"
-                                                                                    id="comment_id_delete_comment_{{ comment.id }}"
-                                                                                    onclick="delete_comment({{ photo.id }}, {{ comment.id }});"
-                                                                                    >
+                                                                >{{ comment.members_commenters }}</strong>:
+                                                        {{ comment.comment_text }}
 
-                                                                            </span>
-
-                                                                </p>
-                                                            {% endfor %}
-                                                        </div>
-                                                    {% else %}
-                                                        <div id="comment_photo_id_{{ photo.id }}">
-                                                            <p>{% trans 'No comments on this photo. Be the first one to comment!' %}</p>
-                                                        </div>
-                                                    {% endif %}
-                                                {% endwith %}
+                                                        {% if my_photographer.id != comment.members_commenters.id %}
+                                                            {# Hidden comment reply form #}
+                                                            <div id="comment_reply_div_{{ comment.id }}" style="display: none;">
+                                                                <form id="reply_comment_form_{{ photo.id }}" class="form" method="post" role="form" action="">
+                                                                {% csrf_token %}
+                                                                {{ comment_form.comment_text }}
+                                                                <div class="form-group">
+                                                                    <button class="btn btn-primary"
+                                                                            type="button"
+                                                                            onclick="send_reply_comment({{ comment.id }});"
+                                                                            style="margin-top: 10px;"
+                                                                            >{% trans 'Reply' %}</button>
+                                                                </div>
+                                                            </form>
+                                                            </div>
+                                                        {% endif %}
+                                                    </p>
+                                                </div>
                                                 <hr>
-                                                <form id="comment_form_{{ photo.id }}" class="form" role="form" action="">
-                                                    {% csrf_token %}
-                                                    {{ comment_form.comment_text }}
-                                                    <div class="form-group">
-                                                        <button class="btn btn-primary"
-                                                                type="submit"
-                                                                onclick="send_comment({{ photo.id }});"
-                                                                style="margin-top: 10px;"
-                                                                >{% trans 'Add comment' %}</button>
-                                                        <button type="button"
-                                                                class="btn btn-default"
-                                                                data-dismiss="modal"
-                                                                style="margin-top: 10px;"
-                                                                >{% trans 'Close' %}</button>
-                                                    </div>
-                                                </form>
-
-                                            </div>
+                                            {% endfor %}
                                         </div>
+                                    {% else %}
+                                        <div id="comment_photo_id_{{ photo.id }}">
+                                            <p>{% trans 'No comments on this photo. Be the first one to comment!' %}</p>
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
+
+
+
+                                <form id="comment_form_{{ photo.id }}" class="form" method="post" role="form" action="">
+                                    {% csrf_token %}
+                                    {{ comment_form.comment_text }}
+                                    <div class="form-group">
+                                        <button class="btn btn-primary"
+                                                type="button"
+                                                onclick="send_comment({{ photo.id }});"
+                                                style="margin-top: 10px;"
+                                                >{% trans 'Add comment' %}</button>
+                                        <button type="button"
+                                                class="btn btn-default"
+                                                data-dismiss="modal"
+                                                style="margin-top: 10px;"
+                                                >{% trans 'Close' %}</button>
                                     </div>
-                                </div>
+                                </form>
+
                             </div>
+
                         </div>
                     {% endfor %}
                 </div>

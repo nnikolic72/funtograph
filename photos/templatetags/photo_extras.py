@@ -8,7 +8,7 @@ register = template.Library()
 from interactions.models import Like
 
 @register.simple_tag
-def has_photographer_liked(photo_art_lover, photo):
+def has_photographer_liked(photographer, photo):
     """
 
     :param photographer: PhotoArtLover
@@ -21,7 +21,7 @@ def has_photographer_liked(photo_art_lover, photo):
     has_liked = False
 
     no_of_likes = Like.objects.filter(
-        members_likers=photo_art_lover,
+        members_likers=photographer,
         photo=photo
     ).count()
 

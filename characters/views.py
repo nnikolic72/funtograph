@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
+from members.models import Member
 
 from .models import (
     Photographer
@@ -71,6 +72,11 @@ class CharactersPhotographerIndexView(TemplateView):
         :return:
         :rtype:
         """
+
+        liked_photos = None
+        unliked_photos = None
+        favorited_photos = None
+
         if request.user.is_authenticated():
 
             photographer_name = kwargs['p_photographer_name']
@@ -81,38 +87,41 @@ class CharactersPhotographerIndexView(TemplateView):
             photographers_photos = []
 
             try:
+                member = Member.objects.get(user__id=request.user.id)
+            except ObjectDoesNotExist:
+                member = None
+
+            try:
                 photographer = Photographer.objects.get(name=photographer_name)
             except ObjectDoesNotExist:
                 photographer = None
 
             try:
-                my_photo_art_lover = Photographer.objects.get(name=photographer_name)
+                my_photographer = Photographer.objects.get(member=member)
             except ObjectDoesNotExist:
-                my_photo_art_lover = None
+                my_photographer = None
 
-
-                #photo_to_photographer = PhotoToPhotographer(photographer=photographer, is_author=True)
-            if photographer:
+            if photographer and member and my_photographer:
                 if photographer.member.user.id == request.user.id:
                     user_is_gallery_owner = True
                 photographers_photos = Photo.objects.filter(owner=photographer)
                 liked_photos_set = \
                     Like.objects.filter(
-                        members_likers=photographer,
+                        members_likers=my_photographer,
                         photo__in=photographers_photos,
                         like_value=True
                     ).select_related('photo')
 
                 unliked_photos_set = \
                     Like.objects.filter(
-                        members_likers=photographer,
+                        members_likers=my_photographer,
                         photo__in=photographers_photos,
                         like_value=False
                     ).select_related('photo')
 
                 favorited_photos_set = \
                     Favorite.objects.filter(
-                        members_favoriters=photographer,
+                        members_favoriters=my_photographer,
                         photo__in=photographers_photos
                     ).select_related('photo')
 
@@ -138,7 +147,7 @@ class CharactersPhotographerIndexView(TemplateView):
                               favorited_photos=favorited_photos,
                               comment_form=CommentForm,
                               user_is_gallery_owner=user_is_gallery_owner,
-                              my_photo_art_lover=my_photo_art_lover,
+                              my_photographer=my_photographer,
                           )
             )
         else:

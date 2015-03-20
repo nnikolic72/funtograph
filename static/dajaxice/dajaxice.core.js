@@ -13,12 +13,20 @@ var Dajaxice = {
         return Dajaxice.call('interactions.send_comment', 'POST', callback_function, argv, custom_settings);
     },
 
+    like_comment: function(callback_function, argv, custom_settings){
+        return Dajaxice.call('interactions.like_comment', 'POST', callback_function, argv, custom_settings);
+    },
+
     favorite: function(callback_function, argv, custom_settings){
         return Dajaxice.call('interactions.favorite', 'POST', callback_function, argv, custom_settings);
     },
 
     like: function(callback_function, argv, custom_settings){
         return Dajaxice.call('interactions.like', 'POST', callback_function, argv, custom_settings);
+    },
+
+    delete_comment: function(callback_function, argv, custom_settings){
+        return Dajaxice.call('interactions.delete_comment', 'POST', callback_function, argv, custom_settings);
     }
 
 

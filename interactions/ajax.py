@@ -186,6 +186,7 @@ def favorite(req, p_photo_id):
     }
     )
 
+
 @dajaxice_register
 def send_comment(req, p_photo_id, form):
     """
@@ -237,11 +238,127 @@ def send_comment(req, p_photo_id, form):
                         commented_photo = None
 
     no_of_comments = commented_photo.get_number_of_comments
+    if no_of_comments == 1:
+        p_is_first = 1
+    else:
+        p_is_first = 0
 
     return json.dumps({
         'comment_text': cleaned_comment,
-        'logged_photo_art_lover': logged_photographer,
+        'logged_photographer_name': logged_photographer.name,
         'p_photo_id': commented_photo.id,
-        'no_of_comments': no_of_comments
+        'no_of_comments': no_of_comments,
+        'p_is_first': p_is_first,
+        'new_comment_id': new_comment.id,
         }
+    )
+
+
+@dajaxice_register
+def delete_comment(req, p_comment_id):
+    """
+    AJAX function to delete comment from photo
+
+    :param req:
+    :type req:
+    :param p_photo_id:
+    :type p_photo_id:
+    :param form:
+    :type form:
+    :return:
+    :rtype:
+    """
+
+    action_result = 'error'
+    no_of_comments = 0
+
+    try:
+        comment_instance = Comment.objects.get(id=p_comment_id)
+        photo = comment_instance.photo
+    except ObjectDoesNotExist:
+        comment_instance = None
+        photo = None
+
+    if comment_instance:
+        logged_user_id = req.user.id
+        if logged_user_id:
+            try:
+                # is logged user a member?
+                logged_member = Member.objects.get(user__id=logged_user_id)
+            except ObjectDoesNotExist:
+                logged_member = None
+
+            if logged_member:
+                # Logged user is a member. Get their Photographer object
+                logged_photographer = logged_member.get_my_photographer
+
+                if logged_photographer:
+                    comment_instance.delete()
+                    action_result = 'deleted'
+
+            no_of_comments = Comment.objects.filter(photo=photo).count()
+
+    return json.dumps({'p_comment_id': p_comment_id,
+                       'action_result': action_result,
+                       'no_of_comments': no_of_comments
+    }
+    )
+
+
+@dajaxice_register
+def like_comment(req, p_comment_id):
+    """
+    AJAX function to delete comment from photo
+
+    :param req:
+    :type req:
+    :param p_photo_id:
+    :type p_photo_id:
+    :param form:
+    :type form:
+    :return:
+    :rtype:
+    """
+
+    action_result = 'error'
+    #no_of_comments = 0
+    no_of_not_liked_comments = 0
+
+    try:
+        comment_instance = Comment.objects.get(id=p_comment_id)
+        photo = comment_instance.photo
+    except ObjectDoesNotExist:
+        comment_instance = None
+        photo = None
+
+    if comment_instance:
+        logged_user_id = req.user.id
+        if logged_user_id:
+            try:
+                # is logged user a member?
+                logged_member = Member.objects.get(user__id=logged_user_id)
+            except ObjectDoesNotExist:
+                logged_member = None
+
+            if logged_member:
+                # Logged user is a member. Get their Photographer object
+                logged_photographer = logged_member.get_my_photographer
+
+                if logged_photographer:
+                    l_liked_by_author = not comment_instance.liked_by_author
+                    comment_instance.liked_by_author = l_liked_by_author
+                    comment_instance.save()
+                    if l_liked_by_author:
+                        action_result = 'liked'
+                    else:
+                        action_result = 'unliked'
+
+            no_of_not_liked_comments = \
+                Comment.objects.filter(photo=photo,liked_by_author=False).\
+                    exclude(members_commenters=logged_photographer).count()
+
+    return json.dumps({'p_comment_id': p_comment_id,
+                       'action_result': action_result,
+                       'no_of_not_liked_comments': no_of_not_liked_comments
+    }
     )

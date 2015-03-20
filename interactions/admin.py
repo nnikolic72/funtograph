@@ -80,6 +80,7 @@ class CommentAdmin(admin.ModelAdmin):
                     'comment_text',
                     'created_at',
                     'updated_at',
+                    'liked_by_author',
     )
 
     readonly_fields = ('created_at', 'updated_at')
@@ -89,6 +90,7 @@ class CommentAdmin(admin.ModelAdmin):
             'photo',
             'members_commenters',
             'comment_text',
+            'liked_by_author',
             ]
         }
         ),

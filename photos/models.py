@@ -106,8 +106,8 @@ class Photo(models.Model):
         :return: Url of thumbnail image
         :rtype: String
         """
-        photo_thumb_url = self.photo.build_url()
-        return photo_thumb_url
+        photo_src_url = self.photo.build_url()
+        return photo_src_url
 
     @property
     def get_number_of_likes(self):
@@ -154,6 +154,20 @@ class Photo(models.Model):
         """
 
         photo_comments = Comment.objects.filter(photo=self)
+        return photo_comments
+
+    @property
+    def get_last_four_comments(self ):
+        """
+
+        :return: Number of likes on a photo
+        :rtype: Comments object
+        """
+
+        photo_comments = Comment.objects.filter(photo=self)
+        photo_comments_len = len(photo_comments)
+        if photo_comments_len > 4:
+            photo_comments = photo_comments[photo_comments_len-4:photo_comments_len]
         return photo_comments
 
     @property
@@ -204,6 +218,16 @@ class Photo(models.Model):
     active = models.BooleanField(null=False, blank=False, default=True,
                                  verbose_name=_('Photo is active')
     )
+
+    phash = models.CharField(max_length=200, null=True, blank=True)
+    format = models.CharField(max_length=20, null=True, blank=True)
+    dominant_color = models.CharField(max_length=20, null=True, blank=True)
+    full_url = models.URLField(null=True, blank=True)
+    photo_creation_date = models.CharField(max_length=20, null=True, blank=True)
+    creator_tool = models.CharField(max_length=200, null=True, blank=True)
+    lens_model = models.CharField(max_length=100, null=True, blank=True)
+    camera_make = models.CharField(max_length=100, null=True, blank=True)
+    camera_model = models.CharField(max_length=100, null=True, blank=True)
 
     def __unicode__(self):
         try:

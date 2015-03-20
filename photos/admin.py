@@ -52,10 +52,12 @@ class PhotoAdmin(admin.ModelAdmin):
 
     list_display = ('title',
                     'photo',
+                    'author',
                     'avg_photo_rating',
                     'photo_wear',
                     'active',
-                    'for_sale'
+                    'for_sale',
+                    'photo_price',
     )
 
     readonly_fields = ('created_at', 'updated_at')
@@ -80,13 +82,26 @@ class PhotoAdmin(admin.ModelAdmin):
         }
         ),
 
+        ('EXIF and Cloudinary Information', {'fields': [
+            'phash',
+            'format',
+            'dominant_color',
+            'full_url',
+            'photo_creation_date',
+            'creator_tool',
+            'lens_model',
+            'camera_make',
+            'camera_model',
+
+        ]
+        }
+        ),
+
         ('In-game Information', {'fields': [
             'photo_wear',
             'avg_photo_rating',
             'photo_price',
             'for_sale',
-            'photo',
-
         ]
         }
         ),
