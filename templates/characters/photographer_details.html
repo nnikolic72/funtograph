@@ -116,7 +116,8 @@
 
                                             {% for comment in comments %}
                                                 <div id="comment_id_{{ comment.id }}">
-                                                    <p>
+
+                                                    <span id="comment_button_bar">
                                                         {% if user_is_gallery_owner %}
                                                             {% if my_photographer.id != comment.members_commenters.id %}
                                                                 {# Like icon #}
@@ -153,34 +154,35 @@
                                                                 >
                                                         </button>
                                                         {% endif %}
-                                                        <br>
-                                                        <strong
-                                                                {% if my_photographer.id == comment.members_commenters.id %}
-                                                                    class="text-info"
-                                                                {% else %}
-                                                                    class="text-default"
-                                                                {% endif %}
+                                                    </span>
+                                                    <br>
+                                                    <strong
+                                                            {% if my_photographer.id == comment.members_commenters.id %}
+                                                                class="text-info"
+                                                            {% else %}
+                                                                class="text-default"
+                                                            {% endif %}
 
-                                                                >{{ comment.members_commenters }}</strong>:
-                                                        {{ comment.comment_text }}
+                                                            >{{ comment.members_commenters }}</strong>:
+                                                    {{ comment.comment_text }}
 
-                                                        {% if my_photographer.id != comment.members_commenters.id %}
-                                                            {# Hidden comment reply form #}
-                                                            <div id="comment_reply_div_{{ comment.id }}" style="display: none;">
-                                                                <form id="reply_comment_form_{{ photo.id }}" class="form" method="post" role="form" action="">
-                                                                    {% csrf_token %}
-                                                                    {{ comment_form.comment_text }}
-                                                                    <div class="form-group">
-                                                                        <button class="btn btn-primary"
-                                                                                type="button"
-                                                                                onclick="send_reply_comment({{ comment.id }});"
-                                                                                style="margin-top: 10px;"
-                                                                                >{% trans 'Reply' %}</button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        {% endif %}
-                                                    </p>
+                                                    {% if my_photographer.id != comment.members_commenters.id %}
+                                                        {# Hidden comment reply form #}
+                                                        <div id="comment_reply_div_{{ comment.id }}" style="display: none;">
+                                                            <form id="reply_comment_form_{{ photo.id }}" class="form" method="post" role="form" action="">
+                                                                {% csrf_token %}
+                                                                {{ comment_form.comment_text }}
+                                                                <div class="form-group">
+                                                                    <button class="btn btn-primary"
+                                                                            type="button"
+                                                                            onclick="send_reply_comment({{ comment.id }});"
+                                                                            style="margin-top: 10px;"
+                                                                            >{% trans 'Reply' %}</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    {% endif %}
+
                                                     <hr>
                                                 </div>
 
@@ -204,11 +206,6 @@
                                                 onclick="send_comment({{ photo.id }});"
                                                 style="margin-top: 10px;"
                                                 >{% trans 'Add comment' %}</button>
-                                        <button type="button"
-                                                class="btn btn-default"
-                                                data-dismiss="modal"
-                                                style="margin-top: 10px;"
-                                                >{% trans 'Close' %}</button>
                                     </div>
                                 </form>
 
