@@ -54,16 +54,16 @@ def like(req, p_photo_id, p_pressed_button):
 
             if logged_member:
                 # Logged user is a member. Get their Photographer object
-                logged_photo_art_lover = logged_member.get_my_photo_art_lover
+                logged_photographer = logged_member.get_my_photographer
 
-                if logged_photo_art_lover:
+                if logged_photographer:
                     # Logged member has a photo art lover character
                     #already_liked = False
                     like_instance = None
 
                     try:
                         like_instance = Like.objects.get(
-                            members_likers=logged_photo_art_lover,
+                            members_likers=logged_photographer,
                             photo=photo_instance,
                             )
                         make_new_like = False
@@ -78,7 +78,7 @@ def like(req, p_photo_id, p_pressed_button):
                             l_like_value = False
 
                         new_like = Like(
-                            members_likers=logged_photo_art_lover,
+                            members_likers=logged_photographer,
                             photo=photo_instance,
                             like_value=l_like_value
                         )
@@ -149,15 +149,15 @@ def favorite(req, p_photo_id):
 
             if logged_member:
                 # Logged user is a member. Get their Photographer object
-                logged_photo_art_lover = logged_member.get_my_photo_art_lover
+                logged_photographer = logged_member.get_my_photographer
 
-                if logged_photo_art_lover:
+                if logged_photographer:
                     # Logged member has a photo art lover character
 
                     favorite_instance = None
                     try:
                         favorite_instance = Favorite.objects.get(
-                            members_favoriters=logged_photo_art_lover,
+                            members_favoriters=logged_photographer,
                             photo=photo_instance
                         )
                         already_favorited = True
@@ -172,7 +172,7 @@ def favorite(req, p_photo_id):
                     else:
                         # we need to like the photo
                         new_favorite = Favorite(
-                            members_favoriters=logged_photo_art_lover,
+                            members_favoriters=logged_photographer,
                             photo=photo_instance
                         )
                         new_favorite.save()
@@ -214,9 +214,9 @@ def send_comment(req, p_photo_id, form):
 
             if logged_member:
                 # Logged user is a member. Get their Photographer object
-                logged_photo_art_lover = logged_member.get_my_photo_art_lover
+                logged_photographer = logged_member.get_my_photographer
 
-                if logged_photo_art_lover:
+                if logged_photographer:
 
                     #Create a comment
                     try:
@@ -227,20 +227,20 @@ def send_comment(req, p_photo_id, form):
 
                             new_comment = Comment(photo=commented_photo,
                                                   comment_text=cleaned_comment,
-                                                  members_commenters=logged_photo_art_lover
+                                                  members_commenters=logged_photographer
                             )
                             new_comment.save()
                             comment_added = True
                     except ObjectDoesNotExist:
                         cleaned_comment = None
-                        logged_photo_art_lover = None
+                        logged_photographer = None
                         commented_photo = None
 
     no_of_comments = commented_photo.get_number_of_comments
 
     return json.dumps({
         'comment_text': cleaned_comment,
-        'logged_photo_art_lover': logged_photo_art_lover,
+        'logged_photo_art_lover': logged_photographer,
         'p_photo_id': commented_photo.id,
         'no_of_comments': no_of_comments
         }
