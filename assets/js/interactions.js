@@ -107,6 +107,8 @@ function send_comment_callback(data) {
 
         //alert(new_comment_to_append);
         $(id_comments_text).append(new_comment_to_append)
+
+        //$(id_comments_text).append('h1').html('Proba');
     }
 
     $(id_name_num).html(data.no_of_comments);
