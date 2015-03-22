@@ -77,6 +77,50 @@
 
     </div>
     <!-- /.intro-header -->
+<div class="banner">
+
+        <div class="container">
+
+            <div class="row" id="signup">
+                <div class="col-lg-6">
+                    <h2>{%  trans 'Sign up for Funtograph' %}</h2><br><h4>{%  trans 'Find out first when we open the gates of fun! We will send you an e-mail to address you provide as soon as time comes!' %}</h4>
+                </div>
+                <div class="col-lg-6">
+                    <div class="center-block">
+                        <form method="POST" role="form" action="{% url 'lander:signupemail' %}" style="display:inline-block;">
+                            {% csrf_token %}
+                            <small>{% trans 'Leave us your email address. We will notify you when the game starts.' %}</small>
+                            <div class="form-group">
+                                <label class="text-default" for="email">{% trans 'Your email:' %}</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="form-group">
+                                <label class="text-default" for="name">{% trans 'Your name:' %}</label>
+                                {{ form.name }}
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-default">{% trans 'Sign up for info' %}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                {% if FUNTOGRAPH_IS_LIVE == True %}
+                    <div class="col-lg-3 col-lg-offset-6">
+                    <p>Funtograph is live: "{{ FUNTOGRAPH_IS_LIVE }}"</p>
+                    <a href="{% url 'members:login' %}"><button class="btn btn-primary" style="padding-bottom: 10px; padding-top: 10px;">{% trans 'Login' %}</button></a>
+                    <a href="{% url 'members:register' %}"><button class="btn btn-success" style="padding-bottom: 10px; padding-top: 10px;">{% trans 'Register as new user' %}</button></a>
+                    </div>
+                {%  endif %}
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.banner -->
 
     <!-- Page Content -->
 
@@ -153,50 +197,7 @@
     </div>
     <!-- /.content-section-a -->
 
-    <div class="banner">
 
-        <div class="container">
-
-            <div class="row" id="signup">
-                <div class="col-lg-6">
-                    <h2>{%  trans 'Sign up for Funtograph' %}</h2><br><h4>{%  trans 'Find out first when we open the gates of fun! We will send you an e-mail to address you provide as soon as time comes!' %}</h4>
-                </div>
-                <div class="col-lg-6">
-                    <div class="center-block">
-                        <form method="POST" role="form" action="{% url 'lander:signupemail' %}" style="display:inline-block;">
-                            {% csrf_token %}
-                            <small>{% trans 'Leave us your email address. We will notify you when the game starts.' %}</small>
-                            <div class="form-group">
-                                <label class="text-default" for="email">{% trans 'Your email:' %}</label>
-                                {{ form.email }}
-                            </div>
-                            <div class="form-group">
-                                <label class="text-default" for="name">{% trans 'Your name:' %}</label>
-                                {{ form.name }}
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-default">{% trans 'Sign up for info' %}</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-
-                {% if FUNTOGRAPH_IS_LIVE == True %}
-                    <div class="col-lg-3 col-lg-offset-6">
-                    <p>Funtograph is live: "{{ FUNTOGRAPH_IS_LIVE }}"</p>
-                    <a href="{% url 'members:login' %}"><button class="btn btn-primary" style="padding-bottom: 10px; padding-top: 10px;">{% trans 'Login' %}</button></a>
-                    <a href="{% url 'members:register' %}"><button class="btn btn-success" style="padding-bottom: 10px; padding-top: 10px;">{% trans 'Register as new user' %}</button></a>
-                    </div>
-                {%  endif %}
-            </div>
-
-        </div>
-        <!-- /.container -->
-
-    </div>
-    <!-- /.banner -->
 
     <!-- Footer -->
     <footer>
