@@ -2,13 +2,19 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from django.utils.datetime_safe import datetime
 
-from  cloudinary.models import CloudinaryField
+from cloudinary.models import CloudinaryField
 
-from characters.models import (Character,
+from characters.models import (
                                Photographer)
 
-
+from interactions.models import (
+    Like,
+    Comment,
+    Favorite
+)
 # Create your models here.
+from members.models import Member
+
 
 class PhotoCategory(models.Model):
     """
@@ -82,17 +88,110 @@ class Photo(models.Model):
     """
     Model for storing members photos, and their metadata
     """
+
+    @property
+    def get_thumbnail_url(self):
+        """
+
+        :return: Url of thumbnail image
+        :rtype: String
+        """
+        photo_thumb_url = self.photo.build_url(transformation='media_lib_thumb')
+        return photo_thumb_url
+
+    @property
+    def get_src_url(self):
+        """
+
+        :return: Url of thumbnail image
+        :rtype: String
+        """
+        photo_src_url = self.photo.build_url()
+        return photo_src_url
+
+    @property
+    def get_number_of_likes(self):
+        """
+
+        :return: Number of likes on a photo
+        :rtype: Integer
+        """
+
+        likes_count = Like.objects.filter(photo=self, like_value=True).count()
+
+        return likes_count
+
+    @property
+    def get_number_of_dislikes(self):
+        """
+
+        :return: Number of likes on a photo
+        :rtype: Integer
+        """
+
+        # likes_count = Like.objects.filter(photo=self, like_value=True).count()
+        dislikes_count = Like.objects.filter(photo=self, like_value=False).count()
+
+        return dislikes_count
+
+    @property
+    def get_number_of_comments(self):
+        """
+
+        :return: Number of likes on a photo
+        :rtype: Integer
+        """
+
+        comments_count = Comment.objects.filter(photo=self).count()
+        return comments_count
+
+    @property
+    def get_comments(self):
+        """
+
+        :return: Number of likes on a photo
+        :rtype: Comments object
+        """
+
+        photo_comments = Comment.objects.filter(photo=self)
+        return photo_comments
+
+    @property
+    def get_last_four_comments(self ):
+        """
+
+        :return: Number of likes on a photo
+        :rtype: Comments object
+        """
+
+        photo_comments = Comment.objects.filter(photo=self)
+        photo_comments_len = len(photo_comments)
+        if photo_comments_len > 4:
+            photo_comments = photo_comments[photo_comments_len-4:photo_comments_len]
+        return photo_comments
+
+    @property
+    def get_number_of_favorites(self):
+        """
+
+        :return: Number of likes on a photo
+        :rtype: Integer
+        """
+
+        favorites_count = Favorite.objects.filter(photo=self).count()
+        return favorites_count
+
     title = models.CharField(max_length=100,
                              verbose_name=_('Photo title'))
-    owner = models.ManyToManyField(Photographer, through='PhotoToPhotographer',
-                                    through_fields=('photo', 'photographer')
-    )
+    owner = models.ManyToManyField(Photographer, null=True, blank=True)
+
+    author = models.ForeignKey(Member, null=True, blank=True)
 
     photo = CloudinaryField('image', null=False)
 
     photo_wear = models.IntegerField(null=False, blank=False,
-                                      default=0,
-                                      verbose_name=_('Photo wear')
+                                     default=0,
+                                     verbose_name=_('Photo wear')
     )
 
     photo_price = models.IntegerField(null=False, blank=False,
@@ -100,7 +199,7 @@ class Photo(models.Model):
                                       verbose_name=_('Photo price')
     )
 
-    avg_photo_rating = models.DecimalField(max_digits=3,decimal_places=2, default=0,
+    avg_photo_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0,
                                            null=True, blank=True,
                                            verbose_name=_('Average photo rating')
     )
@@ -108,6 +207,7 @@ class Photo(models.Model):
     categories = models.ManyToManyField(PhotoCategory, null=True, blank=True,
                                         verbose_name=_('Photo Categories')
     )
+
     attributes = models.ManyToManyField(PhotoAttribute, null=True, blank=True,
                                         verbose_name=_('Photo Attributes')
     )
@@ -119,6 +219,16 @@ class Photo(models.Model):
                                  verbose_name=_('Photo is active')
     )
 
+    phash = models.CharField(max_length=200, null=True, blank=True)
+    format = models.CharField(max_length=20, null=True, blank=True)
+    dominant_color = models.CharField(max_length=20, null=True, blank=True)
+    full_url = models.URLField(null=True, blank=True)
+    photo_creation_date = models.CharField(max_length=20, null=True, blank=True)
+    creator_tool = models.CharField(max_length=200, null=True, blank=True)
+    lens_model = models.CharField(max_length=100, null=True, blank=True)
+    camera_make = models.CharField(max_length=100, null=True, blank=True)
+    camera_model = models.CharField(max_length=100, null=True, blank=True)
+
     def __unicode__(self):
         try:
             public_id = self.image.public_id
@@ -129,7 +239,7 @@ class Photo(models.Model):
     created_at = models.DateTimeField(editable=False)
     updated_at = models.DateTimeField()
 
-    #loot = many to many field to Loot class, with through class LootAmount
+    # loot = many to many field to Loot class, with through class LootAmount
 
     def save(self, *args, **kwargs):
         """ On save, update timestamps """
@@ -143,11 +253,3 @@ class Photo(models.Model):
         verbose_name = _('Photo')
         verbose_name_plural = _('Photos')
 
-
-class PhotoToPhotographer(models.Model):
-
-    photo = models.ForeignKey(Photo)
-    photographer = models.ForeignKey(Photographer)
-
-    is_author = models.BooleanField(default=True, null=False, blank=False)
-    is_manager = models.BooleanField(default=False, null=False, blank=False)

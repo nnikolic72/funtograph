@@ -2,28 +2,53 @@
 {% load i18n %}
 {% load cloudinary %}
 
+{% block bootstrap3_extra_head %}
+    {{ block.super }}
+    <!-- Custom CSS -->
+    <link href="{{ STATIC_URL }}css/photographers.css" rel="stylesheet">
+{% endblock bootstrap3_extra_head %}
+
 {% block content %}
     {{ block.super }}
 
-    <div class="well">
-        <h2>{%  trans 'Photographers list' %}</h2>
+    <div class="container" style="margin-bottom: 20px;">
+        <div class="intro-header">
+
+            <h2><span class="glyphicon glyphicon-camera"></span></h2>
+                <span class="hidden-xs">
+                    <div class="intro-message">
+                        <h2>{%  trans 'Photographers list' %}</h2>
+                    </div>
+                </span>
+                <span class="visible-xs">
+                    <div class="intro-message">
+                        <h4>{%  trans 'Photographers list' %}</h4>
+                    </div>
+                </span>
+
+        </div>
     </div>
+
     <div class="container">
         {%  if photographers %}
-            <div class="row">
-                <div class="col-xs-3"><span class="bg-success">{% trans 'Photographer name' %}</span></div>
-                <div class="col-xs-2"><span class="bg-success">{% trans 'Level' %}</span></div>
-                <div class="col-xs-2"><span class="bg-success">{% trans 'Current XP' %}</span></div>
-                <div class="col-xs-5"></div>
-            </div>
+            <table class="table">
+                <tr>
+                    <th class="col-sm-1">{% trans 'Ranking' %}</th>
+                    <th class="col-sm-6">{% trans 'Photographer' %}</th>
+                    <th class="col-sm-2">{% trans 'Level' %}</th>
+                    <th class="col-sm-3">{% trans 'Current XP' %}</th>
+                </tr>
+
             {% for photographer in photographers %}
-                <div class="row">
-                    <div class="col-xs-3"><a href="{% url 'characters:photographer' p_photographer_name=photographer.name %}">{{ photographer.name }}</a></div>
-                    <div class="col-xs-2">{{ photographer.level }}</div>
-                    <div class="col-xs-2">{{ photographer.current_xp }}</div>
-                    <div class="col-xs-5"></div>
-                </div>
+                <tr>
+                    <td>{{ forloop.counter }}.</td>
+                    <td><a href="{% url 'characters:photographer' p_photographer_name=photographer.name %}">{{ photographer.name }}</a></td>
+                    <td>{{ photographer.level }}</td>
+                    <td>{{ photographer.current_xp }}</td>
+
+                </tr>
             {%  endfor %}
+            </table>
         {% else %}
             <p>{% trans 'There are no photographers on Funtograph.' %}</p>
         {% endif %}

@@ -2,8 +2,13 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.utils.datetime_safe import datetime
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 
 import cloudinary
+
+from characters.models import (
+    Photographer,
+)
 
 # Create your models here.
 
@@ -68,8 +73,27 @@ class MembershipType(models.Model):
         verbose_name_plural = _('MembershipTypes')
 
 
-
 class Member(models.Model):
+    """
+    Defines Member data model
+    """
+
+    @property
+    def get_my_photographer(self):
+        """
+
+        :return: Photographer object
+        :rtype:
+        """
+
+        try:
+            my_photographer = Photographer.objects.get(member=self)
+        except ObjectDoesNotExist:
+            my_photographer = None
+
+        return my_photographer
+
+
     # This line is required. Links UserProfile to a User model instance.
     user = models.OneToOneField(User)
 

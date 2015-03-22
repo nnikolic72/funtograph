@@ -1,10 +1,10 @@
 from django.contrib import admin
+from members.models import Member
 
 from .models import (
     Photo,
     PhotoCategory,
     PhotoAttribute,
-    PhotoToPhotographer
 )
 
 # Register your models here.
@@ -42,20 +42,22 @@ class PhotoAttributeAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
-class OwnerInline(admin.TabularInline):
-    model = PhotoToPhotographer
-    fields = ('photographer',)
+#class OwnerInline(admin.TabularInline):
+#    model = Member
+#    fields = ('photographer',)
 
 class PhotoAdmin(admin.ModelAdmin):
 
-    inlines = (OwnerInline,)
+    #inlines = (OwnerInline,)
 
     list_display = ('title',
                     'photo',
+                    'author',
                     'avg_photo_rating',
                     'photo_wear',
                     'active',
-                    'for_sale'
+                    'for_sale',
+                    'photo_price',
     )
 
     readonly_fields = ('created_at', 'updated_at')
@@ -66,6 +68,8 @@ class PhotoAdmin(admin.ModelAdmin):
         ('General Information', {'fields': [
             'title',
             'photo',
+            'author',
+            'owner',
             'active',
         ]
         }
@@ -78,13 +82,26 @@ class PhotoAdmin(admin.ModelAdmin):
         }
         ),
 
+        ('EXIF and Cloudinary Information', {'fields': [
+            'phash',
+            'format',
+            'dominant_color',
+            'full_url',
+            'photo_creation_date',
+            'creator_tool',
+            'lens_model',
+            'camera_make',
+            'camera_model',
+
+        ]
+        }
+        ),
+
         ('In-game Information', {'fields': [
             'photo_wear',
             'avg_photo_rating',
             'photo_price',
             'for_sale',
-            'photo',
-
         ]
         }
         ),

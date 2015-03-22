@@ -1,0 +1,12 @@
+#demo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #fff;
+  padding: 0 20px 8px 20px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  border: 1px solid #e5e5e5;
+  width: 272px;
+}

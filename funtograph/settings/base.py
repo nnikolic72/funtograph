@@ -58,6 +58,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'django.core.context_processors.tz',
+    'django.core.context_processors.request',
     'django.contrib.messages.context_processors.messages',
     'funtograph.context-processors.google_analytics',
 )
@@ -85,6 +86,7 @@ INSTALLED_APPS = (
 
     'bootstrap3',
     'cloudinary',
+    'dajaxice',
 
 
     'lander',
@@ -153,11 +155,21 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'dajaxice.finders.DajaxiceFinder',
+)
 
 STATIC_URL = '/static/'
 
 LOGIN_URL = '/members/login'
 LOGOUT_URL = '/members/logout'
 LOGIN_REDIRECT_URL = '/members/dashboard'
+
+
+
+
+MAX_UPLOAD_PHOTOS_DEFAULT = 5
 
 

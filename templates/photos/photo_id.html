@@ -1,0 +1,34 @@
+{% extends "memberbase.html" %}
+{% load i18n %}
+{% load cloudinary %}
+{% load photo_extras %}
+
+{%  block extra_script %}
+    {{ block.super }}
+    <script src="{{ STATIC_URL }}js/vendor/jquery.ba-serializeobject.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ STATIC_URL }}js/interactions.js" type="text/javascript" charset="utf-8"></script>
+{% endblock extra_script %}
+
+{% block content %}
+    {{ block.super }}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-offset-3 col-md-6 col-md-offset-3">
+                {% if photo %}
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="text-center">
+                                <h4 class="btn btn-default">{% trans 'Title:' %} {% if photo.title %}{{ photo.title }}{% else %}{% trans '[untitled]' %}{% endif %}</h4>
+                            </div>
+                            <div align="center">
+                            <img class="img-responsive" src="{{  photo.get_src_url }}" alt="{{ photo.title }}">
+                            </div>
+
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -3,15 +3,22 @@
 {% load i18n %}
 {% load bootstrap3 %}
 
-{% block bootstrap3_extra_head %}
+{% block bootstrap3_title %}
     {% trans 'Funtograph - Login' %}
-{% endblock bootstrap3_extra_head %}
+{% endblock bootstrap3_title %}
 
+{% block bootstrap3_extra_head %}
+    {{ block.super }}
+    <!-- Custom CSS -->
+    <link href="{{ STATIC_URL }}css/login.css" rel="stylesheet">
+{% endblock bootstrap3_extra_head %}
 {% block bootstrap3_content %}
     {{ block.super }}
 
-    <div class="container">
-        <div class="well" >
+
+    <div class="container" style="padding-bottom: 20px;">
+        <div class="intro-header">
+
             <div align="center">
                 <span class="hidden-xs center">
                     <a href="{% url 'lander:index' %}">
@@ -23,33 +30,44 @@
                         <img class="img-responsive" style="margin: 20px;" src="{{ STATIC_URL }}img/Funtograph-onlypic-sq-40.png">
                     </a>
                 </div>
-                <h1 class="text-success">{% trans 'Login on Funtograph' %}</h1>
+                <div class="intro-message">
+                    <h1>{% trans 'Login on Funtograph' %}</h1>
+                </div>
             </div>
+
+
         </div>
     </div>
     </div>
 
-    <div class="container">
+    <div class="container" style="padding-bottom: 20px;">
         {% if errors_login %}
             <div class="form-group">
                 <p>{{ errors_login }}</p>
             </div>
         {% endif %}
 
-        <form id="login_form" method="POST" action="{% url 'members:login' %}">
+        <form class="form col-sm-12  center-block" id="login_form" method="POST" action="{% url 'members:login' %}">
             {% csrf_token %}
-            <div class="form-group">
-                <label for="username">{% trans 'Screen name' %}:</label>
-                {{ login_form.username }}
-            </div>
+            <div class="col-sm-offset-3 col-sm-6 col-sm-offset-3">
+                <div class="form-group">
+                    <label for="username">{% trans 'Screen name' %}:</label>
+                    {{ login_form.username }}
+                </div>
 
-            <div class="form-group">
-                <label for="password">{% trans 'Password' %}:</label>
-                {{ login_form.password }}
-            </div>
+                <div class="form-group">
+                    <label for="password">{% trans 'Password' %}:</label>
+                    {{ login_form.password }}
+                </div>
 
-            <button class="btn btn-success" type="submit" value="submit">{% trans 'Login' %}</button>
+
+                <button class="btn btn-success" type="submit" value="submit">{% trans 'Login' %}</button>
+            </div>
         </form>
+    </div>
+
+    <div class="container" style="padding-bottom: 20px;">
+    <p>Do not have an account? Register <a href="{% url 'members:register' %}">here</a>.</p>
     </div>
 
     {% block footer %}

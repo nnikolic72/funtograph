@@ -1,12 +1,27 @@
 {% extends 'bootstrap.html' %}
-
+{% load dajaxice_templatetags %}
 
 {% block bootstrap3_extra_head %}
     {{ block.super }}
+
+    {# Stops zooming on touchscren devices #}
     <meta name="viewport" content="width=device-width,
                                      initial-scale=1.0,
                                      maximum-scale=1.0,
                                      user-scalable=no">
+
+    {# Stops ENTER key in forms #}
+    <script type="text/javascript">
+    function stopRKey(evt) {
+      var evt = (evt) ? evt : ((event) ? event : null);
+      var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+      if ((evt.keyCode == 13) && (node.type=="text"))  {return false;}
+    }
+
+    document.onkeypress = stopRKey;
+    </script>
+
+    {% dajaxice_js_import %}
 {% endblock bootstrap3_extra_head %}
 
 {% block bootstrap3_content %}

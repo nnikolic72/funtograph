@@ -15,7 +15,12 @@ class PhotoUploadForm(Form):
     photo = cloudinary.forms.CloudinaryFileField(required=True,
                                                  options = {
                                                      'tags': 'member_upload',
-                                                     'crop': 'pad', 'width': 600, 'height': 600,
+                                                     'crop': 'pad',
+                                                     'width': 600,
+                                                     'height': 600,
+                                                     'image_metadata': True,
+                                                     'phash': True,
+                                                     'colors': True,
                                                  }
     )
 

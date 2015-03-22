@@ -7,29 +7,41 @@
     @{{ user }}&nbsp;{% trans 'Dashboard' %}
 {% endblock title %}
 
+{% block bootstrap3_extra_head %}
+    {{ block.super }}
+    <!-- Custom CSS -->
+    <link href="{{ STATIC_URL }}css/dashboard.css" rel="stylesheet">
+{% endblock bootstrap3_extra_head %}
+
 {% block content %}
     {{ block.super }}
-    <div class="well">
-        {% comment %}
-        {% cloudinary logged_member.picture crop="thumb" gravity="face" width=150 height=150 %}
-        {% endcomment %}
-        {% if profile_photo_url %}
-            <img src="{{ profile_photo_url }}" class="img-responsive img-circle">
-        {% else %}
-            <small>No profile photo available. You can upload one here.</small>
-        {% endif %}
-        <span class="hidden-xs">
+    <div class="container" style="margin-bottom: 20px;">
+        <div class="intro-header">
+        <div align="center">
+            {% if profile_photo_url %}
+                <img src="{{ profile_photo_url }}" class="img-responsive img-circle">
+            {% else %}
+                <small>No profile photo available. You can upload one here.</small>
+            {% endif %}
+        </div>
+
+            <span class="hidden-xs">
+                <div class="intro-message">
                 <h2>@{{ user }}&nbsp;{% trans 'Dashboard' %}</h2>
+                    </div>
             </span>
             <span class="visible-xs">
+                <div class="intro-message">
                 <h4>@{{ user }}&nbsp;{% trans 'Dashboard' %}</h4>
+                </div>
             </span>
 
+        </div>
     </div>
 
 
 
-    <div role="tabpanel">
+    <div role="tabpanel" style="padding-bottom: 20px;">
         <!-- Nav tabs -->
         <ul class="nav nav-pills" role="tablist">
             <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">{%  trans 'Overview' %}</a></li>
@@ -44,62 +56,33 @@
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="home">
 
-                <div class="well">@{{ user }} {%  trans 'Funtograph Levels and experience' %}</div>
-                <table class="table">
-                    <tr>
-                        <th></th>
-                        <th>{%  trans 'Level' %}</th>
-                        <th>{%  trans 'Current experience' %}</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{% url 'characters:photographer' p_photographer_name=photographer.name %}"
-                                    class="btn btn-success">
-                                {%  trans 'Photographer' %} {{ photographer.name }}
-                            </a>
-                            <a href="" class="btn btn-default">Change name</a>
-                        </td>
-                        <td>
-                            {{ photographer.level }}
-                        </td>
-                        <td>
-                            {{ photographer.current_xp }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            {%  trans 'Art lover' %}
-                        </td>
-                        <td>
-                            {{ photo_art_lover.level }}
-                        </td>
-                        <td>
-                            {{ photo_art_lover.current_xp }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            {%  trans 'Photo judge' %}
-                        </td>
-                        <td>
-                            {{ photo_judge.level }}
-                        </td>
-                        <td>
-                            {{ photo_judge.current_xp }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            {%  trans 'Photo team manager' %}
-                        </td>
-                        <td>
-                            {{ photo_team_manager.level }}
-                        </td>
-                        <td>
-                            {{ photo_team_manager.current_xp }}
-                        </td>
-                    </tr>
-                </table>
+            <div class="well">@{{ user }} {%  trans 'Funtograph Levels and experience' %}</div>
+            <table class="table">
+                <tr>
+                    <th>{% trans 'You' %}</th>
+                    <th>{%  trans 'Level' %}</th>
+                    <th>{%  trans 'Current XP' %}</th>
+                    <th>{%  trans 'Ranking' %}</th>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="{% url 'characters:photographer' p_photographer_name=photographer.name %}"
+                           class="btn btn-success">
+                            {{ photographer.name }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ photographer.level }}
+                    </td>
+                    <td>
+                        {{ photographer.current_xp }}
+                    </td>
+                    <td>
+                        {{ photographer.get_current_ranking_photographer }}
+                    </td>
+                </tr>
+
+            </table>
 
         </div>
         <div role="tabpanel" class="tab-pane fade" id="profile">

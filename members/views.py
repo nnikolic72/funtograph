@@ -14,17 +14,14 @@ import cloudinary.api
 from .forms import (
     UserForm,
     MemberForm,
-    LoginForm
+    LoginForm,
 )
 
 from .models import (User,
                       Member)
 
 from characters.models import (
-    Photographer,
-    PhotoArtLover,
-    PhotoJudge,
-    PhotoTeamManager
+    Photographer
 )
 
 from photos.models import Photo
@@ -108,12 +105,6 @@ class MemberRegisterView(TemplateView):
             # initialize their properties
             member_char_photographer = Photographer(name=new_user.username, member=profile)
             member_char_photographer.save()
-            member_char_photo_art_lover = PhotoArtLover(name=new_user.username, member=profile)
-            member_char_photo_art_lover.save()
-            member_char_photo_judge = PhotoJudge(name=new_user.username, member=profile)
-            member_char_photo_judge.save()
-            member_char_team_manager = PhotoTeamManager(name=new_user.username, member=profile)
-            member_char_team_manager.save()
             # Login this new user so they can get Welcome page
 
             new_user_login = authenticate(username=new_user.username, password=new_user.password)
@@ -271,10 +262,7 @@ class MemberDashboardView(TemplateView):
         dbg = 1
         logged_member = None
         profile_photo_url = None
-        photo_art_lover = None
         photographer = None
-        photo_judge = None
-        photo_team_manager = None
         photographer_photos_cnt = None
 
         if request.user.is_authenticated():
@@ -287,22 +275,12 @@ class MemberDashboardView(TemplateView):
                     profile_photo_url = logged_member.picture.build_url(width=100, height=100, crop='fill',
                                                                         gravity='face')
 
-                try:
-                    photo_art_lover = PhotoArtLover.objects.get(member=logged_member)
-                except ObjectDoesNotExist:
-                    photo_art_lover = None
+
                 try:
                     photographer = Photographer.objects.get(member=logged_member)
                 except ObjectDoesNotExist:
                     photographer = None
-                try:
-                    photo_judge = PhotoJudge.objects.get(member=logged_member)
-                except ObjectDoesNotExist:
-                    photo_judge = None
-                try:
-                    photo_team_manager = PhotoTeamManager.objects.get(member=logged_member)
-                except ObjectDoesNotExist:
-                    photo_team_manager = None
+
 
                 photographer_photos_cnt = Photo.objects.filter(owner=photographer).count()
 
@@ -313,10 +291,7 @@ class MemberDashboardView(TemplateView):
                           self.template_name,
                           dict(logged_member=logged_member,
                                profile_photo_url=profile_photo_url,
-                               photo_art_lover=photo_art_lover,
                                photographer=photographer,
-                               photo_judge=photo_judge,
-                               photo_team_manager=photo_team_manager,
                                photographer_photos_cnt=photographer_photos_cnt
                                )
             )
