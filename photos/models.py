@@ -171,6 +171,20 @@ class Photo(models.Model):
         return photo_comments
 
     @property
+    def get_all_comments(self ):
+        """
+
+        :return: Number of likes on a photo
+        :rtype: Comments object
+        """
+
+        photo_comments = Comment.objects.filter(photo=self)
+        photo_comments_len = len(photo_comments)
+        if photo_comments_len > 4:
+            photo_comments = photo_comments[photo_comments_len-4:photo_comments_len]
+        return photo_comments
+
+    @property
     def get_number_of_favorites(self):
         """
 

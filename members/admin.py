@@ -22,7 +22,9 @@ class MemberAdmin(admin.ModelAdmin):
         }
         ),
         ('Funtograph Information', {'fields': [
-            'funtocredits'
+            'funtocredits',
+            'current_energy',
+            'max_energy',
         ]
         }
         ),

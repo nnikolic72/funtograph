@@ -4,108 +4,81 @@
 {% load members_verbose_names %}
 
 {%  block title %}
-    @{{ user }}&nbsp;{% trans 'Dashboard' %}
+    {{ user }}&nbsp;{% trans 'Dashboard' %}
 {% endblock title %}
 
 {% block bootstrap3_extra_head %}
     {{ block.super }}
-    <!-- Custom CSS -->
-    <link href="{{ STATIC_URL }}css/dashboard.css" rel="stylesheet">
 {% endblock bootstrap3_extra_head %}
 
-{% block content %}
+{% block additional_css %}
     {{ block.super }}
-    <div class="container" style="margin-bottom: 20px;">
-        <div class="intro-header">
-        <div align="center">
-            {% if profile_photo_url %}
-                <img src="{{ profile_photo_url }}" class="img-responsive img-circle">
-            {% else %}
-                <small>No profile photo available. You can upload one here.</small>
-            {% endif %}
-        </div>
+    <link href="{{ STATIC_URL }}css/dashboard.css" rel="stylesheet">
+{% endblock additional_css %}
 
-            <span class="hidden-xs">
-                <div class="intro-message">
-                <h2>@{{ user }}&nbsp;{% trans 'Dashboard' %}</h2>
-                    </div>
-            </span>
-            <span class="visible-xs">
-                <div class="intro-message">
-                <h4>@{{ user }}&nbsp;{% trans 'Dashboard' %}</h4>
-                </div>
-            </span>
 
-        </div>
+
+{% block content_header_title %}
+    {% if profile_photo_url %}
+        <img src="{{ profile_photo_url }}" class="img-responsive img-circle">
+    {% else %}
+        <small>No profile photo available. You can upload one here.</small>
+    {% endif %}
+{% endblock content_header_title %}
+
+{% block content_header_message %}
+    {{ user }}&nbsp;{% trans 'Dashboard' %}
+{% endblock content_header_message %}
+
+
+{% block content %}
+    <div class="col-xs-12 col-lg-6 col-md-6 funtograph-sub-panel">
+        <div class="well">{%  trans 'Funtograph Levels and experience' %}</div>
+        <table class="table">
+            <tr>
+                <th></th>
+                <th>{%  trans 'Level' %}</th>
+                <th>{%  trans 'Current XP' %}</th>
+                <th>{%  trans 'Ranking' %}</th>
+            </tr>
+            <tr>
+                <td>
+                    <a href="{% url 'characters:photographer' p_photographer_name=photographer.name %}"
+                       class="btn btn-success">
+                        {{ photographer.name }}
+                    </a>
+                </td>
+                <td>
+                    {{ photographer.level }}
+                </td>
+                <td>
+                    {{ photographer.current_xp }}
+                </td>
+                <td>
+                    {{ photographer.get_current_ranking_photographer }}
+                </td>
+            </tr>
+
+        </table>
+
+
     </div>
+    <!-- cols main -->
 
 
+    <div class="col-xs-12 col-lg-offset-1 col-lg-5 col-md-offset-1 col-md-5 funtograph-sub-panel">
+        <div class="well">{% trans 'My Portfolio' %}</div>
+        {%  if photographer_photos_cnt > 0%}
+            {% blocktrans %}Number of photos: {{ photographer_photos_cnt }}{% endblocktrans %}
+            <hr>
+            <a class="btn btn-default" href="{% url 'photos:photographer' photographer.name  %}">{% trans 'View my photos' %}</a>
 
-    <div role="tabpanel" style="padding-bottom: 20px;">
-        <!-- Nav tabs -->
-        <ul class="nav nav-pills" role="tablist">
-            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">{%  trans 'Overview' %}</a></li>
-            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">{%  trans 'Portfolio' %}</a></li>
-            <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">{%  trans 'Stats' %}</a></li>
-        </ul>
+        {% else %}
+            <p>{% trans 'There are no your photos on Funtograph.' %}</p>
+        {% endif %}
+
+        <a class="btn btn-default" href="{% url 'photos:upload' %}">{% trans 'Upload photo' %}</a>
+
     </div>
-
-
-
-    <!-- Tab panes -->
-    <div class="tab-content">
-        <div role="tabpanel" class="tab-pane fade in active" id="home">
-
-            <div class="well">@{{ user }} {%  trans 'Funtograph Levels and experience' %}</div>
-            <table class="table">
-                <tr>
-                    <th>{% trans 'You' %}</th>
-                    <th>{%  trans 'Level' %}</th>
-                    <th>{%  trans 'Current XP' %}</th>
-                    <th>{%  trans 'Ranking' %}</th>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="{% url 'characters:photographer' p_photographer_name=photographer.name %}"
-                           class="btn btn-success">
-                            {{ photographer.name }}
-                        </a>
-                    </td>
-                    <td>
-                        {{ photographer.level }}
-                    </td>
-                    <td>
-                        {{ photographer.current_xp }}
-                    </td>
-                    <td>
-                        {{ photographer.get_current_ranking_photographer }}
-                    </td>
-                </tr>
-
-            </table>
-
-        </div>
-        <div role="tabpanel" class="tab-pane fade" id="profile">
-            <div class="container">
-                <h2>{%  trans 'Portfolio' %}</h2>
-                {%  if photographer_photos_cnt > 0%}
-                    {% blocktrans %}Number of photos: {{ photographer_photos_cnt }}{% endblocktrans %}
-                    <div class="content-block">
-                        <a class="btn btn-default" href="{% url 'photos:photographer' photographer.name  %}">{% trans 'View my photos' %}</a>
-                    </div>
-                {% else %}
-                    <p>{% trans 'There are no your photos on Funtograph.' %}</p>
-                {% endif %}
-                <div class="content-block">
-                    <a class="btn btn-default" href="{% url 'photos:upload' %}">{% trans 'Upload photo' %}</a>
-                </div>
-            </div>
-        </div>
-        <div role="tabpanel" class="tab-pane fade" id="messages">
-            <div class="container">
-                <h2>{%  trans 'Stats' %}</h2>
-            </div>
-        </div>
-    </div>
-
+    <!-- cols sidebar -->
 {% endblock content %}

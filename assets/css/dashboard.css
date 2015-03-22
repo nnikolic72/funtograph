@@ -9,20 +9,64 @@ h6 {
     font-weight: 700;
 }
 
+.funtograph-main-panel {
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.34);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.34);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.34);
+
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border: 1px solid #7f7f7f;
+
+    padding: 20px;
+}
+
+.funtograph-sub-panel {
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.34);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.34);
+    box-shadow: 5px 5px 2px 0px rgba(0,0,0,0.20);
+
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border: 1px solid #7f7f7f;
+
+    padding: 20px;
+}
+
+.funtograph-header {
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border: 0px solid #000000;
+    margin-bottom: 40px;
+    background: rgba(247,242,171,1);
+    background: -moz-linear-gradient(left, rgba(247,242,171,1) 0%, rgba(254,210,138,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(247,242,171,1)), color-stop(100%, rgba(254,210,138,1)));
+    background: -webkit-linear-gradient(left, rgba(247,242,171,1) 0%, rgba(254,210,138,1) 100%);
+    background: -o-linear-gradient(left, rgba(247,242,171,1) 0%, rgba(254,210,138,1) 100%);
+    background: -ms-linear-gradient(left, rgba(247,242,171,1) 0%, rgba(254,210,138,1) 100%);
+    background: linear-gradient(to right, rgba(247,242,171,1) 0%, rgba(254,210,138,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f2ab', endColorstr='#fed28a', GradientType=1 );
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.34);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.34);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.34);
+}
+
 .intro-header {
     padding-top: 15px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
     padding-bottom: 5px;
     text-align: center;
-    color: #f8f8f8;
-    background: url(../img/dashboard-bg.jpg) no-repeat center center;
-    background-size: cover;
+
+
 }
 
 .intro-message {
     position: relative;
     padding-top: 1%;
     padding-bottom: 3%;
-    color: rgba(220, 237, 255, 0.99)
+    color: rgba(171, 41, 36, 0.99)
 }
 
 .intro-message > h1 {

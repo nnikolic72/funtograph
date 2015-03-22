@@ -4,32 +4,27 @@
 
 {% block bootstrap3_extra_head %}
     {{ block.super }}
-    <!-- Custom CSS -->
-    <link href="{{ STATIC_URL }}css/photographers.css" rel="stylesheet">
 {% endblock bootstrap3_extra_head %}
+
+{% block additional_css %}
+    {{ block.super }}
+    <link href="{{ STATIC_URL }}css/photographers.css" rel="stylesheet">
+{% endblock additional_css %}
+
+
+{% block content_header_title %}
+    {{ block.super }}
+    <h1><span class="glyphicon glyphicon-camera header-glyph-style"></span></h1>
+{% endblock content_header_title %}
+
+{% block content_header_message %}
+    {%  trans 'Funtograph Photographers Rankings' %}
+{% endblock content_header_message %}
 
 {% block content %}
     {{ block.super }}
 
-    <div class="container" style="margin-bottom: 20px;">
-        <div class="intro-header">
-
-            <h2><span class="glyphicon glyphicon-camera"></span></h2>
-                <span class="hidden-xs">
-                    <div class="intro-message">
-                        <h2>{%  trans 'Photographers list' %}</h2>
-                    </div>
-                </span>
-                <span class="visible-xs">
-                    <div class="intro-message">
-                        <h4>{%  trans 'Photographers list' %}</h4>
-                    </div>
-                </span>
-
-        </div>
-    </div>
-
-    <div class="container">
+    <div class="col-xs-12 col-lg-offset-3 col-lg-6 funtograph-sub-panel">
         {%  if photographers %}
             <table class="table">
                 <tr>
@@ -39,19 +34,19 @@
                     <th class="col-sm-3">{% trans 'Current XP' %}</th>
                 </tr>
 
-            {% for photographer in photographers %}
-                <tr>
-                    <td>{{ forloop.counter }}.</td>
-                    <td><a href="{% url 'characters:photographer' p_photographer_name=photographer.name %}">{{ photographer.name }}</a></td>
-                    <td>{{ photographer.level }}</td>
-                    <td>{{ photographer.current_xp }}</td>
+                {% for photographer in photographers %}
+                    <tr>
+                        <td>{{ forloop.counter }}.</td>
+                        <td><a href="{% url 'characters:photographer' p_photographer_name=photographer.name %}">{{ photographer.name }}</a></td>
+                        <td>{{ photographer.level }}</td>
+                        <td>{{ photographer.current_xp }}</td>
 
-                </tr>
-            {%  endfor %}
+                    </tr>
+                {%  endfor %}
             </table>
         {% else %}
-            <p>{% trans 'There are no photographers on Funtograph.' %}</p>
+            <p>{% trans 'There are no photographers registered on Funtograph.' %}</p>
         {% endif %}
-
     </div>
+
 {% endblock content %}

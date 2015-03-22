@@ -43,6 +43,10 @@ $env:DJANGO_SETTINGS_MODULE="nnpicksdj.settings.local"
 //Windows cmd
 set DJANGO_SETTINGS_MODULE=funtograph.settings.local
 
+//Heroku maintenace mode
+heroku maintenance:on --app funtograph-prod
+heroku maintenance:off --app funtograph-prod
+
 // requirements.txt - Heroku
 1. Add this string without quotes to the end of requrements.txt. "-r requirements_heroku.txt" 2. Convert requirements.txt file in Notepad++ to Encoding > Encode in ANSI
 

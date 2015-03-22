@@ -46,12 +46,24 @@ class CharactersIndexView(TemplateView):
         :rtype:
         """
         if request.user.is_authenticated():
+            try:
+                logged_member = Member.objects.get(user__id=request.user.id)
+                photographer = logged_member.get_my_photographer
+            except ObjectDoesNotExist:
+                logged_member = None
+
             photographers = Photographer.objects.all()
             return render(request,
                           self.template_name,
                           dict(
                               photographers=photographers,
 
+                              statusbar_level=photographer.level,
+                              statusbar_name=photographer.name,
+                              statusbar_current_xp=photographer.current_xp,
+                              statusbar_funtocredits=logged_member.funtocredits,
+                              statusbar_current_energy=logged_member.current_energy,
+                              statusbar_max_energy=logged_member.max_energy,
                               )
             )
         else:
@@ -89,9 +101,9 @@ class CharactersPhotographerIndexView(TemplateView):
             photographers_photos = []
 
             try:
-                member = Member.objects.get(user__id=request.user.id)
+                logged_member = Member.objects.get(user__id=request.user.id)
             except ObjectDoesNotExist:
-                member = None
+                logged_member = None
 
             try:
                 photographer = Photographer.objects.get(name=photographer_name)
@@ -99,11 +111,11 @@ class CharactersPhotographerIndexView(TemplateView):
                 photographer = None
 
             try:
-                my_photographer = Photographer.objects.get(member=member)
+                my_photographer = Photographer.objects.get(member=logged_member)
             except ObjectDoesNotExist:
                 my_photographer = None
 
-            if photographer and member and my_photographer:
+            if photographer and logged_member and my_photographer:
                 if photographer.member.user.id == request.user.id:
                     user_is_gallery_owner = True
                 photographers_photos = Photo.objects.filter(owner=photographer)
@@ -150,7 +162,14 @@ class CharactersPhotographerIndexView(TemplateView):
                               comment_form=CommentForm,
                               user_is_gallery_owner=user_is_gallery_owner,
                               my_photographer=my_photographer,
-                          )
+
+                              statusbar_level=photographer.level,
+                              statusbar_name=photographer.name,
+                              statusbar_current_xp=photographer.current_xp,
+                              statusbar_funtocredits=logged_member.funtocredits,
+                              statusbar_current_energy=logged_member.current_energy,
+                              statusbar_max_energy=logged_member.max_energy,
+                              )
             )
         else:
             return HttpResponseRedirect(reverse('members:register'))

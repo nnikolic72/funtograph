@@ -3,119 +3,136 @@
 {% load cloudinary %}
 {% load photo_extras %}
 
+{%  block title %}
+    {% trans 'Photo Portfolio' %} - {{ photographer.name }}
+{% endblock title %}
+
 {%  block extra_script %}
     {{ block.super }}
     <script src="{{ STATIC_URL }}js/vendor/jquery.ba-serializeobject.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="{{ STATIC_URL }}js/interactions.js" type="text/javascript" charset="utf-8"></script>
 {% endblock extra_script %}
 
+{% block additional_css %}
+    {{ block.super }}
+    <link href="{{ STATIC_URL }}css/photographer-details.css" rel="stylesheet">
+{% endblock additional_css %}
+
+
+{% block content_header_title %}
+    {{ block.super }}
+    <h1>
+        <span class="glyphicon glyphicon-camera header-glyph-style"></span>
+        {% trans 'Photo Portfolio' %}
+        <span class="glyphicon glyphicon-camera header-glyph-style"></span>
+    </h1>
+{% endblock content_header_title %}
+
+{% block content_header_message %}
+    <div class="row">
+        <div class="col-xs-6">
+            {% trans 'Photographer: ' %}{{ photographer.name }}
+        </div>
+        <div class="col-xs-6">
+            {% trans 'Current XP: ' %}{{ photographer.current_xp }}
+        </div>
+    </div>
+
+{% endblock content_header_message %}
+
 {% block content %}
     {{ block.super }}
 
-    <div class="well">
-        <h2>{% trans 'Photographer: ' %}{{ photographer.name }}</h2>
-        <p>{% trans 'Level: ' %}{{ photographer.level }}</p>
-        <p>{% trans 'Current XP: ' %}{{ photographer.current_xp }}</p>
-    </div>
+    {% if photographers_photos %}
+        <div class="row">
+            <div class="col-xs-12 col-md-offset-3 col-md-6 col-md-offset-3">
 
-    <div class="content">
+                {% for photo in  photographers_photos %}
+                    <div class="panel panel-default funtograph-sub-panel">
+                        <div class="panel-body">
+                            <div class="text-center">
+                                <h4 class="btn btn-default" style="margin: 10px;">{% trans 'Title:' %} {% if photo.title %}{{ photo.title }}{% else %}{% trans '[untitled]' %}{% endif %}</h4>
+                            </div>
+                            <a href="{% url 'photos:id' p_photo_id=photo.id %}">
+                                <img class="img-responsive funtograph-image" src="{{  photo.get_src_url }}" alt="{{ photo.title }}">
+                            </a>
 
-        {% if photographers_photos %}
-            <div class="row">
-                <div class="col-xs-12 text-center">
-                    <h3>{% trans 'Photo Portfolio' %}</h3>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-12 col-md-offset-3 col-md-6 col-md-offset-3">
-
-                    {% for photo in  photographers_photos %}
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="text-center">
-                                    <h4 class="btn btn-default" style="margin: 10px;">{% trans 'Title:' %} {% if photo.title %}{{ photo.title }}{% else %}{% trans '[untitled]' %}{% endif %}</h4>
-                                </div>
-                                <a href="{% url 'photos:id' p_photo_id=photo.id %}">
-                                    <img class="img-responsive" src="{{  photo.get_src_url }}" alt="{{ photo.title }}">
-                                </a>
-
-                                <div class="text-center" style="margin-bottom: 20px;">
-                                    {%  if photo in liked_photos %}
-                                        <span
-                                                class="glyphicon glyphicon-ok-sign text-default btn btn-sm btn-success"
-                                                id="likes_id_{{ photo.id }}"
-                                                onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'like_button');"
-                                                title={% trans 'Likes' %}
-                                                >
-                                        </span>
-                                    {% else %}
-                                        <span
-                                                class="glyphicon glyphicon-ok-sign text-default btn btn-sm btn-default"
-                                                id="likes_id_{{ photo.id }}"
-                                                onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'like_button');"
-                                                title={% trans 'Likes' %}
-                                                >
-                                        </span>
-                                    {% endif %}
-                                    <span id="likes_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_likes }}</span>
-
-                                    {%  if photo in unliked_photos %}
-                                        <span
-                                                class="glyphicon glyphicon-remove-sign text-default btn btn-sm btn-danger"
-                                                id="unlikes_id_{{ photo.id }}"
-                                                onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'unlike_button');"
-                                                title={% trans 'Disikes' %}
-                                                >
-                                        </span>
-                                    {% else %}
-                                        <span
-                                                class="glyphicon glyphicon-remove-sign text-default btn btn-sm btn-default"
-                                                id="unlikes_id_{{ photo.id }}"
-                                                onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'unlike_button');"
-                                                title={% trans 'Disikes' %}
-                                                >
-                                        </span>
-                                    {% endif %}
-
-
-                                    <span id="dislikes_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_dislikes }}</span>
-
-
-                                    {%  if photo in favorited_photos %}
-                                        <span
-                                                class="glyphicon glyphicon-star text-default btn btn-sm btn-success"
-                                                id="favorites_id_{{ photo.id }}"
-                                                onclick="favorite('{{ photo.id }}', '{{STATIC_URL}}');"
-                                                title={% trans 'Favorites' %}
-                                                ></span>
-                                        <span id="favorites_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_favorites }}</span>
-                                    {% else %}
-                                        <span
-                                                class="glyphicon glyphicon-star-empty text-default btn btn-sm btn-default"
-                                                id="favorites_id_{{ photo.id }}"
-                                                onclick="favorite('{{ photo.id }}', '{{STATIC_URL}}');"
-                                                title={% trans 'Favorites' %}
-                                                ></span>
-                                        <span id="favorites_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_favorites }}</span>
-                                    {% endif %}
-
+                            <div class="text-center" style="margin-bottom: 20px;">
+                                {%  if photo in liked_photos %}
                                     <span
-                                            class="glyphicon glyphicon-comment btn btn-sm btn-default"
-                                            title={% trans 'Comments' %}
+                                            class="glyphicon glyphicon-ok-sign text-default btn btn-sm btn-success"
+                                            id="likes_id_{{ photo.id }}"
+                                            onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'like_button');"
+                                            title={% trans 'Likes' %}
+                                            >
+                                        </span>
+                                {% else %}
+                                    <span
+                                            class="glyphicon glyphicon-ok-sign text-default btn btn-sm btn-default"
+                                            id="likes_id_{{ photo.id }}"
+                                            onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'like_button');"
+                                            title={% trans 'Likes' %}
+                                            >
+                                        </span>
+                                {% endif %}
+                                <span id="likes_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_likes }}</span>
+
+                                {%  if photo in unliked_photos %}
+                                    <span
+                                            class="glyphicon glyphicon-remove-sign text-default btn btn-sm btn-danger"
+                                            id="unlikes_id_{{ photo.id }}"
+                                            onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'unlike_button');"
+                                            title={% trans 'Disikes' %}
+                                            >
+                                        </span>
+                                {% else %}
+                                    <span
+                                            class="glyphicon glyphicon-remove-sign text-default btn btn-sm btn-default"
+                                            id="unlikes_id_{{ photo.id }}"
+                                            onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'unlike_button');"
+                                            title={% trans 'Disikes' %}
+                                            >
+                                        </span>
+                                {% endif %}
+
+
+                                <span id="dislikes_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_dislikes }}</span>
+
+
+                                {%  if photo in favorited_photos %}
+                                    <span
+                                            class="glyphicon glyphicon-star text-default btn btn-sm btn-success"
+                                            id="favorites_id_{{ photo.id }}"
+                                            onclick="favorite('{{ photo.id }}', '{{STATIC_URL}}');"
+                                            title={% trans 'Favorites' %}
                                             ></span>
-                                    <span id="comments_num_{{ photo.id }}">{{ photo.get_number_of_comments }}</span>
+                                    <span id="favorites_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_favorites }}</span>
+                                {% else %}
+                                    <span
+                                            class="glyphicon glyphicon-star-empty text-default btn btn-sm btn-default"
+                                            id="favorites_id_{{ photo.id }}"
+                                            onclick="favorite('{{ photo.id }}', '{{STATIC_URL}}');"
+                                            title={% trans 'Favorites' %}
+                                            ></span>
+                                    <span id="favorites_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_favorites }}</span>
+                                {% endif %}
+
+                                <span
+                                        class="glyphicon glyphicon-comment btn btn-sm btn-default"
+                                        title={% trans 'Comments' %}
+                                        ></span>
+                                <span id="comments_num_{{ photo.id }}">{{ photo.get_number_of_comments }}</span>
 
 
-                                </div>
-                                <hr>
-                                {%  with photo.get_last_four_comments as comments %}
-                                    {% if comments %}
-                                        <div id="comment_photo_id_{{ photo.id }}">
-                                            <p>{% trans 'Comments:' %}</p>
+                            </div>
+                            <hr>
+                            {%  with photo.get_last_four_comments as comments %}
+                                {% if comments %}
+                                    <div id="comment_photo_id_{{ photo.id }}">
+                                        <p>{% trans 'Comments:' %}</p>
 
-                                            {% for comment in comments %}
-                                                <div id="comment_id_{{ comment.id }}">
+                                        {% for comment in comments %}
+                                            <div id="comment_id_{{ comment.id }}">
 
                                                     <span id="comment_button_bar">
                                                         {% if user_is_gallery_owner %}
@@ -155,69 +172,69 @@
                                                         </button>
                                                         {% endif %}
                                                     </span>
-                                                    <br>
-                                                    <strong
-                                                            {% if my_photographer.id == comment.members_commenters.id %}
-                                                                class="text-info"
-                                                            {% else %}
-                                                                class="text-default"
-                                                            {% endif %}
+                                                <br>
+                                                <strong
+                                                        {% if my_photographer.id == comment.members_commenters.id %}
+                                                            class="text-info"
+                                                        {% else %}
+                                                            class="text-default"
+                                                        {% endif %}
 
-                                                            >{{ comment.members_commenters }}</strong>:
-                                                    {{ comment.comment_text }}
+                                                        >{{ comment.members_commenters }}</strong>:
+                                                {{ comment.comment_text }}
 
-                                                    {% if my_photographer.id != comment.members_commenters.id %}
-                                                        {# Hidden comment reply form #}
-                                                        <div id="comment_reply_div_{{ comment.id }}" style="display: none;">
-                                                            <form id="reply_comment_form_{{ photo.id }}" class="form" method="post" role="form" action="">
-                                                                {% csrf_token %}
-                                                                {{ comment_form.comment_text }}
-                                                                <div class="form-group">
-                                                                    <button class="btn btn-primary"
-                                                                            type="button"
-                                                                            onclick="send_reply_comment({{ comment.id }});"
-                                                                            style="margin-top: 10px;"
-                                                                            >{% trans 'Reply' %}</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    {% endif %}
+                                                {% if my_photographer.id != comment.members_commenters.id %}
+                                                    {# Hidden comment reply form #}
+                                                    <div id="comment_reply_div_{{ comment.id }}" style="display: none;">
+                                                        <form id="reply_comment_form_{{ photo.id }}" class="form" method="post" role="form" action="">
+                                                            {% csrf_token %}
+                                                            {{ comment_form.comment_text }}
+                                                            <div class="form-group">
+                                                                <button class="btn btn-primary"
+                                                                        type="button"
+                                                                        onclick="send_reply_comment({{ comment.id }});"
+                                                                        style="margin-top: 10px;"
+                                                                        >{% trans 'Reply' %}</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                {% endif %}
 
-                                                    <hr>
-                                                </div>
+                                                <hr>
+                                            </div>
 
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        <div id="comment_photo_id_{{ photo.id }}">
-                                            <p>{% trans 'No comments on this photo. Be the first one to comment!' %}</p>
-                                        </div>
-                                    {% endif %}
-                                {% endwith %}
-
-
-
-                                <form id="comment_form_{{ photo.id }}" class="form" method="post" role="form" action="">
-                                    {% csrf_token %}
-                                    {{ comment_form.comment_text }}
-                                    <div class="form-group">
-                                        <button class="btn btn-primary"
-                                                type="button"
-                                                onclick="send_comment({{ photo.id }});"
-                                                style="margin-top: 10px;"
-                                                >{% trans 'Add comment' %}</button>
+                                        {% endfor %}
                                     </div>
-                                </form>
+                                {% else %}
+                                    <div id="comment_photo_id_{{ photo.id }}">
+                                        <p>{% trans 'No comments on this photo. Be the first one to comment!' %}</p>
+                                    </div>
+                                {% endif %}
+                            {% endwith %}
 
-                            </div>
+
+
+                            <form id="comment_form_{{ photo.id }}" class="form" method="post" role="form" action="">
+                                {% csrf_token %}
+                                {{ comment_form.comment_text }}
+                                <div class="form-group">
+                                    <button class="btn btn-primary"
+                                            type="button"
+                                            onclick="send_comment({{ photo.id }});"
+                                            style="margin-top: 10px;"
+                                            >{% trans 'Add comment' %}</button>
+                                </div>
+                            </form>
 
                         </div>
-                    {% endfor %}
-                </div>
+
+                    </div>
+                {% endfor %}
             </div>
-        {% else %}
-            <p>{% trans 'No uploaded photos.' %}</p>
-        {% endif %}
-    </div>
+        </div>
+    {% else %}
+        <p>{% trans 'No uploaded photos.' %}</p>
+    {% endif %}
+
 
 {% endblock %}
