@@ -1,0 +1,86 @@
+{% extends "memberbase.html" %}
+{% load i18n %}
+{% load cloudinary %}
+
+{% block bootstrap3_extra_head %}
+    {{ block.super }}
+{% endblock bootstrap3_extra_head %}
+
+{%  block extra_script %}
+    {{ block.super }}
+    <script src="{{ STATIC_URL }}js/vendor/jquery.ba-serializeobject.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ STATIC_URL }}js/duels.js" type="text/javascript" charset="utf-8"></script>
+{% endblock extra_script %}
+
+{% block additional_css %}
+    {{ block.super }}
+    <link href="{{ STATIC_URL }}css/ihover.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/photoduels.css" rel="stylesheet">
+{% endblock additional_css %}
+
+
+{% block content_header_title %}
+    {{ block.super }}
+    <h1><span class="glyphicon glyphicon-camera header-glyph-style"></span></h1>
+{% endblock content_header_title %}
+
+{% block content_header_message %}
+    {%  trans 'Funtograph Photo Duels' %}
+{% endblock content_header_message %}
+
+{% block content %}
+    {{ block.super }}
+
+    <div class="col-xs-12 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6 funtograph-sub-panel">
+        <div id="dueling_panel">
+            {%  if photo_duels %}
+                {% for photo_duel in photo_duels %}
+                    <div id="duel_id_{{ photo_duel.id }}">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <h4>{% trans 'Photo Duel' %} #{{ photo_duel.id }}</h4>
+                                <h6>{% trans 'Vote for photo by clicking on it' %}</h6>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div id="photo_a_{{ photo_duel.id }}">
+                                <div class="col-xs-12 col-md-6" align="center">
+                                    <img class="img-responsive img-thumbnail tilt"
+                                         src="{{photo_duel.photo_a.get_big_thumbnail_url }}"
+                                         onclick="photo_duel_vote({{ photo_duel.id }}, 'a');"
+                                            >
+                                </div>
+                            </div>
+
+                            <div id="photo_b_{{ photo_duel.id }}">
+                                <div class="col-xs-12 col-md-6" align="center">
+                                    <img class="img-responsive img-thumbnail tilt"
+                                         onclick="photo_duel_vote({{ photo_duel.id }}, 'b');"
+                                         src="{{photo_duel.photo_b.get_big_thumbnail_url }}"
+                                            >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <h5>
+                                    <button class="btn btn-defult btn-xs"
+                                            onclick="photo_duel_vote({{ photo_duel.id }} , 'x');"
+                                            >
+                                        {% trans 'Skip' %}
+                                    </button>{% trans ' if you do not vote for any of the photos' %}</h5>
+
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>{% trans 'No available photo duels to vote on Funtograph at this time. Want to start one?' %}</p>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock content %}

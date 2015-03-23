@@ -12,6 +12,11 @@ from interactions.models import (
     Comment,
     Favorite
 )
+
+from duels.models import (
+    PhotoDuel,
+)
+
 # Create your models here.
 from members.models import Member
 
@@ -88,6 +93,36 @@ class Photo(models.Model):
     """
     Model for storing members photos, and their metadata
     """
+    def sxor(self, s1, s2):
+        """
+        String XOR
+        :param s1:
+        :type s1:
+        :param s2:
+        :type s2:
+        :return:
+        :rtype:
+        """
+
+        temp = ''.join(chr(ord(a) ^ ord(b)) for a,b in zip(s1, s2))
+        return temp
+
+
+    @property
+    def similar_to_other_photos(self):
+        """
+
+        :return: True if photo is similar to already uploaded photo
+        :rtype: Boolean
+        """
+        all_photos_except_this = Photo.objects.exclude(id=self.id).all()
+
+        for photo in all_photos_except_this:
+            phash_xor = self.sxor(photo.phash, self.phash)
+
+            #phash_score = 1 - (phash_distance(photo.phash, self.phash) / 64.0)
+
+        return phash_xor
 
     @property
     def get_thumbnail_url(self):
@@ -97,6 +132,16 @@ class Photo(models.Model):
         :rtype: String
         """
         photo_thumb_url = self.photo.build_url(transformation='media_lib_thumb')
+        return photo_thumb_url
+
+    @property
+    def get_big_thumbnail_url(self):
+        """
+
+        :return: Url of thumbnail image
+        :rtype: String
+        """
+        photo_thumb_url = self.photo.build_url(transformation='media_big_thumb')
         return photo_thumb_url
 
     @property
@@ -144,6 +189,19 @@ class Photo(models.Model):
 
         comments_count = Comment.objects.filter(photo=self).count()
         return comments_count
+
+    @property
+    def get_number_of_active_duels(self):
+        """
+
+        :return: Number of likes on a photo
+        :rtype: Integer
+        """
+
+        active_duels_count_a = PhotoDuel.objects.filter(photo_a=self).count()
+        active_duels_count_b = PhotoDuel.objects.filter(photo_b=self).count()
+        active_duels_count = active_duels_count_a + active_duels_count_b
+        return active_duels_count
 
     @property
     def get_comments(self):

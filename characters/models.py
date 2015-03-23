@@ -22,6 +22,7 @@ class Photographer(models.Model):
     max_photos_to_upload = models.IntegerField(default=MAX_UPLOAD_PHOTOS_DEFAULT,
                                                null=False, blank=False)
 
+    last_vote_time = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(editable=False)
     updated_at = models.DateTimeField()
 

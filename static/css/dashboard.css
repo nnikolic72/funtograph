@@ -9,36 +9,9 @@ h6 {
     font-weight: 700;
 }
 
-.funtograph-main-panel {
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.34);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.34);
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.34);
 
-    border-radius: 10px 10px 10px 10px;
-    -moz-border-radius: 10px 10px 10px 10px;
-    -webkit-border-radius: 10px 10px 10px 10px;
-    border: 1px solid #7f7f7f;
-
-    padding: 20px;
-}
-
-.funtograph-sub-panel {
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.34);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.34);
-    box-shadow: 5px 5px 2px 0px rgba(0,0,0,0.20);
-
-    border-radius: 10px 10px 10px 10px;
-    -moz-border-radius: 10px 10px 10px 10px;
-    -webkit-border-radius: 10px 10px 10px 10px;
-    border: 1px solid #7f7f7f;
-
-    padding: 20px;
-}
 
 .funtograph-header {
-    border-radius: 10px 10px 10px 10px;
-    -moz-border-radius: 10px 10px 10px 10px;
-    -webkit-border-radius: 10px 10px 10px 10px;
     border: 0px solid #000000;
     margin-bottom: 40px;
     background: rgba(247,242,171,1);
@@ -49,9 +22,6 @@ h6 {
     background: -ms-linear-gradient(left, rgba(247,242,171,1) 0%, rgba(254,210,138,1) 100%);
     background: linear-gradient(to right, rgba(247,242,171,1) 0%, rgba(254,210,138,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f2ab', endColorstr='#fed28a', GradientType=1 );
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.34);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.34);
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.34);
 }
 
 .intro-header {

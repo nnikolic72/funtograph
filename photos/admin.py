@@ -114,8 +114,6 @@ class PhotoAdmin(admin.ModelAdmin):
         ),
     ]
 
-
-
 admin.site.register(Photo, PhotoAdmin)
 admin.site.register(PhotoCategory, PhotoCategoryAdmin)
 admin.site.register(PhotoAttribute, PhotoAttributeAdmin)

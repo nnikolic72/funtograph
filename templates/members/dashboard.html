@@ -71,7 +71,7 @@
         {%  if photographer_photos_cnt > 0%}
             {% blocktrans %}Number of photos: {{ photographer_photos_cnt }}{% endblocktrans %}
             <hr>
-            <a class="btn btn-default" href="{% url 'photos:photographer' photographer.name  %}">{% trans 'View my photos' %}</a>
+            <a class="btn btn-default" href="{% url 'characters:photographer' p_photographer_name=photographer.name %}">{% trans 'View my photos' %}</a>
 
         {% else %}
             <p>{% trans 'There are no your photos on Funtograph.' %}</p>

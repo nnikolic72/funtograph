@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext as _
 
 from dajaxice.decorators import dajaxice_register
-from dajaxice.utils import deserialize_form
+#from dajaxice.utils import deserialize_form
 
 
 from funtograph.settings.base import STATIC_URL

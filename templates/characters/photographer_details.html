@@ -117,6 +117,28 @@
                                     <span id="favorites_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_favorites }}</span>
                                 {% endif %}
 
+                                {%  if photo in challenged_photos %}
+                                    <span
+                                            {% if photo in challenged_photos_agreed %}
+                                                class="glyphicon glyphicon-fire text-default btn btn-sm btn-success"
+                                            {% else %}
+                                                class="glyphicon glyphicon-fire text-default btn btn-sm btn-warning"
+                                            {% endif %}
+                                            id="challenged_id_{{ photo.id }}"
+                                            onclick="photo_duel_challenge('{{ photo.id }}');"
+                                            title={% trans 'Duels A/W/L' %}
+                                            ></span>
+                                    <span id="challenged_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_active_duels }}</span>
+                                {% else %}
+                                    <span
+                                            class="glyphicon glyphicon-fire text-default btn btn-sm btn-default"
+                                            id="challenged_id_{{ photo.id }}"
+                                            onclick="photo_duel_challenge('{{ photo.id }}');"
+                                            title={% trans 'Duels A/W/L' %}
+                                            ></span>
+                                    <span id="challenged_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_active_duels }}</span>
+                                {% endif %}
+
                                 <span
                                         class="glyphicon glyphicon-comment btn btn-sm btn-default"
                                         title={% trans 'Comments' %}

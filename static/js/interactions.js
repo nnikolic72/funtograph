@@ -203,3 +203,9 @@ function reply_comment(p_comment_id) {
     }
 
 }
+
+
+
+function photo_duel_challenge(p_photo_id) {
+    alert('photo_duel_challenge ' + p_photo_id);
+}

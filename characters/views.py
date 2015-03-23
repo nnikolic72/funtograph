@@ -24,6 +24,10 @@ from interactions.models import (
     Comment
 )
 
+from duels.models import (
+    PhotoDuel
+)
+
 from interactions.forms import CommentForm
 
 class CharactersIndexView(TemplateView):
@@ -90,6 +94,7 @@ class CharactersPhotographerIndexView(TemplateView):
         liked_photos = None
         unliked_photos = None
         favorited_photos = None
+        challenged_photos = None
 
         if request.user.is_authenticated():
 
@@ -139,6 +144,37 @@ class CharactersPhotographerIndexView(TemplateView):
                         photo__in=photographers_photos
                     ).select_related('photo')
 
+                challenged_a_photos_set = \
+                    PhotoDuel.objects.filter(
+                        active=True,
+                        photo_a__owner=my_photographer,
+                        photo_b__owner=photographer,
+
+                    ).select_related('photo_b')
+
+                challenged_a_photos_set_agreed = \
+                    PhotoDuel.objects.filter(
+                        active=True,
+                        photo_a__owner=my_photographer,
+                        photo_b__owner=photographer,
+                        agreed_b=True
+                    ).select_related('photo_b')
+
+                challenged_b_photos_set = \
+                    PhotoDuel.objects.filter(
+                        active=True,
+                        photo_a__owner=photographer,
+                        photo_b__owner=my_photographer
+                    ).select_related('photo_a')
+
+                challenged_b_photos_set_agreed = \
+                    PhotoDuel.objects.filter(
+                        active=True,
+                        photo_a__owner=photographer,
+                        photo_b__owner=my_photographer,
+                        agreed_a=True
+                    ).select_related('photo_a')
+
                 liked_photos = []
                 for p in liked_photos_set:
                     liked_photos.extend([p.photo])
@@ -151,6 +187,18 @@ class CharactersPhotographerIndexView(TemplateView):
                 for p in favorited_photos_set:
                     favorited_photos.extend([p.photo])
 
+                challenged_photos = []
+                for p in challenged_a_photos_set:
+                    challenged_photos.extend([p.photo_b])
+                for p in challenged_b_photos_set:
+                    challenged_photos.extend([p.photo_a])
+
+                challenged_photos_agreed = []
+                for p in challenged_a_photos_set_agreed:
+                    challenged_photos_agreed.extend([p.photo_b])
+                for p in challenged_b_photos_set_agreed:
+                    challenged_photos_agreed.extend([p.photo_a])
+
             return render(request,
                           self.template_name,
                           dict(
@@ -159,6 +207,7 @@ class CharactersPhotographerIndexView(TemplateView):
                               liked_photos=liked_photos,
                               unliked_photos=unliked_photos,
                               favorited_photos=favorited_photos,
+                              challenged_photos=challenged_photos,
                               comment_form=CommentForm,
                               user_is_gallery_owner=user_is_gallery_owner,
                               my_photographer=my_photographer,
