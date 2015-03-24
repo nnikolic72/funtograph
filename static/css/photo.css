@@ -2,23 +2,31 @@
     padding-top: 15px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
     padding-bottom: 5px;
     text-align: center;
-
+    color: #000000;
+    text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.75);
 }
 
 .header-glyph-style {
-    color: #110f94;
-    text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.60);
+    color: #000000;
+    text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.75);
 }
 
 .funtograph-header {
-    background: rgba(242,246,248,1);
-    background: -moz-linear-gradient(left, rgba(242,246,248,1) 0%, rgba(216,225,231,1) 49%, rgba(181,198,208,1) 51%, rgba(224,239,249,1) 100%);
-    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(242,246,248,1)), color-stop(49%, rgba(216,225,231,1)), color-stop(51%, rgba(181,198,208,1)), color-stop(100%, rgba(224,239,249,1)));
-    background: -webkit-linear-gradient(left, rgba(242,246,248,1) 0%, rgba(216,225,231,1) 49%, rgba(181,198,208,1) 51%, rgba(224,239,249,1) 100%);
-    background: -o-linear-gradient(left, rgba(242,246,248,1) 0%, rgba(216,225,231,1) 49%, rgba(181,198,208,1) 51%, rgba(224,239,249,1) 100%);
-    background: -ms-linear-gradient(left, rgba(242,246,248,1) 0%, rgba(216,225,231,1) 49%, rgba(181,198,208,1) 51%, rgba(224,239,249,1) 100%);
-    background: linear-gradient(to right, rgba(242,246,248,1) 0%, rgba(216,225,231,1) 49%, rgba(181,198,208,1) 51%, rgba(224,239,249,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', endColorstr='#e0eff9', GradientType=1 );
+background-color: hsl(34, 53%, 82%);
+background-image: repeating-linear-gradient(45deg, transparent 5px, hsla(197, 62%, 11%, 0.5) 5px, hsla(197, 62%, 11%, 0.5) 10px,
+  hsla(5, 53%, 63%, 0) 10px, hsla(5, 53%, 63%, 0) 35px, hsla(5, 53%, 63%, 0.5) 35px, hsla(5, 53%, 63%, 0.5) 40px,
+  hsla(197, 62%, 11%, 0.5) 40px, hsla(197, 62%, 11%, 0.5) 50px, hsla(197, 62%, 11%, 0) 50px, hsla(197, 62%, 11%, 0) 60px,
+  hsla(5, 53%, 63%, 0.5) 60px, hsla(5, 53%, 63%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 80px,
+  hsla(35, 91%, 65%, 0) 80px, hsla(35, 91%, 65%, 0) 90px, hsla(5, 53%, 63%, 0.5) 90px, hsla(5, 53%, 63%, 0.5) 110px,
+  hsla(5, 53%, 63%, 0) 110px, hsla(5, 53%, 63%, 0) 120px, hsla(197, 62%, 11%, 0.5) 120px, hsla(197, 62%, 11%, 0.5) 140px
+  ),
+repeating-linear-gradient(135deg, transparent 5px, hsla(197, 62%, 11%, 0.5) 5px, hsla(197, 62%, 11%, 0.5) 10px,
+  hsla(5, 53%, 63%, 0) 10px, hsla(5, 53%, 63%, 0) 35px, hsla(5, 53%, 63%, 0.5) 35px, hsla(5, 53%, 63%, 0.5) 40px,
+  hsla(197, 62%, 11%, 0.5) 40px, hsla(197, 62%, 11%, 0.5) 50px, hsla(197, 62%, 11%, 0) 50px, hsla(197, 62%, 11%, 0) 60px,
+  hsla(5, 53%, 63%, 0.5) 60px, hsla(5, 53%, 63%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 70px, hsla(35, 91%, 65%, 0.5) 80px,
+  hsla(35, 91%, 65%, 0) 80px, hsla(35, 91%, 65%, 0) 90px, hsla(5, 53%, 63%, 0.5) 90px, hsla(5, 53%, 63%, 0.5) 110px,
+  hsla(5, 53%, 63%, 0) 110px, hsla(5, 53%, 63%, 0) 140px, hsla(197, 62%, 11%, 0.5) 140px, hsla(197, 62%, 11%, 0.5) 160px
+);
 }
 
 .intro-message {
@@ -26,30 +34,30 @@
     padding-top: 1%;
     padding-bottom: 3%;
 
-    color: #110f94;
+    color: #000000;
+    text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.75);
 }
 
 .intro-header > h1 {
     margin: 0;
-    color: #f4f379;
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+
     font-size: 5em;
 }
 
 .intro-message > h1 {
     margin: 0;
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.75);
     font-size: 5em;
 }
 
 .intro-message > h2 {
     margin: 0;
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.75);
     font-size: 3em;
 }
 
 .intro-message > h4 {
     margin: 0;
-    text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.60);
+    text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.75);
     font-size: 1.5em;
 }

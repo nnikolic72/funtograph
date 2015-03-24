@@ -20,28 +20,19 @@
 
     {% dajaxice_js_import %}
 
-    {# Stops ENTER key in forms #}
-    <script type="text/javascript">
-        function stopRKey(evt) {
-            var evt = (evt) ? evt : ((event) ? event : null);
-            var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
-            if ((evt.keyCode == 13) && (node.type=="text"))  {return false;}
-        }
-
-        document.onkeypress = stopRKey;
-    </script>
-
     {%  block extra_head %}
         <link rel="stylesheet" href="{{STATIC_URL}}css/funtograph-common.css">
         <link rel="shortcut icon" href="{{ STATIC_URL }}ico/favicon.ico">
     {% endblock extra_head %}
 
     {% block additional_css %}
+
     {% endblock additional_css %}
 {% endblock %}
 
 {% block bootstrap3_extra_script %}
     {{ block.super }}
+    <script src="{{ STATIC_URL }}js/funtograph-common.js" type="text/javascript" charset="utf-8"></script>
     {%  block extra_script %}
     {% endblock extra_script %}
 {% endblock %}
@@ -93,13 +84,13 @@
         <nav class="statusbar">
             <div class="container">
                 <div class="col-xs-3">
-                    <span class="glyphicon glyphicon-user"></span>
-                    {{ statusbar_name }}
+                    <button class="btn btn-xs btn-default"><span class="glyphicon glyphicon-user"></span></button>
+                    <small>{{ statusbar_name }}</small>
                 </div>
-                <div class="col-xs-2">{% trans 'Lvl' %}: {{ statusbar_level }}</div>
-                <div class="col-xs-3">{% trans 'XP' %}: {{ statusbar_current_xp }}</div>
-                <div class="col-xs-2">{% trans 'F' %}: {{ statusbar_funtocredits }}</div>
-                <div class="col-xs-2">{% trans 'Energy' %}: {{ statusbar_current_energy }}/{{ statusbar_max_energy }}</div>
+                <div class="col-xs-2"><button class="btn btn-xs btn-default">{% trans 'LVL' %}</button> {{ statusbar_level }}</div>
+                <div class="col-xs-3"><button class="btn btn-xs btn-default">{% trans 'XP' %}</button> {{ statusbar_current_xp }}</div>
+                <div class="col-xs-2"><button class="btn btn-xs btn-default"><span class="glyphicon glyphicon-record"></span></button> {{ statusbar_funtocredits }}</div>
+                <div class="col-xs-2"><button class="btn btn-xs btn-default"><span class="glyphicon glyphicon-heart"></span></button> {{ statusbar_current_energy }}/{{ statusbar_max_energy }}</div>
             </div>
         </nav>
 
@@ -118,10 +109,35 @@
         </div>
     </div>
 
+    <div class="container funtograph-breadcrumbs-panel">
+        <div class="row">
+            <ol class="breadcrumb">
+                {% block breadcrumbs %}
+                {% endblock breadcrumbs %}
+            </ol>
+        </div>
+    </div>
+
     <div class="container funtograph-main-panel">
         {% block content %}
         {%  endblock content %}
+
     </div> <!--main container-->
+
+    <div class="container funtograph-main-panel" style="margin-top: 20px;">
+        <div class="row">
+            <div class="col-xs-4">
+                <button class="btn btn-default btn-small center-block" onclick="back_button();">
+                <span class="glyphicon glyphicon-step-backward"></span></button>
+            </div>
+            <div class="col-xs-4">
+                <a href="{% url 'members:dashboard' %}"><button class="btn btn-default btn-small center-block"><span class="glyphicon glyphicon-home"></span></button></a>
+            </div>
+            <div class="col-xs-4">
+                <button class="btn btn-default btn-small center-block" onclick="forward_button();"><span class="glyphicon glyphicon-step-forward"></span></button>
+            </div>
+        </div>
+    </div>
 
     {% block footer %}
         <div class="container">

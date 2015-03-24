@@ -21,8 +21,14 @@
     {%  trans 'Funtograph Photographers Rankings' %}
 {% endblock content_header_message %}
 
+{% block breadcrumbs %}
+        <li><a href="{% url 'members:dashboard' %}">{% trans 'Dashboard' %}</a></li>
+        <li class="active"><a href="{% url 'characters:index' %}">{% trans 'Photgraphers' %}</a></li>
+{% endblock breadcrumbs %}
+
 {% block content %}
     {{ block.super }}
+
 
     <div class="col-xs-12 col-lg-offset-3 col-lg-6 funtograph-sub-panel">
         {%  if photographers %}

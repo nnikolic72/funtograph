@@ -5,20 +5,22 @@
 
 }
 
+.intro-header-small {
+    color: #cecece;
+    text-shadow: 2px 2px 1px rgb(0, 0, 0);
+}
+
 .header-glyph-style {
-    color: #110f94;
-    text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.60);
+    color: #cecece;
+    text-shadow: 2px 2px 1px rgb(0, 0, 0);
 }
 
 .funtograph-header {
-    background: rgba(235,233,249,1);
-    background: -moz-linear-gradient(left, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 40%, rgba(206,199,236,1) 57%, rgba(193,191,234,1) 100%);
-    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(235,233,249,1)), color-stop(40%, rgba(216,208,239,1)), color-stop(57%, rgba(206,199,236,1)), color-stop(100%, rgba(193,191,234,1)));
-    background: -webkit-linear-gradient(left, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 40%, rgba(206,199,236,1) 57%, rgba(193,191,234,1) 100%);
-    background: -o-linear-gradient(left, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 40%, rgba(206,199,236,1) 57%, rgba(193,191,234,1) 100%);
-    background: -ms-linear-gradient(left, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 40%, rgba(206,199,236,1) 57%, rgba(193,191,234,1) 100%);
-    background: linear-gradient(to right, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 40%, rgba(206,199,236,1) 57%, rgba(193,191,234,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebe9f9', endColorstr='#c1bfea', GradientType=1 );
+background-color: #fff;
+background-image:
+linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+linear-gradient(#eee .1em, transparent .1em);
+background-size: 100% 1.2em;
 }
 
 .intro-message {
@@ -26,32 +28,36 @@
     padding-top: 1%;
     padding-bottom: 3%;
 
-    color: #110f94;
+    color: #cecece;
+    text-shadow: 2px 2px 1px rgb(0, 0, 0);
 }
 
 .intro-header > h1 {
     margin: 0;
-    color: #110f94;
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    color: #cecece;
+    text-shadow: 2px 2px 1px rgb(0, 0, 0);
     font-size: 5em;
 }
 
 .intro-message > h1 {
     margin: 0;
 
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    color: #cecece;
+    text-shadow: 2px 2px 1px rgb(0, 0, 0);
     font-size: 5em;
 }
 
 .intro-message > h2 {
     margin: 0;
 
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    color: #cecece;
+    text-shadow: 2px 2px 1px rgb(0, 0, 0);
     font-size: 3em;
 }
 
 .intro-message > h4 {
     margin: 0;
-    text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.60);
+    color: #cecece;
+    text-shadow: 2px 2px 1px rgb(0, 0, 0);
     font-size: 1.5em;
 }

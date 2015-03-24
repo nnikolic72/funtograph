@@ -28,6 +28,11 @@
     {%  trans 'Funtograph Photo Duels' %}
 {% endblock content_header_message %}
 
+{% block breadcrumbs %}
+        <li><a href="{% url 'members:dashboard' %}">{% trans 'Dashboard' %}</a></li>
+        <li class="active"><a href="{% url 'duels:index' %}">{% trans 'Duels' %}</a></li>
+{% endblock breadcrumbs %}
+
 {% block content %}
     {{ block.super }}
 
@@ -38,7 +43,7 @@
                     <div id="duel_id_{{ photo_duel.id }}">
                         <div class="row">
                             <div class="col-xs-12 text-center">
-                                <h4>{% trans 'Photo Duel' %} #{{ photo_duel.id }}</h4>
+                                <h4>{% trans 'Photo Duel' %}<br><small>#{{ photo_duel.id }}</small></h4>
                                 <h6>{% trans 'Vote for photo by clicking on it' %}</h6>
                             </div>
                         </div>

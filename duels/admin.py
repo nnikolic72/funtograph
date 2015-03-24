@@ -9,6 +9,33 @@ class PhotoDuelAdmin(admin.ModelAdmin):
     Admin class for basic Photo Duel
     """
 
+    def restart_duel(self, request, queryset):
+        """
+        Action -> Clears duel result and restarts it
+        :return:
+        :rtype:
+        """
+        l_votes_cnt = 0
+        l_duel_cnt = 0
+
+        for duel in queryset:
+            l_duel_cnt += 1
+            for votes in duel.votes_a.all():
+                votes.delete()
+                l_votes_cnt += 1
+            for votes in duel.votes_b.all():
+                votes.delete()
+                l_votes_cnt += 1
+            for votes in duel.undecided.all():
+                votes.delete()
+                l_votes_cnt += 1
+
+        buf = "Restarted %s duels and deleted total of %s votes." % (l_duel_cnt, l_votes_cnt)
+        self.message_user(request, buf)
+    restart_duel.short_description = 'Restart duels'
+
+    actions = (restart_duel,)
+
     list_display = ('photo_a',
                     'photo_b',
                     'agreed_a',

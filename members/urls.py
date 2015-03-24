@@ -14,7 +14,7 @@ from .views import (
     MemberDisabledView,
     MemberLogoutView
 )
-__author__ = 'n.nikolic'
+
 
 urlpatterns = patterns('',
     #url(r'^$', login_required(MemberHomePageView.as_view()), name='index'),

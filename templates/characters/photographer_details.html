@@ -22,9 +22,9 @@
 {% block content_header_title %}
     {{ block.super }}
     <h1>
-        <span class="glyphicon glyphicon-camera header-glyph-style"></span>
-        {% trans 'Photo Portfolio' %}
-        <span class="glyphicon glyphicon-camera header-glyph-style"></span>
+        <span class="glyphicon glyphicon-briefcase header-glyph-style"></span><br>
+        <small class="intro-header-small">{% trans 'Photo Portfolio' %}</small>
+
     </h1>
 {% endblock content_header_title %}
 
@@ -40,6 +40,12 @@
 
 {% endblock content_header_message %}
 
+{% block breadcrumbs %}
+        <li><a href="{% url 'members:dashboard' %}">{% trans 'Dashboard' %}</a></li>
+        <li><a href="{% url 'characters:index' %}">{% trans 'Photgraphers' %}</a></li>
+        <li class="active"><a href="{% url 'characters:photographer' p_photographer_name=photographer.name %}">{{ photographer.name }}</a></li>
+{% endblock breadcrumbs %}
+
 {% block content %}
     {{ block.super }}
 
@@ -54,7 +60,7 @@
                                 <h4 class="btn btn-default" style="margin: 10px;">{% trans 'Title:' %} {% if photo.title %}{{ photo.title }}{% else %}{% trans '[untitled]' %}{% endif %}</h4>
                             </div>
                             <a href="{% url 'photos:id' p_photo_id=photo.id %}">
-                                <img class="img-responsive funtograph-image" src="{{  photo.get_src_url }}" alt="{{ photo.title }}">
+                                <img class="img-responsive img-thumbnail funtograph-image" src="{{  photo.get_src_url }}" alt="{{ photo.title }}">
                             </a>
 
                             <div class="text-center" style="margin-bottom: 20px;">

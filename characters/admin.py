@@ -28,7 +28,6 @@ class PhotographerAdmin(admin.ModelAdmin):
             'member',
             'name',
             'level',
-            'character_type'
         ]
         }
         ),

@@ -28,6 +28,15 @@
     {%  trans 'Photo Details' %}
 {% endblock content_header_message %}
 
+
+{% block breadcrumbs %}
+        <li><a href="{% url 'members:dashboard' %}">{% trans 'Dashboard' %}</a></li>
+        <li><a href="{% url 'characters:index' %}">{% trans 'Photgraphers' %}</a></li>
+        <li class="active"><a href="{% url 'characters:photographer' p_photographer_name=photo.author %}">{{ photo.author }}</a></li>
+    <li class="active"><a href="{% url 'photos:id' p_photo_id=photo.id %}">{{ photo.title }}</a></li>
+{% endblock breadcrumbs %}
+
+
 {% block content %}
 {{ block.super }}
 

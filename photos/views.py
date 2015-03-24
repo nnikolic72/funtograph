@@ -134,7 +134,7 @@ class PhotosUploadView(TemplateView):
                         new_photo.save()
 
                     return HttpResponseRedirect(
-                        reverse('photos:photographer',
+                        reverse('characters:photographer',
                                 kwargs={'p_photographer_name': new_photo_owner.name}
                         )
                     )
