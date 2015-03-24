@@ -21,13 +21,13 @@ class PhotoDuelAdmin(admin.ModelAdmin):
         for duel in queryset:
             l_duel_cnt += 1
             for votes in duel.votes_a.all():
-                votes.delete()
+                duel.votes_a.remove(votes)
                 l_votes_cnt += 1
             for votes in duel.votes_b.all():
-                votes.delete()
+                duel.votes_b.remove(votes)
                 l_votes_cnt += 1
             for votes in duel.undecided.all():
-                votes.delete()
+                duel.undecided.remove(votes)
                 l_votes_cnt += 1
 
         buf = "Restarted %s duels and deleted total of %s votes." % (l_duel_cnt, l_votes_cnt)

@@ -36,6 +36,10 @@ body { padding-top: 51px; }
     color: #ffffff;
 }
 
+.funtograph-statusbar-button {
+    margin-right: 5px;
+}
+
 .funtograph-image {
     margin-top: 20px;
     margin-bottom: 20px;

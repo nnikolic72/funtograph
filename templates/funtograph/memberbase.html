@@ -84,13 +84,13 @@
         <nav class="statusbar">
             <div class="container">
                 <div class="col-xs-3">
-                    <button class="btn btn-xs btn-default"><span class="glyphicon glyphicon-user"></span></button>
+                    <button class="btn btn-xs btn-default funtograph-statusbar-button"><span class="glyphicon glyphicon-user"></span></button>
                     <small>{{ statusbar_name }}</small>
                 </div>
-                <div class="col-xs-2"><button class="btn btn-xs btn-default">{% trans 'LVL' %}</button> {{ statusbar_level }}</div>
-                <div class="col-xs-3"><button class="btn btn-xs btn-default">{% trans 'XP' %}</button> {{ statusbar_current_xp }}</div>
-                <div class="col-xs-2"><button class="btn btn-xs btn-default"><span class="glyphicon glyphicon-record"></span></button> {{ statusbar_funtocredits }}</div>
-                <div class="col-xs-2"><button class="btn btn-xs btn-default"><span class="glyphicon glyphicon-heart"></span></button> {{ statusbar_current_energy }}/{{ statusbar_max_energy }}</div>
+                <div class="col-xs-2"><button class="btn btn-xs btn-default funtograph-statusbar-button">{% trans 'LVL' %}</button><small>{{ statusbar_level }}</small></div>
+                <div class="col-xs-3"><button class="btn btn-xs btn-default funtograph-statusbar-button">{% trans 'EXP' %}</button><small>{{ statusbar_current_xp }}</small></div>
+                <div class="col-xs-2"><button class="btn btn-xs btn-default funtograph-statusbar-button"><span class="glyphicon glyphicon-record"></span></button><small>{{ statusbar_funtocredits }}</small></div>
+                <div class="col-xs-2"><button class="btn btn-xs btn-default funtograph-statusbar-button"><span class="glyphicon glyphicon-heart"></span></button><small>{{ statusbar_current_energy }}/{{ statusbar_max_energy }}<small></small></div>
             </div>
         </nav>
 

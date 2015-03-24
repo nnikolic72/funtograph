@@ -53,6 +53,7 @@ class CharactersIndexView(TemplateView):
             try:
                 logged_member = Member.objects.get(user__id=request.user.id)
                 photographer = logged_member.get_my_photographer
+                my_photographer = photographer
             except ObjectDoesNotExist:
                 logged_member = None
 
@@ -61,6 +62,7 @@ class CharactersIndexView(TemplateView):
                           self.template_name,
                           dict(
                               photographers=photographers,
+                              my_photographer=my_photographer,
 
                               statusbar_level=photographer.level,
                               statusbar_name=photographer.name,
@@ -212,9 +214,9 @@ class CharactersPhotographerIndexView(TemplateView):
                               user_is_gallery_owner=user_is_gallery_owner,
                               my_photographer=my_photographer,
 
-                              statusbar_level=photographer.level,
-                              statusbar_name=photographer.name,
-                              statusbar_current_xp=photographer.current_xp,
+                              statusbar_level=my_photographer.level,
+                              statusbar_name=my_photographer.name,
+                              statusbar_current_xp=my_photographer.current_xp,
                               statusbar_funtocredits=logged_member.funtocredits,
                               statusbar_current_energy=logged_member.current_energy,
                               statusbar_max_energy=logged_member.max_energy,

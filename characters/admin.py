@@ -40,6 +40,19 @@ class PhotographerAdmin(admin.ModelAdmin):
         }
         ),
 
+        ('In-game permissions', {'fields': [
+            'allowed_to_duel',
+            'allowed_to_team_duel',
+            'allowed_to_join_league',
+            'allowed_to_found_collective',
+            'allowed_to_like',
+            'allowed_to_comment',
+            'allowed_to_favorite',
+            'allowed_to_see_stats',
+        ]
+        }
+        ),
+
         ('Timestamps', {'fields': [
             'created_at',
             'updated_at'

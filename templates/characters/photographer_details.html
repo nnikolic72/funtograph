@@ -41,9 +41,9 @@
 {% endblock content_header_message %}
 
 {% block breadcrumbs %}
-        <li><a href="{% url 'members:dashboard' %}">{% trans 'Dashboard' %}</a></li>
-        <li><a href="{% url 'characters:index' %}">{% trans 'Photgraphers' %}</a></li>
-        <li class="active"><a href="{% url 'characters:photographer' p_photographer_name=photographer.name %}">{{ photographer.name }}</a></li>
+    <li><a href="{% url 'members:dashboard' %}">{% trans 'Dashboard' %}</a></li>
+    <li><a href="{% url 'characters:index' %}">{% trans 'Photgraphers' %}</a></li>
+    <li class="active"><a href="{% url 'characters:photographer' p_photographer_name=photographer.name %}">{{ photographer.name }}</a></li>
 {% endblock breadcrumbs %}
 
 {% block content %}
@@ -54,105 +54,128 @@
             <div class="col-xs-12 col-md-offset-3 col-md-6 col-md-offset-3">
 
                 {% for photo in  photographers_photos %}
-                    <div class="panel panel-default funtograph-sub-panel">
-                        <div class="panel-body">
-                            <div class="text-center">
-                                <h4 class="btn btn-default" style="margin: 10px;">{% trans 'Title:' %} {% if photo.title %}{{ photo.title }}{% else %}{% trans '[untitled]' %}{% endif %}</h4>
-                            </div>
-                            <a href="{% url 'photos:id' p_photo_id=photo.id %}">
-                                <img class="img-responsive img-thumbnail funtograph-image" src="{{  photo.get_src_url }}" alt="{{ photo.title }}">
-                            </a>
+                    <div class="funtograph-sub-panel">
+                        <div class="text-center">
+                            <h4 class="btn btn-default" style="margin: 10px;">{% trans 'Title:' %} {% if photo.title %}{{ photo.title }}{% else %}{% trans '[untitled]' %}{% endif %}</h4>
+                            <br><small>{% trans 'Photo score' %} <span id="photo_score_num_{{ photo.id }}">{{ photo.get_photo_score }}</span></small>
+                        </div>
+                        <a href="{% url 'photos:id' p_photo_id=photo.id %}">
+                            <img class="img-responsive img-thumbnail funtograph-image" src="{{  photo.get_src_url }}" alt="{{ photo.title }}">
+                        </a>
 
-                            <div class="text-center" style="margin-bottom: 20px;">
-                                {%  if photo in liked_photos %}
-                                    <span
-                                            class="glyphicon glyphicon-ok-sign text-default btn btn-sm btn-success"
-                                            id="likes_id_{{ photo.id }}"
-                                            onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'like_button');"
-                                            title={% trans 'Likes' %}
-                                            >
+                        <div class="text-center" style="margin-bottom: 20px;">
+                            {% if my_photographer.id != photographer.id %}
+                                {% if my_photographer.allowed_to_like %}
+                                    {%  if photo in liked_photos %}
+                                        <span
+                                                class="glyphicon glyphicon-ok-sign text-default btn btn-sm btn-success"
+                                                id="likes_id_{{ photo.id }}"
+                                                onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'like_button');"
+                                                title={% trans 'Likes' %}
+                                                >
+                                    </span>
+                                    {% else %}
+                                        <span
+                                                class="glyphicon glyphicon-ok-sign text-default btn btn-sm btn-default"
+                                                id="likes_id_{{ photo.id }}"
+                                                onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'like_button');"
+                                                title={% trans 'Likes' %}
+                                                >
                                         </span>
-                                {% else %}
-                                    <span
-                                            class="glyphicon glyphicon-ok-sign text-default btn btn-sm btn-default"
-                                            id="likes_id_{{ photo.id }}"
-                                            onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'like_button');"
-                                            title={% trans 'Likes' %}
-                                            >
+                                    {% endif %}
+                                    {% if my_photographer.allowed_to_see_stats %}
+                                        <span id="likes_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_likes }}</span>
+                                    {% endif %}
+
+                                    {%  if photo in unliked_photos %}
+                                        <span
+                                                class="glyphicon glyphicon-remove-sign text-default btn btn-sm btn-danger"
+                                                id="unlikes_id_{{ photo.id }}"
+                                                onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'unlike_button');"
+                                                title={% trans 'Disikes' %}
+                                                >
                                         </span>
-                                {% endif %}
-                                <span id="likes_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_likes }}</span>
-
-                                {%  if photo in unliked_photos %}
-                                    <span
-                                            class="glyphicon glyphicon-remove-sign text-default btn btn-sm btn-danger"
-                                            id="unlikes_id_{{ photo.id }}"
-                                            onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'unlike_button');"
-                                            title={% trans 'Disikes' %}
-                                            >
+                                    {% else %}
+                                        <span
+                                                class="glyphicon glyphicon-remove-sign text-default btn btn-sm btn-default"
+                                                id="unlikes_id_{{ photo.id }}"
+                                                onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'unlike_button');"
+                                                title={% trans 'Disikes' %}
+                                                >
                                         </span>
-                                {% else %}
-                                    <span
-                                            class="glyphicon glyphicon-remove-sign text-default btn btn-sm btn-default"
-                                            id="unlikes_id_{{ photo.id }}"
-                                            onclick="like('{{ photo.id }}', '{{STATIC_URL}}', 'unlike_button');"
-                                            title={% trans 'Disikes' %}
-                                            >
-                                        </span>
+                                    {% endif %}
+
+                                    {% if my_photographer.allowed_to_see_stats %}
+                                        <span id="dislikes_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_dislikes }}</span>
+                                    {% endif %}
                                 {% endif %}
+                            {% endif %}
 
+                            {% if my_photographer.id != photographer.id %}
+                                {% if my_photographer.allowed_to_favorite %}
+                                    {%  if photo in favorited_photos %}
+                                        <span
+                                                class="glyphicon glyphicon-star text-default btn btn-sm btn-success"
+                                                id="favorites_id_{{ photo.id }}"
+                                                onclick="favorite('{{ photo.id }}', '{{STATIC_URL}}');"
+                                                title={% trans 'Favorites' %}
+                                                ></span>
 
-                                <span id="dislikes_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_dislikes }}</span>
+                                    {% else %}
+                                        <span
+                                                class="glyphicon glyphicon-star-empty text-default btn btn-sm btn-default"
+                                                id="favorites_id_{{ photo.id }}"
+                                                onclick="favorite('{{ photo.id }}', '{{STATIC_URL}}');"
+                                                title={% trans 'Favorites' %}
+                                                ></span>
 
-
-                                {%  if photo in favorited_photos %}
-                                    <span
-                                            class="glyphicon glyphicon-star text-default btn btn-sm btn-success"
-                                            id="favorites_id_{{ photo.id }}"
-                                            onclick="favorite('{{ photo.id }}', '{{STATIC_URL}}');"
-                                            title={% trans 'Favorites' %}
-                                            ></span>
-                                    <span id="favorites_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_favorites }}</span>
-                                {% else %}
-                                    <span
-                                            class="glyphicon glyphicon-star-empty text-default btn btn-sm btn-default"
-                                            id="favorites_id_{{ photo.id }}"
-                                            onclick="favorite('{{ photo.id }}', '{{STATIC_URL}}');"
-                                            title={% trans 'Favorites' %}
-                                            ></span>
-                                    <span id="favorites_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_favorites }}</span>
+                                    {% endif %}
+                                    {% if my_photographer.allowed_to_see_stats %}
+                                        <span id="favorites_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_favorites }}</span>
+                                    {% endif %}
                                 {% endif %}
+                            {% endif %}
 
-                                {%  if photo in challenged_photos %}
-                                    <span
-                                            {% if photo in challenged_photos_agreed %}
-                                                class="glyphicon glyphicon-fire text-default btn btn-sm btn-success"
-                                            {% else %}
-                                                class="glyphicon glyphicon-fire text-default btn btn-sm btn-warning"
-                                            {% endif %}
-                                            id="challenged_id_{{ photo.id }}"
-                                            onclick="photo_duel_challenge('{{ photo.id }}');"
-                                            title={% trans 'Duels A/W/L' %}
-                                            ></span>
-                                    <span id="challenged_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_active_duels }}</span>
-                                {% else %}
-                                    <span
-                                            class="glyphicon glyphicon-fire text-default btn btn-sm btn-default"
-                                            id="challenged_id_{{ photo.id }}"
-                                            onclick="photo_duel_challenge('{{ photo.id }}');"
-                                            title={% trans 'Duels A/W/L' %}
-                                            ></span>
-                                    <span id="challenged_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_active_duels }}</span>
+                            {% if my_photographer.id != photographer.id %}
+                                {% if my_photographer.allowed_to_duel %}
+                                    {%  if photo in challenged_photos %}
+                                        <a href="{% url 'duels:duelchallenge' p_photo_id=photo.id %}"><span
+                                                {% if photo in challenged_photos_agreed %}
+                                                    class="glyphicon glyphicon-fire text-default btn btn-sm btn-success"
+                                                {% else %}
+                                                    class="glyphicon glyphicon-fire text-default btn btn-sm btn-warning"
+                                                {% endif %}
+                                                    id="challenged_id_{{ photo.id }}"
+
+                                                    title={% trans 'Duels A/W/L' %}
+                                                ></span></a>
+
+                                    {% else %}
+                                        <a href="{% url 'duels:duelchallenge' p_photo_id=photo.id %}"><span
+                                                class="glyphicon glyphicon-fire text-default btn btn-sm btn-default"
+                                                id="challenged_id_{{ photo.id }}"
+
+                                                title={% trans 'Duels A/W/L' %}
+                                                ></span></a>
+
+                                    {% endif %}
+                                    {% if my_photographer.allowed_to_see_stats %}
+                                        <span id="challenged_num_{{ photo.id }}" style="margin-right: 10px;">{{ photo.get_number_of_active_duels }}</span>
+                                    {% endif %}
                                 {% endif %}
+                            {% endif %}
 
-                                <span
-                                        class="glyphicon glyphicon-comment btn btn-sm btn-default"
-                                        title={% trans 'Comments' %}
+                            {% if my_photographer.allowed_to_comment %}
+                                <span type="button" data-toggle="collapse" data-target="#photo_comments_{{ photo.id }}" aria-expanded="false" aria-controls="collapseExample"
+
+                                      class="glyphicon glyphicon-comment btn btn-sm btn-default"
+                                      title={% trans 'Comments' %}
                                         ></span>
                                 <span id="comments_num_{{ photo.id }}">{{ photo.get_number_of_comments }}</span>
+                            {% endif %}
+                        </div>
 
-
-                            </div>
+                        <div class="collapse" id="photo_comments_{{ photo.id }}">
                             <hr>
                             {%  with photo.get_last_four_comments as comments %}
                                 {% if comments %}
@@ -253,10 +276,8 @@
                                             >{% trans 'Add comment' %}</button>
                                 </div>
                             </form>
-
-                        </div>
-
-                    </div>
+                        </div> <!-- collapse -->
+                    </div> <!-- funtograph-sub-panel -->
                 {% endfor %}
             </div>
         </div>

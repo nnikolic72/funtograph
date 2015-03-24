@@ -22,6 +22,18 @@ class Photographer(models.Model):
     max_photos_to_upload = models.IntegerField(default=MAX_UPLOAD_PHOTOS_DEFAULT,
                                                null=False, blank=False)
 
+    photo_wear_limit = models.IntegerField(default=5, blank=False, null=False)
+
+    allowed_to_duel = models.BooleanField(default=True, blank=False, null=False)
+    allowed_to_team_duel = models.BooleanField(default=True, blank=False, null=False)
+    allowed_to_join_league = models.BooleanField(default=True, blank=False, null=False)
+    allowed_to_found_collective = models.BooleanField(default=True, blank=False, null=False)
+    allowed_to_like = models.BooleanField(default=True, blank=False, null=False)
+    allowed_to_comment = models.BooleanField(default=True, blank=False, null=False)
+    allowed_to_favorite = models.BooleanField(default=True, blank=False, null=False)
+    allowed_to_see_stats = models.BooleanField(default=False, blank=False, null=False)
+
+
     last_vote_time = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(editable=False)
     updated_at = models.DateTimeField()

@@ -4,8 +4,16 @@ from django.utils.datetime_safe import datetime
 
 from cloudinary.models import CloudinaryField
 
+from funtograph.settings.base import (
+    INTERACTION_LIKE_WEIGHT,
+    INTERACTION_DISLIKE_WEIGHT,
+    INTERACTION_FAVORITE_WEIGHT,
+    INTERACTION_DUEL_WIN_WEIGHT,
+    INTERACTION_DUEL_LOSS_WEIGHT,
+)
+
 from characters.models import (
-                               Photographer)
+    Photographer)
 
 from interactions.models import (
     Like,
@@ -252,6 +260,41 @@ class Photo(models.Model):
 
         favorites_count = Favorite.objects.filter(photo=self).count()
         return favorites_count
+
+    @property
+    def get_photo_score(self):
+        """
+        Calculates and returns total photo score
+        :return:
+        :rtype:
+        """
+        #INTERACTION_LIKE_WEIGHT
+        #INTERACTION_DISLIKE_WEIGHT
+        #INTERACTION_FAVORITE_WEIGHT
+        #INTERACTION_DUEL_WIN_WEIGHT
+        #INTERACTION_DUEL_LOSS_WEIGHT
+
+        l_photo_score = 0
+
+        photo_favorites = Favorite.objects.filter(photo=self)
+        #photo_comments = Comment.objects.filter(photo=self)
+        photo_likes = Like.objects.filter(photo=self, like_value=True)
+        photo_dislikes = Like.objects.filter(photo=self, like_value=False)
+
+        for favorite in photo_favorites:
+            l_photo_score += INTERACTION_FAVORITE_WEIGHT * favorite.members_favoriters.level
+
+        for like in photo_likes:
+            l_photo_score += INTERACTION_LIKE_WEIGHT * like.members_likers.level
+
+        for dislike in photo_dislikes:
+            l_photo_score += INTERACTION_DISLIKE_WEIGHT * dislike.members_likers.level
+
+        if l_photo_score:
+            return l_photo_score
+        else:
+            return 0
+
 
     title = models.CharField(max_length=100,
                              verbose_name=_('Photo title'))

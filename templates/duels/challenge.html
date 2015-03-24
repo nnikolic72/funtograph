@@ -1,0 +1,77 @@
+{% extends "memberbase.html" %}
+{% load i18n %}
+{% load cloudinary %}
+{% load photo_extras %}
+
+{%  block title %}
+    {% trans 'Duel Challenge' %} - {{ challenged_photo.title }}
+{% endblock title %}
+
+{%  block extra_script %}
+    {{ block.super }}
+    <script src="{{ STATIC_URL }}js/vendor/jquery.ba-serializeobject.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ STATIC_URL }}js/duels.js" type="text/javascript" charset="utf-8"></script>
+{% endblock extra_script %}
+
+{% block additional_css %}
+    {{ block.super }}
+    <link href="{{ STATIC_URL }}css/duel_challenge.css" rel="stylesheet">
+{% endblock additional_css %}
+
+
+{% block content_header_title %}
+    {{ block.super }}
+    <h1>
+        <span class="glyphicon glyphicon-fire header-glyph-style"></span><br>
+        <h2 class="intro-header-small">{% trans 'Duel Challenge' %}</h2>
+    </h1>
+{% endblock content_header_title %}
+
+{% block content_header_message %}
+    <div class="row">
+        <div class="col-xs-12">
+            <h4>{% trans 'Select your photo for duel' %}</h4><br>
+            <h5>{% trans 'Eligible photos:' %}{{ own_photos_count }}</h5>
+        </div>
+    </div>
+
+{% endblock content_header_message %}
+
+{% block breadcrumbs %}
+    <li><a href="{% url 'members:dashboard' %}">{% trans 'Dashboard' %}</a></li>
+    <li><a href="{% url 'duels:index' %}">{% trans 'Duels' %}</a></li>
+    <li><a href="{% url 'characters:index' %}">{% trans 'Challenge' %}</a></li>
+    <li class="active"><a href="{% url 'photos:id' p_photo_id=challenged_photo.id %}">{{ challenged_photo.title }}</a></li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+    {{ block.super }}
+
+    <div class="row">
+        <div class="col-xs-12 col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 text-center funtograph-sub-panel">
+            <h4>{% trans 'You are challenging this photo to a duel' %}</h4>
+            <img src="{{ challenged_photo.get_big_thumbnail_url}}">
+        </div>
+    </div>
+
+    <div class="row funtograph-sub-panel">
+        {% if own_photos %}
+            <div class="text-center" id="result_area">
+                <h4 class="text-center">{% trans 'Select one of your photos by clicking on it' %}</h4>
+                {% for photo in own_photos %}
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 text-center">
+
+                        <img
+                                class="img-responsive img-thumbnail tilt"
+                                src="{{ photo.get_thumbnail_url }}"
+                                onclick="photo_duel_challenge_complete({{ challenged_photo.id }}, {{ photo.id }});"
+                                >
+
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>{% trans 'You have no photos. To challenge other photo for duel you must first upload a photo.' %}</p>
+        {% endif %}
+    </div>
+{% endblock content %}

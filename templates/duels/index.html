@@ -82,6 +82,12 @@
                         <hr>
                     </div>
                 {% endfor %}
+
+                <div id="more-duels-button">
+                <a href="{% url 'duels:index' %}">
+                    <button class="btn btn-default center-block">{% trans 'Load more duels' %}</button>
+                </a>
+                </div>
             {% else %}
                 <p>{% trans 'No available photo duels to vote on Funtograph at this time. Want to start one?' %}</p>
             {% endif %}
