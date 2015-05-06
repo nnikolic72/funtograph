@@ -83,15 +83,25 @@
 
     {%  block statusbar %}
         <nav class="statusbar">
-            <div class="container">
+            <div class="container hidden-xs visible-sm visible-md visible-lg">
                 <div class="col-xs-3">
                     <button class="btn btn-xs btn-default funtograph-statusbar-button"><span class="glyphicon glyphicon-user"></span></button>
                     <small>{{ statusbar_name }}</small>
                 </div>
-                <div class="col-xs-2"><button class="btn btn-xs btn-default funtograph-statusbar-button">{% trans 'LVL' %}</button><small>{{ statusbar_level }}</small></div>
-                <div class="col-xs-3"><button class="btn btn-xs btn-default funtograph-statusbar-button">{% trans 'EXP' %}</button><small>{{ statusbar_current_xp }}</small></div>
-                <div class="col-xs-2"><button class="btn btn-xs btn-default funtograph-statusbar-button"><span class="glyphicon glyphicon-record"></span></button><small>{{ statusbar_funtocredits }}</small></div>
-                <div class="col-xs-2"><button class="btn btn-xs btn-default funtograph-statusbar-button"><span class="glyphicon glyphicon-heart"></span></button><small>{{ statusbar_current_energy }}/{{ statusbar_max_energy }}<small></small></div>
+                <div class="col-xs-2"><button class="btn btn-xs btn-default funtograph-statusbar-button"><i class="fa fa-level-up"></i></button><small id="statusbar_level">{{ statusbar_level }}</small></div>
+                <div class="col-xs-3"><button class="btn btn-xs btn-default funtograph-statusbar-button"><i class="fa fa-bolt"></i></button><small id="statusbar_current_xp">{{ statusbar_current_xp }}</small></div>
+                <div class="col-xs-2"><button class="btn btn-xs btn-default funtograph-statusbar-button"><i class="fa fa-money"></i></button><small id="statusbar_funtocredits">{{ statusbar_funtocredits }}</small></div>
+                <div class="col-xs-2"><button class="btn btn-xs btn-default funtograph-statusbar-button"><i class="fa fa-heartbeat"></i></button><small id="statusbar_current_energy">{{ statusbar_current_energy }}/{{ statusbar_max_energy }}<small></small></div>
+            </div>
+            <div class="container visible-xs hidden-sm hidden-md hidden-lg">
+                <div class="col-xs-3">
+                    <button class="btn btn-xs btn-default funtograph-statusbar-button"><span class="glyphicon glyphicon-user"></span></button>
+                    <br><small>{{ statusbar_name }}</small>
+                </div>
+                <div class="col-xs-2"><button class="btn btn-xs btn-default funtograph-statusbar-button"><i class="fa fa-level-up"></i></button><br><small id="statusbar_level">{{ statusbar_level }}</small></div>
+                <div class="col-xs-3"><button class="btn btn-xs btn-default funtograph-statusbar-button"><i class="fa fa-bolt"></i></button><br><small id="statusbar_current_xp">{{ statusbar_current_xp }}</small></div>
+                <div class="col-xs-2"><button class="btn btn-xs btn-default funtograph-statusbar-button"><i class="fa fa-money"></i></button><br><small id="statusbar_funtocredits">{{ statusbar_funtocredits }}</small></div>
+                <div class="col-xs-2"><button class="btn btn-xs btn-default funtograph-statusbar-button"><i class="fa fa-heartbeat"></i></button><br><small id="statusbar_current_energy">{{ statusbar_current_energy }}/{{ statusbar_max_energy }}<small></small></div>
             </div>
         </nav>
 

@@ -50,7 +50,7 @@ heroku maintenance:off --app funtograph-prod
 // requirements.txt - Heroku
 1. Add this string without quotes to the end of requrements.txt. "-r requirements_heroku.txt" 2. Convert requirements.txt file in Notepad++ to Encoding > Encode in ANSI
 
-// Hwow to remove already commited file from Git
+// How to remove already commited file from Git
 git rm -r --cached .idea
 -> update .gitignore
 git commit -m "some text"
