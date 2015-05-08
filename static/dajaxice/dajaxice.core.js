@@ -7,14 +7,31 @@ var Dajaxice = {
     
 
     
+    duels: {
+    
+    photo_duel_vote: function(callback_function, argv, custom_settings){
+        return Dajaxice.call('duels.photo_duel_vote', 'POST', callback_function, argv, custom_settings);
+    },
+
+    photo_duel_challenge_complete: function(callback_function, argv, custom_settings){
+        return Dajaxice.call('duels.photo_duel_challenge_complete', 'POST', callback_function, argv, custom_settings);
+    }
+
+
+    
+    
+    }
+    
+,
+    
     interactions: {
     
     send_comment: function(callback_function, argv, custom_settings){
         return Dajaxice.call('interactions.send_comment', 'POST', callback_function, argv, custom_settings);
     },
 
-    like_comment: function(callback_function, argv, custom_settings){
-        return Dajaxice.call('interactions.like_comment', 'POST', callback_function, argv, custom_settings);
+    delete_comment: function(callback_function, argv, custom_settings){
+        return Dajaxice.call('interactions.delete_comment', 'POST', callback_function, argv, custom_settings);
     },
 
     favorite: function(callback_function, argv, custom_settings){
@@ -25,8 +42,8 @@ var Dajaxice = {
         return Dajaxice.call('interactions.like', 'POST', callback_function, argv, custom_settings);
     },
 
-    delete_comment: function(callback_function, argv, custom_settings){
-        return Dajaxice.call('interactions.delete_comment', 'POST', callback_function, argv, custom_settings);
+    like_comment: function(callback_function, argv, custom_settings){
+        return Dajaxice.call('interactions.like_comment', 'POST', callback_function, argv, custom_settings);
     }
 
 

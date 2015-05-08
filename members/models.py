@@ -150,6 +150,14 @@ class Member(models.Model):
                                     verbose_name=_('Beta tester'),
                                     help_text=_('Checked if Member is Beta tester')
     )
+    current_energy = models.IntegerField(default=0, null=False, blank=False,
+                                       verbose_name=_('Current Energy'),
+                                       help_text=_('How much Energy Member has')
+    )
+    max_energy = models.IntegerField(default=0, null=False, blank=False,
+                                       verbose_name=_('Max Energy'),
+                                       help_text=_('How much Energy Member can have')
+    )
 
     created_at = models.DateTimeField(editable=False)
     updated_at = models.DateTimeField()

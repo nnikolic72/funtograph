@@ -3,32 +3,136 @@
 {% load cloudinary %}
 {% load photo_extras %}
 
+{%  block title %}
+    {{ photo_owners.name }}&nbsp;{% trans 'photo - ' %}{% if photo.title %}{{ photo.title }}{% else %}{% trans '[untitled]' %}{% endif %}
+{% endblock title %}
+
 {%  block extra_script %}
     {{ block.super }}
     <script src="{{ STATIC_URL }}js/vendor/jquery.ba-serializeobject.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="{{ STATIC_URL }}js/interactions.js" type="text/javascript" charset="utf-8"></script>
 {% endblock extra_script %}
 
-{% block content %}
+{% block additional_css %}
     {{ block.super }}
+    <link href="{{ STATIC_URL }}css/photo.css" rel="stylesheet">
+{% endblock additional_css %}
 
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-md-offset-3 col-md-6 col-md-offset-3">
-                {% if photo %}
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="text-center">
-                                <h4 class="btn btn-default">{% trans 'Title:' %} {% if photo.title %}{{ photo.title }}{% else %}{% trans '[untitled]' %}{% endif %}</h4>
-                            </div>
-                            <div align="center">
-                            <img class="img-responsive" src="{{  photo.get_src_url }}" alt="{{ photo.title }}">
-                            </div>
 
-                        </div>
+{% block content_header_title %}
+    {{ block.super }}
+    <h1><span class="glyphicon glyphicon-camera header-glyph-style"></span></h1>
+{% endblock content_header_title %}
+
+{% block content_header_message %}
+    {%  trans 'Photo Details' %}
+{% endblock content_header_message %}
+
+
+{% block breadcrumbs %}
+        <li><a href="{% url 'members:dashboard' %}">{% trans 'Dashboard' %}</a></li>
+        <li><a href="{% url 'characters:index' %}">{% trans 'Photgraphers' %}</a></li>
+        <li class="active"><a href="{% url 'characters:photographer' p_photographer_name=photo.author %}">{{ photo.author }}</a></li>
+    <li class="active"><a href="{% url 'photos:id' p_photo_id=photo.id %}">{{ photo.title }}</a></li>
+{% endblock breadcrumbs %}
+
+
+{% block content %}
+{{ block.super }}
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-offset-3 col-md-6 col-md-offset-3">
+            {% if photo %}
+            <div class="panel panel-default funtograph-sub-panel">
+                <div class="panel-body">
+                    <div class="text-center">
+                        <h4 class="btn btn-default">{% trans 'Title:' %} {% if photo.title %}{{ photo.title }}{% else %}{% trans '[untitled]' %}{% endif %}</h4>
                     </div>
-                {% endif %}
+                    <div align="center">
+                        <img class="img-responsive funtograph-image" src="{{  photo.get_src_url }}" alt="{{ photo.title }}">
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <td>{% trans 'Author' %}</td>
+                            <td><a href="{% url 'characters:photographer' p_photographer_name=photo.author %}" >{{ photo.author}}</a></td>
+                        </tr>
+                        <tr>
+                            <td>{% trans 'Likes' %}</td>
+                            <td>{{ photo.get_number_of_likes }}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans 'Dislikes' %}</td>
+                            <td>{{ photo.get_number_of_dislikes }}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans 'Favorites' %}</td>
+                            <td>{{ photo.get_number_of_favorites }}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans 'Comments' %}</td>
+                            <td>{{ photo.get_number_of_comments }}</td>
+                        </tr>
+                        {% for owner in photo.owners.all %}
+                            <tr>
+                                <td>{% trans 'Owner' %}</td>
+                                <td>{{ owner.name }}</td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td>{% trans 'Photo wear' %}</td>
+                            <td>{{ photo.photo_wear }}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans 'For sale' %}</td>
+                            <td>{% if for_sale %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans 'Price' %}</td>
+                            <td>{{ photo.photo_price }}</td>
+                        </tr>
+
+                        <tr>
+                            <td>{% trans 'Categories' %}</td>
+                            <td>
+                                {% for category in photo.categories.all %}
+                                {{ category.name }}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{% trans 'Attributes ' %}</td>
+                            <td>
+                                {% for attribute in photo.attributes.all %}
+                                {{ attribute.name }}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{% trans 'Dominant color' %}</td>
+                            <td>{% if photo.photo_creation_date %}{{ photo.dominant_color }}{% else %}{% trans 'Unknown' %}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans 'Creation date' %}</td>
+                            <td>{% if photo.photo_creation_date %}{{ photo.photo_creation_date }}{% else %}{% trans 'Unknown' %}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans 'Creation tool' %}</td>
+                            <td>{% if photo.creator_tool %}{{ photo.creator_tool }}{% else %}{% trans 'Unknown' %}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans 'Camera model' %}</td>
+                            <td>{% if photo.camera_model %}{{ photo.camera_model }}{% else %}{% trans 'Unknown' %}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans 'Lens' %}</td>
+                            <td>{% if photo.lens_model %}{{ photo.lens_model }}{% else %}{% trans 'Unknown' %}{% endif %}</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
+            {% endif %}
         </div>
     </div>
+</div>
 {% endblock content %}

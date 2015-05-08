@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext as _
 
 from dajaxice.decorators import dajaxice_register
-from dajaxice.utils import deserialize_form
+#from dajaxice.utils import deserialize_form
 
 
 from funtograph.settings.base import STATIC_URL
@@ -107,11 +107,13 @@ def like(req, p_photo_id, p_pressed_button):
 
         no_of_likes = photo_instance.get_number_of_likes
         no_of_dislikes = photo_instance.get_number_of_dislikes
+        photo_score = photo_instance.get_photo_score
 
         return json.dumps({'p_photo_id': p_photo_id,
                            'like_action_result': like_action_result,
                            'no_of_likes': no_of_likes,
-                           'no_of_dislikes': no_of_dislikes
+                           'no_of_dislikes': no_of_dislikes,
+                           'photo_score': photo_score,
         }
         )
 
@@ -180,10 +182,12 @@ def favorite(req, p_photo_id):
                         favorite_action_result = 'favorited'
 
             no_of_favorites = Favorite.objects.filter(photo__id=p_photo_id).count()
+            photo_score = photo_instance.get_photo_score
 
     return json.dumps({'p_photo_id': p_photo_id,
                        'favorite_action_result': favorite_action_result,
-                       'no_of_favorites': no_of_favorites
+                       'no_of_favorites': no_of_favorites,
+                       'photo_score': photo_score,
     }
     )
 

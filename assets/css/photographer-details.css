@@ -1,0 +1,63 @@
+.intro-header {
+    padding-top: 15px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
+    padding-bottom: 5px;
+    text-align: center;
+
+}
+
+.intro-header-small {
+    color: #cecece;
+    text-shadow: 2px 2px 1px rgb(0, 0, 0);
+}
+
+.header-glyph-style {
+    color: #cecece;
+    text-shadow: 2px 2px 1px rgb(0, 0, 0);
+}
+
+.funtograph-header {
+background-color: #fff;
+background-image:
+linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+linear-gradient(#eee .1em, transparent .1em);
+background-size: 100% 1.2em;
+}
+
+.intro-message {
+    position: relative;
+    padding-top: 1%;
+    padding-bottom: 3%;
+
+    color: #cecece;
+    text-shadow: 2px 2px 1px rgb(0, 0, 0);
+}
+
+.intro-header > h1 {
+    margin: 0;
+    color: #cecece;
+    text-shadow: 2px 2px 1px rgb(0, 0, 0);
+    font-size: 5em;
+}
+
+.intro-message > h1 {
+    margin: 0;
+
+    color: #cecece;
+    text-shadow: 2px 2px 1px rgb(0, 0, 0);
+    font-size: 5em;
+}
+
+.intro-message > h2 {
+    margin: 0;
+
+    color: #cecece;
+    text-shadow: 2px 2px 1px rgb(0, 0, 0);
+    font-size: 3em;
+}
+
+.intro-message > h4 {
+    margin: 0;
+    color: #cecece;
+    text-shadow: 2px 2px 1px rgb(0, 0, 0);
+    font-size: 1.5em;
+}

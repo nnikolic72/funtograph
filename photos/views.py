@@ -122,7 +122,7 @@ class PhotosUploadView(TemplateView):
                                           camera_make=l_camera_make,
                                           camera_model=l_camera_model
 
-                                          )
+                        )
                         new_photo.save()
                         new_photo.owner.add(new_photo_owner)
 
@@ -134,7 +134,7 @@ class PhotosUploadView(TemplateView):
                         new_photo.save()
 
                     return HttpResponseRedirect(
-                        reverse('photos:photographer',
+                        reverse('characters:photographer',
                                 kwargs={'p_photographer_name': new_photo_owner.name}
                         )
                     )
@@ -147,7 +147,7 @@ class PhotosUploadView(TemplateView):
                                   dict(
                                       upload_form=upload_form,
                                       form_errors=photo_upload_form.errors
-                                      )
+                                  )
                     )
                 else:
                     return HttpResponseRedirect(reverse('members:login'))
@@ -159,7 +159,7 @@ class PhotosUploadView(TemplateView):
                               dict(
                                   upload_form=upload_form,
                                   form_errors=photo_upload_form.errors
-                                  )
+                              )
                 )
             else:
                 return HttpResponseRedirect(reverse('members:login'))
@@ -197,7 +197,7 @@ class MembersPhotosView(TemplateView):
                               dict(
                                   photographer_photos=photographer_photos,
                                   photographer=photographer
-                                  )
+                              )
                 )
             else:
                 return HttpResponseRedirect(reverse('members:dashboard'))
@@ -223,6 +223,11 @@ class PhotoIDView(TemplateView):
         """
         if request.user.is_authenticated():
             photo_id = kwargs['p_photo_id']
+            try:
+                logged_member = Member.objects.get(user__id=request.user.id)
+                photographer = logged_member.get_my_photographer
+            except ObjectDoesNotExist:
+                logged_member = None
 
             try:
                 photo = Photo.objects.get(id=photo_id)
@@ -239,7 +244,14 @@ class PhotoIDView(TemplateView):
                               dict(
                                   photo=photo,
                                   photo_author=photo_author,
-                                  photo_owners=photo_owners
+                                  photo_owners=photo_owners,
+
+                                  statusbar_level=photographer.level,
+                                  statusbar_name=photographer.name,
+                                  statusbar_current_xp=photographer.current_xp,
+                                  statusbar_funtocredits=logged_member.funtocredits,
+                                  statusbar_current_energy=logged_member.current_energy,
+                                  statusbar_max_energy=logged_member.max_energy,
                                   )
                 )
 

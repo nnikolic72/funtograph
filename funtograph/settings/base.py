@@ -38,8 +38,6 @@ settings_path = PROJECT_DIR.child('funtograph').child("settings")
 settings_path = Path(settings_path, 'settings.ini')
 config.read(settings_path)
 
-
-
 TEMPLATE_DIRS = (
     PROJECT_DIR.child("templates"),
     PROJECT_DIR.child("templates").child("funtograph"),
@@ -94,6 +92,7 @@ INSTALLED_APPS = (
     'characters',
     'photos',
     'interactions',
+    'duels',
 )
 
 
@@ -167,9 +166,15 @@ LOGIN_URL = '/members/login'
 LOGOUT_URL = '/members/logout'
 LOGIN_REDIRECT_URL = '/members/dashboard'
 
+# Funtograph default preferences
+MAX_UPLOAD_PHOTOS_DEFAULT = 5  # How many max photos user can upload to Funtograph
+INITIAL_PHOTO_DUELS_TO_DISPLAY = 5  # How many duels to display on PhotoDuels index page
 
+INTERACTION_LIKE_WEIGHT = 1
+INTERACTION_DISLIKE_WEIGHT = -1
+INTERACTION_FAVORITE_WEIGHT = 5
+INTERACTION_DUEL_WIN_WEIGHT = 10
+INTERACTION_DUEL_LOSS_WEIGHT = -5
 
-
-MAX_UPLOAD_PHOTOS_DEFAULT = 5
 
 

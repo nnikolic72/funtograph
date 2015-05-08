@@ -13,9 +13,24 @@ h6 {
     padding-top: 15px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
     padding-bottom: 5px;
     text-align: center;
-    color: #f8f8f8;
-    background: url(../img/photographers-bg.jpg) no-repeat center center;
-    background-size: cover;
+
+}
+
+.header-glyph-style {
+    color: #ffffff;
+    text-shadow: 2px 2px 1px rgb(98, 98, 98);
+}
+
+.funtograph-header {
+background:
+linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
+linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
+linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+background-color: #131313;
+background-size: 20px 20px;
 }
 
 .intro-message {
@@ -23,23 +38,34 @@ h6 {
     padding-top: 1%;
     padding-bottom: 3%;
 
-    color: rgba(255, 236, 191, 0.99)
+    color: #ffffff;
+    text-shadow: 2px 2px 1px rgb(98, 98, 98);
+}
+
+.intro-header > h1 {
+    margin: 0;
+    color: #ffffff;
+    text-shadow: 2px 2px 1px rgb(98, 98, 98);
+    font-size: 5em;
 }
 
 .intro-message > h1 {
     margin: 0;
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    color: #ffffff;
+    text-shadow: 2px 2px 1px rgb(98, 98, 98);
     font-size: 5em;
 }
 
 .intro-message > h2 {
     margin: 0;
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    color: #ffffff;
+    text-shadow: 2px 2px 1px rgb(98, 98, 98);
     font-size: 3em;
 }
 
 .intro-message > h4 {
     margin: 0;
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    color: #ffffff;
+    text-shadow: 2px 2px 1px rgb(98, 98, 98);
     font-size: 1.5em;
 }

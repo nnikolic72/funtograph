@@ -9,6 +9,7 @@ function like_callback(data) {
     var id_name_unlikes = '#unlikes_id_' + p_photo_id;
     var id_name_num_likes = '#likes_num_' + p_photo_id;
     var id_name_num_dislikes = '#dislikes_num_' + p_photo_id;
+    var id_name_num_photoscore = '#photo_score_num_' + p_photo_id;
 
     //alert(id_name)
     $(id_name_likes).addClass('btn-default').removeClass('btn-success')
@@ -31,6 +32,7 @@ function like_callback(data) {
 
     $(id_name_num_likes).html(data.no_of_likes);
     $(id_name_num_dislikes).html(data.no_of_dislikes);
+    $(id_name_num_photoscore).html(data.photo_score);
 }
 
 function like(p_photo_id, static_url, pressed_button) {
@@ -48,6 +50,7 @@ function favorite_callback(data) {
     var p_photo_id = data.p_photo_id;
     var id_name = '#favorites_id_' + p_photo_id;
     var id_name_num = '#favorites_num_' + p_photo_id;
+    var id_name_num_photoscore = '#photo_score_num_' + p_photo_id;
 
     //alert(id_name)
 
@@ -66,6 +69,7 @@ function favorite_callback(data) {
     }
 
     $(id_name_num).html(data.no_of_favorites);
+    $(id_name_num_photoscore).html(data.photo_score);
 }
 
 
@@ -202,4 +206,10 @@ function reply_comment(p_comment_id) {
         $(id_name).hide(400);
     }
 
+}
+
+
+
+function photo_duel_challenge(p_photo_id) {
+    alert('photo_duel_challenge ' + p_photo_id);
 }

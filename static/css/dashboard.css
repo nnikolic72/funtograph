@@ -1,28 +1,30 @@
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-weight: 700;
+
+
+.funtograph-header {
+    border: 0px solid #000000;
+background:
+radial-gradient(black 15%, transparent 16%) 0 0,
+radial-gradient(black 15%, transparent 16%) 8px 8px,
+radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+background-color:#282828;
+background-size:16px 16px;
 }
 
 .intro-header {
     padding-top: 15px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
     padding-bottom: 5px;
     text-align: center;
-    color: #f8f8f8;
-    background: url(../img/dashboard-bg.jpg) no-repeat center center;
-    background-size: cover;
+
+
 }
 
 .intro-message {
     position: relative;
     padding-top: 1%;
     padding-bottom: 3%;
-    color: rgba(220, 237, 255, 0.99)
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 2px 2px 3px rgba(215, 215, 215, 0.75);
 }
 
 .intro-message > h1 {

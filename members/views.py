@@ -268,22 +268,15 @@ class MemberDashboardView(TemplateView):
         if request.user.is_authenticated():
 
             try:
-                logged_member = Member.objects.get(user__username=request.user)
+                logged_member = Member.objects.get(user__id=request.user.id)
+                photographer = logged_member.get_my_photographer
+
                 # Todo: Make generic profile photo and assign to profile_photo_url
                 profile_photo_url = None
                 if logged_member.picture:
-                    profile_photo_url = logged_member.picture.build_url(width=100, height=100, crop='fill',
-                                                                        gravity='face')
-
-
-                try:
-                    photographer = Photographer.objects.get(member=logged_member)
-                except ObjectDoesNotExist:
-                    photographer = None
-
+                    profile_photo_url = logged_member.picture.build_url(transformation='media_lib_thumb')
 
                 photographer_photos_cnt = Photo.objects.filter(owner=photographer).count()
-
             except ObjectDoesNotExist:
                 logged_member = None
 
@@ -292,7 +285,14 @@ class MemberDashboardView(TemplateView):
                           dict(logged_member=logged_member,
                                profile_photo_url=profile_photo_url,
                                photographer=photographer,
-                               photographer_photos_cnt=photographer_photos_cnt
+                               photographer_photos_cnt=photographer_photos_cnt,
+
+                               statusbar_level=photographer.level,
+                               statusbar_name=photographer.name,
+                               statusbar_current_xp=photographer.current_xp,
+                               statusbar_funtocredits=logged_member.funtocredits,
+                               statusbar_current_energy=logged_member.current_energy,
+                               statusbar_max_energy=logged_member.max_energy,
                                )
             )
 

@@ -4,14 +4,27 @@ from django.utils.datetime_safe import datetime
 
 from cloudinary.models import CloudinaryField
 
+from funtograph.settings.base import (
+    INTERACTION_LIKE_WEIGHT,
+    INTERACTION_DISLIKE_WEIGHT,
+    INTERACTION_FAVORITE_WEIGHT,
+    INTERACTION_DUEL_WIN_WEIGHT,
+    INTERACTION_DUEL_LOSS_WEIGHT,
+)
+
 from characters.models import (
-                               Photographer)
+    Photographer)
 
 from interactions.models import (
     Like,
     Comment,
     Favorite
 )
+
+from duels.models import (
+    PhotoDuel,
+)
+
 # Create your models here.
 from members.models import Member
 
@@ -88,6 +101,36 @@ class Photo(models.Model):
     """
     Model for storing members photos, and their metadata
     """
+    def sxor(self, s1, s2):
+        """
+        String XOR
+        :param s1:
+        :type s1:
+        :param s2:
+        :type s2:
+        :return:
+        :rtype:
+        """
+
+        temp = ''.join(chr(ord(a) ^ ord(b)) for a,b in zip(s1, s2))
+        return temp
+
+
+    @property
+    def similar_to_other_photos(self):
+        """
+
+        :return: True if photo is similar to already uploaded photo
+        :rtype: Boolean
+        """
+        all_photos_except_this = Photo.objects.exclude(id=self.id).all()
+
+        for photo in all_photos_except_this:
+            phash_xor = self.sxor(photo.phash, self.phash)
+
+            #phash_score = 1 - (phash_distance(photo.phash, self.phash) / 64.0)
+
+        return phash_xor
 
     @property
     def get_thumbnail_url(self):
@@ -97,6 +140,16 @@ class Photo(models.Model):
         :rtype: String
         """
         photo_thumb_url = self.photo.build_url(transformation='media_lib_thumb')
+        return photo_thumb_url
+
+    @property
+    def get_big_thumbnail_url(self):
+        """
+
+        :return: Url of thumbnail image
+        :rtype: String
+        """
+        photo_thumb_url = self.photo.build_url(transformation='media_big_thumb')
         return photo_thumb_url
 
     @property
@@ -146,6 +199,19 @@ class Photo(models.Model):
         return comments_count
 
     @property
+    def get_number_of_active_duels(self):
+        """
+
+        :return: Number of likes on a photo
+        :rtype: Integer
+        """
+
+        active_duels_count_a = PhotoDuel.objects.filter(photo_a=self).count()
+        active_duels_count_b = PhotoDuel.objects.filter(photo_b=self).count()
+        active_duels_count = active_duels_count_a + active_duels_count_b
+        return active_duels_count
+
+    @property
     def get_comments(self):
         """
 
@@ -171,6 +237,20 @@ class Photo(models.Model):
         return photo_comments
 
     @property
+    def get_all_comments(self ):
+        """
+
+        :return: Number of likes on a photo
+        :rtype: Comments object
+        """
+
+        photo_comments = Comment.objects.filter(photo=self)
+        photo_comments_len = len(photo_comments)
+        if photo_comments_len > 4:
+            photo_comments = photo_comments[photo_comments_len-4:photo_comments_len]
+        return photo_comments
+
+    @property
     def get_number_of_favorites(self):
         """
 
@@ -180,6 +260,41 @@ class Photo(models.Model):
 
         favorites_count = Favorite.objects.filter(photo=self).count()
         return favorites_count
+
+    @property
+    def get_photo_score(self):
+        """
+        Calculates and returns total photo score
+        :return:
+        :rtype:
+        """
+        #INTERACTION_LIKE_WEIGHT
+        #INTERACTION_DISLIKE_WEIGHT
+        #INTERACTION_FAVORITE_WEIGHT
+        #INTERACTION_DUEL_WIN_WEIGHT
+        #INTERACTION_DUEL_LOSS_WEIGHT
+
+        l_photo_score = 0
+
+        photo_favorites = Favorite.objects.filter(photo=self)
+        #photo_comments = Comment.objects.filter(photo=self)
+        photo_likes = Like.objects.filter(photo=self, like_value=True)
+        photo_dislikes = Like.objects.filter(photo=self, like_value=False)
+
+        for favorite in photo_favorites:
+            l_photo_score += INTERACTION_FAVORITE_WEIGHT * favorite.members_favoriters.level
+
+        for like in photo_likes:
+            l_photo_score += INTERACTION_LIKE_WEIGHT * like.members_likers.level
+
+        for dislike in photo_dislikes:
+            l_photo_score += INTERACTION_DISLIKE_WEIGHT * dislike.members_likers.level
+
+        if l_photo_score:
+            return l_photo_score
+        else:
+            return 0
+
 
     title = models.CharField(max_length=100,
                              verbose_name=_('Photo title'))

@@ -85,6 +85,7 @@
                 <div class="col-lg-6">
                     <h2>{%  trans 'Sign up for Funtograph' %}</h2><br><h4>{%  trans 'Find out first when we open the gates of fun! We will send you an e-mail to address you provide as soon as time comes!' %}</h4>
                 </div>
+                <!--
                 <div class="col-lg-6">
                     <div class="center-block">
                         <form method="POST" role="form" action="{% url 'lander:signupemail' %}" style="display:inline-block;">
@@ -104,6 +105,7 @@
                         </form>
                     </div>
                 </div>
+                -->
             </div>
             <div class="row">
 
@@ -114,6 +116,7 @@
                     <a href="{% url 'members:register' %}"><button class="btn btn-success" style="padding-bottom: 10px; padding-top: 10px;">{% trans 'Register as new user' %}</button></a>
                     </div>
                 {%  endif %}
+
             </div>
 
         </div>
@@ -222,5 +225,7 @@
                 </div>
             </div>
             </footer>
+
+    <script src="//my.hellobar.com/ce3d89e2f75a6c07cf97a2bbc50d37e784a533ed.js" type="text/javascript" charset="utf-8" async="async"></script>
 
 {% endblock bootstrap3_content %}
